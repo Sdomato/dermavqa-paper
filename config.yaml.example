@@ -1,0 +1,10 @@
+# Copy this file to config.yaml and set your local paths
+# config.yaml is gitignored — each team member has their own copy
+
+# Path to the DermaVQA dataset (the cloned Microsoft repo)
+# Example Windows: C:/Users/yourname/Udesa/NLP/prueba1/DermaVQA/data/iiyi
+# Example Linux:   /home/yourname/data/DermaVQA/data/iiyi
+data_dir: "CHANGE_ME/DermaVQA/data/iiyi"
+
+# Where to write processed CSVs and outputs
+output_dir: "CHANGE_ME/dermavqa-paper/outputs"

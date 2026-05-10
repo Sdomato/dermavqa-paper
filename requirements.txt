@@ -1,0 +1,23 @@
+# Data & viz
+pandas
+pillow
+matplotlib
+pyyaml
+tqdm
+
+# Jupyter
+jupyter
+ipywidgets
+
+# Modeling (VLM fine-tuning)
+torch
+torchvision
+transformers>=4.45.0
+peft>=0.13.0
+accelerate>=0.34.0
+bitsandbytes>=0.43.0
+datasets>=2.20.0
+
+# Evaluation
+bert-score
+sacrebleu
