@@ -1,5 +1,8 @@
-# Data - never commit images or raw data
-data/
+# Images are too large for GitHub (1.2 GB) — copy manually after cloning
+data/iiyi/images_final/
+data/iiyi/images_final.zip
+
+# Generated outputs
 outputs/
 results/
 checkpoints/
