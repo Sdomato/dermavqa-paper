@@ -1,0 +1,9 @@
+paper,year,dataset,language,modality,model_or_method,adaptation,evaluation,limitations
+DermaVQA,2024,DermaVQA,multilingual,image+text,VQA dataset,N/A,dataset statistics and benchmark,"reference heterogeneity; multilingual medical VQA remains hard"
+LLaVA-Med,2023,biomedical image instruction data,English,image+text,LLaVA-Med,instruction tuning,biomedical VQA and dialogue,"mostly English; not focused on Spanish dermatology"
+BiomedCLIP,2023,PMC-15M,English,image+text,BiomedCLIP,contrastive pretraining,retrieval and classification,"encoder rather than full Spanish VQA system"
+RAG,2020,knowledge-intensive NLP datasets,English,text,RAG,retrieval-augmented generation,QA and generation,"not multimodal dermatology-specific"
+LoRA,2022,general LLM adaptation,N/A,text,low-rank adaptation,parameter-efficient fine-tuning,downstream task performance,"method paper; not medical VQA-specific"
+QLoRA,2023,general LLM adaptation,N/A,text,quantized LoRA,parameter-efficient fine-tuning,downstream task performance,"method paper; not medical VQA-specific"
+Qwen2-VL,2024,general vision-language benchmarks,multilingual,image+text,Qwen2-VL,pretraining/instruction tuning,VLM benchmarks,"general-domain; domain adaptation needed"
+Qwen2.5-VL,2025,general vision-language benchmarks,multilingual,image+text,Qwen2.5-VL,pretraining/instruction tuning,VLM benchmarks,"general-domain; compute requirements may matter"

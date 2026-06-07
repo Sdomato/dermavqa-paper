@@ -1,0 +1,7 @@
+rows,empty_predictions,sacrebleu,chrf,avg_reference_words,avg_prediction_words,method,split,path
+56,0,8.675428207052626,30.098917464498804,49.482142857142854,48.30357142857143,tfidf,valid,results\dataset_enriched\retrieval_textual\predictions_valid_tfidf.csv
+100,0,8.266186102187199,26.989937277831732,47.83,39.22,tfidf,test,results\dataset_enriched\retrieval_textual\predictions_test_tfidf.csv
+56,0,7.939858542053067,30.534520628391608,49.482142857142854,47.035714285714285,e5_small,valid,results\dataset_enriched\retrieval_textual\predictions_valid_e5_small.csv
+100,0,8.55510311958457,30.090544824248333,47.83,46.43,e5_small,test,results\dataset_enriched\retrieval_textual\predictions_test_e5_small.csv
+56,0,7.917644897970252,28.005704152974726,49.482142857142854,42.410714285714285,sbert_multilingual_minilm,valid,results\dataset_enriched\retrieval_textual\predictions_valid_sbert_multilingual_minilm.csv
+100,0,8.794968349242765,29.81613977617042,47.83,44.59,sbert_multilingual_minilm,test,results\dataset_enriched\retrieval_textual\predictions_test_sbert_multilingual_minilm.csv
