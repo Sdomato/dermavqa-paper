@@ -18,6 +18,8 @@ dominio medico multimodal y subrepresentado en espanol.
 - `experiment_grid.md`: condiciones experimentales, parametros y entregables.
 - `models_to_compare.md`: candidatos para retrieval textual, visual y VLM.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
+- `team_execution_plan.md`: division de tareas, protocolo comun y metricas
+  para comparar modelos fine-tuned.
 - `related_work_matrix.csv`: matriz inicial para organizar papers relacionados.
 - `risks.md`: riesgos metodologicos, medicos y operativos.
 
