@@ -2,8 +2,12 @@
 data/iiyi/images_final/
 data/iiyi/images_final.zip
 
-# Generated outputs
-outputs/
+# Generated outputs — track lightweight datasets but ignore large artifacts
+outputs/*
+!outputs/datasets/
+outputs/datasets/*
+!outputs/datasets/*.json
+!outputs/datasets/*.csv
 results/
 checkpoints/
 
