@@ -10,6 +10,7 @@ python-dotenv
 # Retrieval baselines
 scikit-learn
 sentence-transformers
+open_clip_torch
 
 # Jupyter
 jupyter
