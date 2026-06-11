@@ -3,6 +3,7 @@ numpy
 pandas
 pillow
 matplotlib
+seaborn
 pyyaml
 tqdm
 python-dotenv
