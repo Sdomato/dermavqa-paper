@@ -12,7 +12,7 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
 
-from retrieval_utils import (
+from src.retrieval_utils import (
     PROJECT_ROOT,
     build_query_text,
     build_results,

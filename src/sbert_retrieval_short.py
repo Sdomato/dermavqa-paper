@@ -8,7 +8,7 @@ Salida: outputs/results/dataset_short_answer/retrieval_textual_sbert/sbert_resul
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from retrieval_utils import (
+from src.retrieval_utils import (
     PROJECT_ROOT,
     build_query_text,
     build_results,

@@ -21,7 +21,7 @@ import torch
 from PIL import Image
 from tqdm import tqdm
 
-from retrieval_utils import (
+from src.retrieval_utils import (
     IMAGES_DIR,
     PROJECT_ROOT,
     clean_text,

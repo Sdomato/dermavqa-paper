@@ -8,6 +8,7 @@ outputs/*
 outputs/datasets/*
 !outputs/datasets/*.json
 !outputs/datasets/*.csv
+!outputs/metrics/
 results/
 checkpoints/
 

@@ -11,7 +11,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from tqdm import tqdm
 
-from retrieval_utils import (
+from src.retrieval_utils import (
     PROJECT_ROOT,
     build_query_text,
     build_results,

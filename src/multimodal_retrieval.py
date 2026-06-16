@@ -29,7 +29,7 @@ import torch
 from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
 
-from retrieval_utils import (
+from src.retrieval_utils import (
     IMAGES_DIR,
     PROJECT_ROOT,
     build_query_text,
