@@ -1,7 +1,9 @@
 # Images are too large for GitHub (1.2 GB) — copy manually after cloning
 data/iiyi/images_final/
 data/iiyi/images_final.zip
-
+*.jpg
+*.png
+*.jpeg
 # Generated outputs — track lightweight datasets but ignore large artifacts
 outputs/*
 !outputs/datasets/

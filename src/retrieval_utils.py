@@ -21,6 +21,19 @@ def find_project_root(start: Path | None = None) -> Path:
 PROJECT_ROOT = find_project_root()
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
 IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+_IMAGE_SUBDIRS = ["images_train", "images_valid", "images_test"]
+
+
+def find_image(image_id: str) -> Path | None:
+    """Busca un archivo de imagen en IMAGES_DIR y sus subcarpetas conocidas."""
+    direct = IMAGES_DIR / image_id
+    if direct.exists():
+        return direct
+    for subdir in _IMAGE_SUBDIRS:
+        candidate = IMAGES_DIR / subdir / image_id
+        if candidate.exists():
+            return candidate
+    return None
 
 
 def clean_text(text: Any) -> str:
@@ -71,7 +84,7 @@ def build_results(
 def save_results(results: list[dict[str, Any]], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
+        json.dump(results, f, ensure_ascii=False, indent=2, default=lambda o: bool(o) if isinstance(o, np.bool_) else float(o))
     scores = [r["similarity_score"] for r in results]
     arr = np.array(scores)
     print(f"Guardados {len(results)} resultados en {output_path}")

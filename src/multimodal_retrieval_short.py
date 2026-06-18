@@ -29,11 +29,11 @@ from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
 
 from src.retrieval_utils import (
-    IMAGES_DIR,
     PROJECT_ROOT,
     build_query_text,
     build_results,
     clean_text,
+    find_image,
     load_dataset,
     save_results,
     top1_excluding_self,
@@ -139,8 +139,8 @@ def _embed_record(
 
     tensors: list[torch.Tensor] = []
     for img_id in image_ids:
-        p = IMAGES_DIR / img_id
-        if not p.exists():
+        p = find_image(img_id)
+        if p is None:
             continue
         try:
             tensors.append(preprocess(Image.open(p).convert("RGB")))
