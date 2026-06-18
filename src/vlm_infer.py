@@ -20,10 +20,8 @@ Salida (esquema canónico del plan de equipo):
   (tiempo medio por ejemplo, tiempo total, device).
 
 Nota sobre rutas de imágenes:
-  retrieval_utils.IMAGES_DIR apunta a data/images, pero las imágenes reales
-  del equipo viven en data/iiyi/images_final/{images_train,images_valid,images_test}.
-  Este script resuelve cada image_id con un rglob sobre IMAGES_DIR (abajo),
-  igual que hacía el prepare_dataset.py original.
+  Las imágenes deben estar en data/images/ (con subcarpetas por split).
+  El índice se construye una sola vez con rglob sobre ese directorio.
 
 Uso:
     # Validación en CPU (no carga el modelo): chequea prompts e imágenes
@@ -52,7 +50,7 @@ from src.retrieval_utils import PROJECT_ROOT, build_query_text, clean_text, load
 # ── paths y constantes ──────────────────────────────────────────────────────────
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
-IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
+IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 RESULTS_ROOT = PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
 
 MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
@@ -75,7 +73,20 @@ SYSTEM_PROMPT = (
 
 def filter_split(records: list[dict[str, Any]], split: str) -> list[dict[str, Any]]:
     target = SPLIT_ALIASES.get(split, split)
-    return [r for r in records if r.get("_split") == target]
+    result = [r for r in records if r.get("_split") == target]
+    if not result:
+        raise ValueError(f"Split '{split}' (→ '{target}') no encontrado en el dataset.")
+    return result
+
+
+def _build_image_index() -> dict[str, str]:
+    """Índice {image_id: ruta} precalculado una sola vez sobre IMAGES_DIR."""
+    if not IMAGES_DIR.exists():
+        return {}
+    return {p.name: str(p) for p in IMAGES_DIR.rglob("*") if p.is_file()}
+
+
+_IMAGE_INDEX: dict[str, str] = {}
 
 
 def resolve_image_paths(image_ids: list[str]) -> tuple[list[str], list[str]]:
@@ -83,12 +94,16 @@ def resolve_image_paths(image_ids: list[str]) -> tuple[list[str], list[str]]:
 
     Retorna (rutas_encontradas, ids_faltantes).
     """
+    global _IMAGE_INDEX
+    if not _IMAGE_INDEX:
+        _IMAGE_INDEX = _build_image_index()
+
     found: list[str] = []
     missing: list[str] = []
     for img_id in image_ids:
-        matches = list(IMAGES_DIR.rglob(img_id)) if IMAGES_DIR.exists() else []
-        if matches:
-            found.append(str(matches[0]))
+        path = _IMAGE_INDEX.get(img_id)
+        if path:
+            found.append(path)
         else:
             missing.append(img_id)
     return found, missing
