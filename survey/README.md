@@ -20,6 +20,9 @@ dominio medico multimodal y subrepresentado en espanol.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
+- `matias_execution_plan.md`: plan y progreso de la pata VLM (zero-shot + LoRA
+  sobre `dataset_longest_answer`): `src/vlm_infer.py`, `src/train_longest.py`,
+  `src/evaluate_predictions.py`.
 - `related_work_matrix.csv`: matriz inicial para organizar papers relacionados.
 - `risks.md`: riesgos metodologicos, medicos y operativos.
 
