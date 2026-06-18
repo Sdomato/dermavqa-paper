@@ -66,15 +66,18 @@ def normalize(text: str) -> str:
 
 
 def token_f1(pred: str, ref: str) -> float:
+    from collections import Counter
+
     pred_tokens = normalize(pred).split()
     ref_tokens = normalize(ref).split()
     if not pred_tokens or not ref_tokens:
         return 0.0
-    common = set(pred_tokens) & set(ref_tokens)
+    # Usar Counter para respetar duplicados (set perdería tokens repetidos).
+    common = sum((Counter(pred_tokens) & Counter(ref_tokens)).values())
     if not common:
         return 0.0
-    p = len(common) / len(pred_tokens)
-    r = len(common) / len(ref_tokens)
+    p = common / len(pred_tokens)
+    r = common / len(ref_tokens)
     return 2 * p * r / (p + r)
 
 

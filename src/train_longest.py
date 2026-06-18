@@ -147,33 +147,56 @@ def load_model_processor_and_lora(model_id: str, lora_r: int, lora_alpha: int):
 
 
 def make_collate_fn(processor):
-    """Collator multimodal: tokeniza el chat y enmascara prompt e imágenes en la loss."""
+    """Collator multimodal: tokeniza el chat y enmascara prompt e imágenes en la loss.
+
+    Solo los tokens del turno assistant (la respuesta de referencia) contribuyen
+    a la loss. El prompt completo (system + user + placeholders de imagen + padding)
+    se enmascara con -100.
+    """
     from qwen_vl_utils import process_vision_info
 
-    # Tokens que NO deben contribuir a la loss (relleno + placeholders de imagen).
     image_token_id = getattr(processor.tokenizer, "image_token_id", None)
     if image_token_id is None:
-        image_token = "<|image_pad|>"
-        image_token_id = processor.tokenizer.convert_tokens_to_ids(image_token)
+        image_token_id = processor.tokenizer.convert_tokens_to_ids("<|image_pad|>")
     pad_token_id = processor.tokenizer.pad_token_id
 
     def collate_fn(examples: list[dict[str, Any]]):
         messages = [ex["messages"] for ex in examples]
-        texts = [
+
+        # Texto completo (system + user + assistant) para el forward pass.
+        full_texts = [
             processor.apply_chat_template(m, tokenize=False, add_generation_prompt=False)
             for m in messages
         ]
+        # Texto solo del prompt (system + user) para medir su longitud en tokens
+        # y enmascarar esos tokens en la loss.
+        prompt_only = [
+            processor.apply_chat_template(m[:-1], tokenize=False, add_generation_prompt=True)
+            for m in messages
+        ]
+
         image_inputs = [process_vision_info(m)[0] for m in messages]
+
         batch = processor(
-            text=texts,
+            text=full_texts,
             images=image_inputs,
             return_tensors="pt",
             padding=True,
         )
+        prompt_lens = [
+            processor(text=p, return_tensors="pt")["input_ids"].shape[1]
+            for p in prompt_only
+        ]
+
         labels = batch["input_ids"].clone()
+        # Enmascarar padding e image tokens.
         labels[labels == pad_token_id] = -100
         if image_token_id is not None:
             labels[labels == image_token_id] = -100
+        # Enmascarar el prompt (system + user) fila a fila.
+        for i, prompt_len in enumerate(prompt_lens):
+            labels[i, :prompt_len] = -100
+
         batch["labels"] = labels
         return batch
 
