@@ -142,7 +142,12 @@ def load_model_processor_and_lora(model_id: str, lora_r: int, lora_alpha: int):
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
 
-    processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
+    processor = AutoProcessor.from_pretrained(
+        model_id,
+        trust_remote_code=True,
+        min_pixels=256 * 28 * 28,
+        max_pixels=512 * 28 * 28,  # limita resolución para caber en 16GB VRAM
+    )
     return model, processor
 
 
