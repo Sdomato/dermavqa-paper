@@ -4,7 +4,8 @@ Retrieval Visual con BiomedCLIP sobre dataset_short_answer.
 Modelo: microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224 (via open_clip)
         Fallback: ViT-B-32/openai si el hub model no está disponible.
 
-Las imágenes se buscan en data/images/ usando el campo `image_ids`.
+Las imágenes se resuelven con retrieval_utils.resolve_image_path (indexa
+data/iiyi/images_final/ recursivamente) usando el campo `image_ids`.
 Cuando un caso tiene varias imágenes se promedian sus embeddings (mean-pool).
 Casos sin imagen válida no son candidatos de retrieval (sus scores quedan en -inf).
 
@@ -26,6 +27,7 @@ from src.retrieval_utils import (
     PROJECT_ROOT,
     clean_text,
     load_dataset,
+    resolve_image_path,
     save_results,
     top1_excluding_self,
 )
@@ -93,8 +95,8 @@ def embed_record_images(
     """
     tensors: list[torch.Tensor] = []
     for img_id in image_ids:
-        path = IMAGES_DIR / img_id
-        if not path.exists():
+        path = resolve_image_path(img_id)
+        if path is None:
             continue
         try:
             tensors.append(preprocess(Image.open(path).convert("RGB")))
@@ -173,7 +175,7 @@ def main() -> None:
     if not IMAGES_DIR.exists():
         print(
             f"ADVERTENCIA: directorio de imágenes no encontrado en {IMAGES_DIR}.\n"
-            "Crea data/images/ y coloca allí los archivos IMG_ENC*.jpg.\n"
+            "Copiá las imágenes en data/iiyi/images_final/ (subdirs images_{train,valid,test}/).\n"
             "El script continúa pero todos los embeddings serán cero."
         )
 

@@ -35,6 +35,7 @@ from src.retrieval_utils import (
     build_query_text,
     build_results,
     load_dataset,
+    resolve_image_path,
     save_results,
     top1_excluding_self,
 )
@@ -146,8 +147,8 @@ def _embed_images_for_record(
 
     tensors: list[torch.Tensor] = []
     for img_id in image_ids:
-        p = IMAGES_DIR / img_id
-        if not p.exists():
+        p = resolve_image_path(img_id)
+        if p is None:
             continue
         try:
             tensors.append(preprocess(Image.open(p).convert("RGB")))

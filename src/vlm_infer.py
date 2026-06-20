@@ -20,10 +20,10 @@ Salida (esquema canónico del plan de equipo):
   (tiempo medio por ejemplo, tiempo total, device).
 
 Nota sobre rutas de imágenes:
-  retrieval_utils.IMAGES_DIR apunta a data/images, pero las imágenes reales
-  del equipo viven en data/iiyi/images_final/{images_train,images_valid,images_test}.
-  Este script resuelve cada image_id con un rglob sobre IMAGES_DIR (abajo),
-  igual que hacía el prepare_dataset.py original.
+  Las imágenes viven en data/iiyi/images_final/{images_train,images_valid,images_test}.
+  Este script resuelve cada image_id con un rglob sobre IMAGES_DIR (abajo).
+  Los baselines de retrieval resuelven igual vía retrieval_utils.resolve_image_path,
+  que indexa esa misma carpeta (ver survey/STRUCTURE.md).
 
 Uso:
     # Validación en CPU (no carga el modelo): chequea prompts e imágenes

@@ -20,6 +20,8 @@ dominio medico multimodal y subrepresentado en espanol.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
+- `STRUCTURE.md`: convencion canonica de carpetas y artefactos del repo
+  (raiz de resultados, que se versiona, resolucion de imagenes).
 - `matias_execution_plan.md`: plan y progreso de la pata VLM (zero-shot + LoRA
   sobre `dataset_longest_answer`): `src/vlm_infer.py`, `src/train_longest.py`,
   `src/evaluate_predictions.py`.
@@ -33,7 +35,9 @@ dominio medico multimodal y subrepresentado en espanol.
   imagen-pregunta-respuesta para entrenamiento.
 - `requirements.txt` incluye dependencias para EDA, fine-tuning de VLMs y
   evaluacion (`transformers`, `peft`, `accelerate`, `bert-score`, `sacrebleu`).
-- `src/` existe pero todavia no contiene la implementacion modular.
+- `src/` contiene el pipeline modular: construccion de datasets, baselines de
+  retrieval (textual/visual/multimodal), VLM (zero-shot + LoRA) y evaluacion.
+  Ver el README raiz y `STRUCTURE.md`.
 - `config.yaml` define paths relativos para datos y salidas.
 
 Estado observado:

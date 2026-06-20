@@ -20,7 +20,45 @@ def find_project_root(start: Path | None = None) -> Path:
 
 PROJECT_ROOT = find_project_root()
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
-IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+
+# Canonical image location: images live under data/iiyi/images_final/ in the
+# split subdirs images_{train,valid,test}/. We also fall back to the legacy flat
+# data/images/ layout so older local setups keep working.
+IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
+_LEGACY_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+_IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}
+_IMAGE_INDEX: dict[str, Path] | None = None
+
+
+def _build_image_index() -> dict[str, Path]:
+    """Index every image file by filename, searching the canonical dir
+    recursively (images live in images_{train,valid,test}/) and the legacy
+    flat dir. First match wins."""
+    index: dict[str, Path] = {}
+    for base in (IMAGES_DIR, _LEGACY_IMAGES_DIR):
+        if not base.exists():
+            continue
+        for path in base.rglob("*"):
+            if path.is_file() and path.suffix.lower() in _IMAGE_EXTS:
+                index.setdefault(path.name, path)
+    return index
+
+
+def resolve_image_path(img_id: str) -> Path | None:
+    """Resolve an image filename (e.g. ``IMG_ENC00908_00001.jpg``) to a real
+    path on disk, regardless of which split subdir it sits in. Returns None if
+    the image is not found. The index is built once and cached."""
+    global _IMAGE_INDEX
+    if _IMAGE_INDEX is None:
+        _IMAGE_INDEX = _build_image_index()
+    if img_id in _IMAGE_INDEX:
+        return _IMAGE_INDEX[img_id]
+    if "." not in img_id:  # caller passed an id without extension
+        for ext in (".jpg", ".jpeg", ".png", ".webp"):
+            hit = _IMAGE_INDEX.get(img_id + ext)
+            if hit is not None:
+                return hit
+    return None
 
 
 def clean_text(text: Any) -> str:
