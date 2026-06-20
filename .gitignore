@@ -1,17 +1,40 @@
 # Images are too large for GitHub (1.2 GB) — copy manually after cloning
 data/iiyi/images_final/
 data/iiyi/images_final.zip
+# Any image zip anywhere in the repo (e.g. images_final.zip at root, ~1 GB)
+images_final.zip
+**/images_final.zip
+# Raw image files anywhere — never version images
 *.jpg
 *.png
 *.jpeg
-# Generated outputs — track lightweight datasets but ignore large artifacts
+
+# Generated outputs — canonical results root is outputs/ (see survey/STRUCTURE.md).
+# Track lightweight datasets/metrics, ignore heavy artifacts.
 outputs/*
 !outputs/datasets/
+!outputs/metrics/
+!outputs/results/
+
+# Datasets: version json/csv/zip only
 outputs/datasets/*
 !outputs/datasets/*.json
 !outputs/datasets/*.csv
-!outputs/metrics/
-results/
+!outputs/datasets/*.zip
+
+# Metrics: descend into the dir and version everything in it (light CSVs)
+
+# Predictions/results: descend, but ignore heavy artifacts (keep light CSV/JSON)
+outputs/results/**/*.npy
+outputs/results/**/*.npz
+outputs/results/**/*.pt
+outputs/results/**/*.bin
+outputs/results/**/*.safetensors
+outputs/results/**/final_adapter/
+
+# Legacy top-level results/ root is deprecated — everything lives under outputs/ now.
+# Anchored with a leading slash so it does NOT also match outputs/results/.
+/results/
 checkpoints/
 
 # Local config (has absolute paths, varies per machine)
