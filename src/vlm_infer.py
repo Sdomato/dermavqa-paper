@@ -57,7 +57,7 @@ IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
 _LEGACY_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 RESULTS_ROOT = PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
 
-MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-VL-3B-Instruct"
 DATASET_VARIANT = "longest_answer"
 
 # Mapea el nombre de split "amigable" al valor real en el campo _split del dataset.
