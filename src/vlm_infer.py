@@ -20,8 +20,10 @@ Salida (esquema canónico del plan de equipo):
   (tiempo medio por ejemplo, tiempo total, device).
 
 Nota sobre rutas de imágenes:
-  Las imágenes deben estar en data/images/ (con subcarpetas por split).
-  El índice se construye una sola vez con rglob sobre ese directorio.
+  Las imágenes viven en data/iiyi/images_final/{images_train,images_valid,images_test}
+  (con fallback al layout legacy data/images/). El índice se construye una sola vez
+  con rglob sobre esos directorios. Los baselines de retrieval resuelven igual vía
+  retrieval_utils.find_image (ver survey/STRUCTURE.md).
 
 Uso:
     # Validación en CPU (no carga el modelo): chequea prompts e imágenes
@@ -50,7 +52,9 @@ from src.retrieval_utils import PROJECT_ROOT, build_query_text, clean_text, load
 # ── paths y constantes ──────────────────────────────────────────────────────────
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
-IMAGES_DIR = PROJECT_ROOT / "data" / "images"
+# Canonical image dir + legacy fallback (ver survey/STRUCTURE.md).
+IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
+_LEGACY_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 RESULTS_ROOT = PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
 
 MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
@@ -80,10 +84,16 @@ def filter_split(records: list[dict[str, Any]], split: str) -> list[dict[str, An
 
 
 def _build_image_index() -> dict[str, str]:
-    """Índice {image_id: ruta} precalculado una sola vez sobre IMAGES_DIR."""
-    if not IMAGES_DIR.exists():
-        return {}
-    return {p.name: str(p) for p in IMAGES_DIR.rglob("*") if p.is_file()}
+    """Índice {image_id: ruta} precalculado una sola vez sobre el dir canónico
+    (data/iiyi/images_final) con fallback al legacy (data/images). Primer match gana."""
+    index: dict[str, str] = {}
+    for base in (IMAGES_DIR, _LEGACY_IMAGES_DIR):
+        if not base.exists():
+            continue
+        for p in base.rglob("*"):
+            if p.is_file():
+                index.setdefault(p.name, str(p))
+    return index
 
 
 _IMAGE_INDEX: dict[str, str] = {}

@@ -2,7 +2,8 @@
 Baseline de Retrieval Visual con BiomedCLIP sobre dataset_longest_answer.
 
 Modelo: microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224 (via open_clip)
-Las imágenes se buscan en data/images/ usando los IDs de imagen del campo `image_ids`.
+Las imágenes se resuelven con retrieval_utils.resolve_image_path (indexa
+data/iiyi/images_final/ recursivamente) usando los IDs del campo `image_ids`.
 Cuando un caso tiene varias imágenes se promedia su embedding.
 Casos sin imagen válida obtienen un embedding cero y no son candidatos de retrieval
 (sus scores quedan en -inf al buscar el top-1).
@@ -26,6 +27,7 @@ from src.retrieval_utils import (
     clean_text,
     find_image,
     load_dataset,
+    resolve_image_path,
     save_results,
     top1_excluding_self,
 )
@@ -165,6 +167,7 @@ def main() -> None:
     from src.retrieval_utils import IMAGES_DIR
     if not IMAGES_DIR.exists():
         print(f"ADVERTENCIA: directorio de imágenes no encontrado en {IMAGES_DIR}.")
+        print("Copiá las imágenes en data/iiyi/images_final/ (subdirs images_{train,valid,test}/).")
         print("El script continuará pero todos los embeddings serán cero.")
 
     records = load_dataset()

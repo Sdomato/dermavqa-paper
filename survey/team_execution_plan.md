@@ -23,8 +23,14 @@ El trabajo se organiza alrededor de tres variantes de dataset:
   `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip`.
 - El baseline de retrieval textual sobre `dataset_enriched` ya esta corrido.
 - Los resultados resumidos estan en
-  `results/dataset_enriched/retrieval_textual/`.
+  `outputs/metrics/dataset_enriched/retrieval_textual/`.
 - Las imagenes no se suben a GitHub porque el equipo ya las tiene localmente.
+
+> **Nota de convencion (actualizada 2026-06-20):** la raiz canonica de resultados
+> es `outputs/` — predicciones en `outputs/results/<dataset>/<metodo>/` y metricas
+> en `outputs/metrics/<dataset>/`. Donde este documento escribe `results/...` (mas
+> abajo), leer `outputs/results/...` u `outputs/metrics/...` segun corresponda.
+> Detalle en `STRUCTURE.md`.
 
 ## Responsabilidades por participante
 
@@ -202,19 +208,19 @@ mejor enfoque combinando:
 
 ## Estructura esperada de resultados
 
+Predicciones y artefactos por metodo van en `outputs/results/`; los resumenes de
+metricas en `outputs/metrics/` (ver `STRUCTURE.md`).
+
 ```text
-results/
-  dataset_enriched/
-    retrieval_textual/
-    vlm_lora/
-  dataset_longest_answer/
-    retrieval_textual/
-    retrieval_visual/
-    retrieval_multimodal/
-    vlm_zero_shot/
-    vlm_lora/
-  dataset_short_answer/
-    retrieval_visual/
+outputs/
+  results/                       # predicciones + artefactos por metodo
+    dataset_enriched/{retrieval_textual,vlm_lora}/
+    dataset_longest_answer/{retrieval_textual,retrieval_visual,retrieval_multimodal,vlm_zero_shot,vlm_lora}/
+    dataset_short_answer/retrieval_visual/
+  metrics/                       # resumenes de metricas (VERSIONADO)
+    dataset_enriched/...
+    dataset_longest_answer/...
+    dataset_short_answer/...
 ```
 
 ## Reglas de colaboracion
