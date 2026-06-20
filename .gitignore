@@ -4,6 +4,10 @@ data/iiyi/images_final.zip
 # Any image zip anywhere in the repo (e.g. images_final.zip at root, ~1 GB)
 images_final.zip
 **/images_final.zip
+# Raw image files anywhere — never version images
+*.jpg
+*.png
+*.jpeg
 
 # Generated outputs — canonical results root is outputs/ (see survey/STRUCTURE.md).
 # Track lightweight datasets/metrics, ignore heavy artifacts.

@@ -20,10 +20,10 @@ Salida (esquema canónico del plan de equipo):
   (tiempo medio por ejemplo, tiempo total, device).
 
 Nota sobre rutas de imágenes:
-  Las imágenes viven en data/iiyi/images_final/{images_train,images_valid,images_test}.
-  Este script resuelve cada image_id con un rglob sobre IMAGES_DIR (abajo).
-  Los baselines de retrieval resuelven igual vía retrieval_utils.resolve_image_path,
-  que indexa esa misma carpeta (ver survey/STRUCTURE.md).
+  Las imágenes viven en data/iiyi/images_final/{images_train,images_valid,images_test}
+  (con fallback al layout legacy data/images/). El índice se construye una sola vez
+  con rglob sobre esos directorios. Los baselines de retrieval resuelven igual vía
+  retrieval_utils.find_image (ver survey/STRUCTURE.md).
 
 Uso:
     # Validación en CPU (no carga el modelo): chequea prompts e imágenes
@@ -52,7 +52,9 @@ from src.retrieval_utils import PROJECT_ROOT, build_query_text, clean_text, load
 # ── paths y constantes ──────────────────────────────────────────────────────────
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
+# Canonical image dir + legacy fallback (ver survey/STRUCTURE.md).
 IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
+_LEGACY_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 RESULTS_ROOT = PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
 
 MODEL_ID = "Qwen/Qwen2.5-VL-7B-Instruct"
@@ -75,7 +77,26 @@ SYSTEM_PROMPT = (
 
 def filter_split(records: list[dict[str, Any]], split: str) -> list[dict[str, Any]]:
     target = SPLIT_ALIASES.get(split, split)
-    return [r for r in records if r.get("_split") == target]
+    result = [r for r in records if r.get("_split") == target]
+    if not result:
+        raise ValueError(f"Split '{split}' (→ '{target}') no encontrado en el dataset.")
+    return result
+
+
+def _build_image_index() -> dict[str, str]:
+    """Índice {image_id: ruta} precalculado una sola vez sobre el dir canónico
+    (data/iiyi/images_final) con fallback al legacy (data/images). Primer match gana."""
+    index: dict[str, str] = {}
+    for base in (IMAGES_DIR, _LEGACY_IMAGES_DIR):
+        if not base.exists():
+            continue
+        for p in base.rglob("*"):
+            if p.is_file():
+                index.setdefault(p.name, str(p))
+    return index
+
+
+_IMAGE_INDEX: dict[str, str] = {}
 
 
 def resolve_image_paths(image_ids: list[str]) -> tuple[list[str], list[str]]:
@@ -83,12 +104,16 @@ def resolve_image_paths(image_ids: list[str]) -> tuple[list[str], list[str]]:
 
     Retorna (rutas_encontradas, ids_faltantes).
     """
+    global _IMAGE_INDEX
+    if not _IMAGE_INDEX:
+        _IMAGE_INDEX = _build_image_index()
+
     found: list[str] = []
     missing: list[str] = []
     for img_id in image_ids:
-        matches = list(IMAGES_DIR.rglob(img_id)) if IMAGES_DIR.exists() else []
-        if matches:
-            found.append(str(matches[0]))
+        path = _IMAGE_INDEX.get(img_id)
+        if path:
+            found.append(path)
         else:
             missing.append(img_id)
     return found, missing

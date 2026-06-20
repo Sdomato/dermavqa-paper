@@ -20,10 +20,9 @@ def find_project_root(start: Path | None = None) -> Path:
 
 PROJECT_ROOT = find_project_root()
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
-
 # Canonical image location: images live under data/iiyi/images_final/ in the
-# split subdirs images_{train,valid,test}/. We also fall back to the legacy flat
-# data/images/ layout so older local setups keep working.
+# split subdirs images_{train,valid,test}/. We fall back to the legacy flat
+# data/images/ layout (and its subdirs) so older local setups keep working.
 IMAGES_DIR = PROJECT_ROOT / "data" / "iiyi" / "images_final"
 _LEGACY_IMAGES_DIR = PROJECT_ROOT / "data" / "images"
 _IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}
@@ -31,9 +30,9 @@ _IMAGE_INDEX: dict[str, Path] | None = None
 
 
 def _build_image_index() -> dict[str, Path]:
-    """Index every image file by filename, searching the canonical dir
-    recursively (images live in images_{train,valid,test}/) and the legacy
-    flat dir. First match wins."""
+    """Index every image file by filename, searching the canonical dir and the
+    legacy dir recursively (images live in images_{train,valid,test}/ subdirs).
+    First match wins."""
     index: dict[str, Path] = {}
     for base in (IMAGES_DIR, _LEGACY_IMAGES_DIR):
         if not base.exists():
@@ -44,21 +43,26 @@ def _build_image_index() -> dict[str, Path]:
     return index
 
 
-def resolve_image_path(img_id: str) -> Path | None:
+def find_image(image_id: str) -> Path | None:
     """Resolve an image filename (e.g. ``IMG_ENC00908_00001.jpg``) to a real
-    path on disk, regardless of which split subdir it sits in. Returns None if
-    the image is not found. The index is built once and cached."""
+    path on disk, regardless of which split subdir it lives in. Searches
+    data/iiyi/images_final recursively with a fallback to the legacy
+    data/images layout. Returns None if not found; the index is cached."""
     global _IMAGE_INDEX
     if _IMAGE_INDEX is None:
         _IMAGE_INDEX = _build_image_index()
-    if img_id in _IMAGE_INDEX:
-        return _IMAGE_INDEX[img_id]
-    if "." not in img_id:  # caller passed an id without extension
+    if image_id in _IMAGE_INDEX:
+        return _IMAGE_INDEX[image_id]
+    if "." not in image_id:  # caller passed an id without extension
         for ext in (".jpg", ".jpeg", ".png", ".webp"):
-            hit = _IMAGE_INDEX.get(img_id + ext)
+            hit = _IMAGE_INDEX.get(image_id + ext)
             if hit is not None:
                 return hit
     return None
+
+
+# Backward-compatible alias: some modules import resolve_image_path.
+resolve_image_path = find_image
 
 
 def clean_text(text: Any) -> str:
@@ -109,7 +113,7 @@ def build_results(
 def save_results(results: list[dict[str, Any]], output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
+        json.dump(results, f, ensure_ascii=False, indent=2, default=lambda o: bool(o) if isinstance(o, np.bool_) else float(o))
     scores = [r["similarity_score"] for r in results]
     arr = np.array(scores)
     print(f"Guardados {len(results)} resultados en {output_path}")

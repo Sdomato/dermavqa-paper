@@ -30,12 +30,11 @@ from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
 
 from src.retrieval_utils import (
-    IMAGES_DIR,
     PROJECT_ROOT,
     build_query_text,
     build_results,
+    find_image,
     load_dataset,
-    resolve_image_path,
     save_results,
     top1_excluding_self,
 )
@@ -147,7 +146,7 @@ def _embed_images_for_record(
 
     tensors: list[torch.Tensor] = []
     for img_id in image_ids:
-        p = resolve_image_path(img_id)
+        p = find_image(img_id)
         if p is None:
             continue
         try:

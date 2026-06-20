@@ -22,10 +22,10 @@ from PIL import Image
 from tqdm import tqdm
 
 from src.retrieval_utils import (
-    IMAGES_DIR,
     PROJECT_ROOT,
     build_results,
     clean_text,
+    find_image,
     load_dataset,
     resolve_image_path,
     save_results,
@@ -49,6 +49,22 @@ OUTPUT_PATH = (
     / "dataset_longest_answer"
     / "retrieval_visual"
     / "visual_results.json"
+)
+SIM_MATRIX_CACHE = (
+    PROJECT_ROOT
+    / "outputs"
+    / "results"
+    / "dataset_longest_answer"
+    / "retrieval_visual"
+    / "visual_sim_matrix.npy"
+)
+HAS_IMAGE_CACHE = (
+    PROJECT_ROOT
+    / "outputs"
+    / "results"
+    / "dataset_longest_answer"
+    / "retrieval_visual"
+    / "visual_has_image.npy"
 )
 
 
@@ -77,7 +93,7 @@ def resolve_image_paths(image_ids: list[str]) -> list[Path]:
     """Return existing paths for a list of image filenames."""
     paths: list[Path] = []
     for img_id in image_ids:
-        candidate = resolve_image_path(img_id)
+        candidate = find_image(img_id)
         if candidate is not None:
             paths.append(candidate)
     return paths
@@ -148,6 +164,7 @@ def main() -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Dispositivo: {device}")
 
+    from src.retrieval_utils import IMAGES_DIR
     if not IMAGES_DIR.exists():
         print(f"ADVERTENCIA: directorio de imágenes no encontrado en {IMAGES_DIR}.")
         print("Copiá las imágenes en data/iiyi/images_final/ (subdirs images_{train,valid,test}/).")
@@ -166,15 +183,18 @@ def main() -> None:
 
     sim_matrix: np.ndarray = embeddings @ embeddings.T
 
-    # Cases without a valid image should never be retrieved as top-1 candidates.
     no_image_mask = ~np.array(has_image)
     sim_matrix[:, no_image_mask] = -np.inf
+
+    # Cachear para que visual_retrieval_short.py no tenga que recomputar.
+    SIM_MATRIX_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    np.save(SIM_MATRIX_CACHE, sim_matrix)
+    np.save(HAS_IMAGE_CACHE, np.array(has_image))
+    print(f"Caché guardada en {SIM_MATRIX_CACHE.parent}")
 
     best_idx, best_scores = top1_excluding_self(sim_matrix)
 
     results = build_results(records, best_idx, best_scores)
-
-    # Annotate whether the query had a valid image.
     for i, r in enumerate(results):
         r["query_has_image"] = has_image[i]
 
