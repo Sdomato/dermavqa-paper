@@ -75,7 +75,9 @@ def build_training_messages(item: dict[str, Any]) -> list[dict[str, Any]]:
     agrega el turno assistant con la respuesta larga de referencia, que es
     sobre lo único que se calcula la loss.
     """
-    messages = build_chat_messages(item)
+    # Limitar a 1 imagen para reducir memoria en T4 16GB
+    item_1img = {**item, "image_paths": item["image_paths"][:1]}
+    messages = build_chat_messages(item_1img)
     messages.append(
         {
             "role": "assistant",
@@ -145,8 +147,8 @@ def load_model_processor_and_lora(model_id: str, lora_r: int, lora_alpha: int):
     processor = AutoProcessor.from_pretrained(
         model_id,
         trust_remote_code=True,
-        min_pixels=256 * 28 * 28,
-        max_pixels=512 * 28 * 28,  # limita resolución para caber en 16GB VRAM
+        min_pixels=64 * 28 * 28,
+        max_pixels=256 * 28 * 28,  # reducido para caber en T4 16GB con 3B
     )
     return model, processor
 
