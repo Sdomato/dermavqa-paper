@@ -187,7 +187,12 @@ def load_model_and_processor(model_id: str, quantize: str | None, adapter: str |
         model = PeftModel.from_pretrained(model, adapter)
 
     model.eval()
-    processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
+    processor = AutoProcessor.from_pretrained(
+        model_id,
+        trust_remote_code=True,
+        min_pixels=64 * 28 * 28,
+        max_pixels=256 * 28 * 28,
+    )
     return model, processor
 
 

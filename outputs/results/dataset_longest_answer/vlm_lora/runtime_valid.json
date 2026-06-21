@@ -1,0 +1,10 @@
+{
+  "method": "vlm_lora",
+  "model_name": "final_adapter",
+  "split": "valid",
+  "n": 56,
+  "mean_latency_s": 10.396652573946417,
+  "total_time_s": 582.2125441409994,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

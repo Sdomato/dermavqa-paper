@@ -1,0 +1,14 @@
+{
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "n_train": 842,
+  "n_eval": 56,
+  "epochs": 3,
+  "lr": 0.0002,
+  "batch_size": 1,
+  "grad_accum": 16,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "total_train_time_s": 20683.2,
+  "peak_vram_gb": 6.91,
+  "adapter_size_mb": 160.1
+}
