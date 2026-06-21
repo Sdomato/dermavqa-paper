@@ -88,6 +88,10 @@ def build_reference_map(records: list[dict[str, Any]]) -> dict[str, str]:
     return {r["encounter_id"]: r.get("answer_es", "") for r in records}
 
 
+def build_split_map(records: list[dict[str, Any]]) -> dict[str, str]:
+    return {r["encounter_id"]: r.get("_split", "unknown") for r in records}
+
+
 def get_retrieved_answer(result: dict[str, Any]) -> str:
     for key in RETRIEVED_ANSWER_KEYS:
         if key in result:
@@ -135,11 +139,13 @@ def compute_bertscore(
 def evaluate_file(
     results_path: Path,
     reference_map: dict[str, str],
+    split_map: dict[str, str],
     model_name: str,
     dataset_variant: str,
-) -> tuple[pd.DataFrame, dict[str, float]]:
+) -> tuple[pd.DataFrame, list[dict[str, float]]]:
     """
-    Retorna (per_case_df, summary_dict).
+    Retorna (per_case_df, list_of_summary_dicts).
+    Hay una fila de summary por split (train/valid/test) más una fila "all".
     """
     results = load_results(results_path)
 
@@ -147,6 +153,7 @@ def evaluate_file(
     predictions: list[str] = []
     references: list[str] = []
     sim_scores: list[float] = []
+    splits: list[str] = []
 
     for r in results:
         eid = r["encounter_id"]
@@ -158,6 +165,7 @@ def evaluate_file(
         predictions.append(pred)
         references.append(ref)
         sim_scores.append(r.get("similarity_score", float("nan")))
+        splits.append(split_map.get(eid, "unknown"))
 
     print(f"\n[{model_name}] {len(predictions)} casos evaluados")
 
@@ -170,6 +178,7 @@ def evaluate_file(
         {
             "dataset_variant": dataset_variant,
             "model": model_name,
+            "split": splits,
             "encounter_id": encounter_ids,
             "similarity_score": sim_scores,
             "rouge_l": rouge_l,
@@ -179,18 +188,24 @@ def evaluate_file(
         }
     )
 
-    summary = {
-        "dataset_variant": dataset_variant,
-        "model": model_name,
-        "n": len(predictions),
-        "sim_score_mean": float(np.nanmean(sim_scores)),
-        "rouge_l_mean": float(np.mean(rouge_l)),
-        "chrf_mean": float(np.mean(chrf)),
-        "token_f1_mean": float(np.mean(tok_f1)),
-        "bertscore_f1_mean": float(np.mean(bscore)),
-    }
+    def _summary_for(mask: pd.Series, split_label: str) -> dict:
+        sub = per_case[mask]
+        return {
+            "dataset_variant": dataset_variant,
+            "model": model_name,
+            "split": split_label,
+            "n": len(sub),
+            "sim_score_mean": float(sub["similarity_score"].mean()),
+            "rouge_l_mean": float(sub["rouge_l"].mean()),
+            "chrf_mean": float(sub["chrf"].mean()),
+            "token_f1_mean": float(sub["token_f1"].mean()),
+            "bertscore_f1_mean": float(sub["bertscore_f1"].mean()),
+        }
 
-    return per_case, summary
+    summaries = [_summary_for(per_case["split"] == s, s) for s in per_case["split"].unique()]
+    summaries.append(_summary_for(pd.Series([True] * len(per_case)), "all"))
+
+    return per_case, summaries
 
 
 # ── main ───────────────────────────────────────────────────────────────────────
@@ -275,14 +290,15 @@ def main() -> None:
 
         records = load_dataset(dataset_path)
         reference_map = build_reference_map(records)
+        split_map = build_split_map(records)
         print(f"\n=== dataset_{variant} ({len(records)} referencias) ===")
 
         for results_path, model_name in variant_jobs:
-            per_case, summary = evaluate_file(
-                results_path, reference_map, model_name, variant
+            per_case, summaries = evaluate_file(
+                results_path, reference_map, split_map, model_name, variant
             )
             all_per_case.append(per_case)
-            all_summaries.append(summary)
+            all_summaries.extend(summaries)
 
         # Guarda métricas por dataset
         out_dir = METRICS_ROOT / f"dataset_{variant}"
@@ -301,7 +317,7 @@ def main() -> None:
     # Tabla resumen en consola
     if all_summaries:
         df_summary = pd.DataFrame(all_summaries)
-        cols = ["dataset_variant", "model", "n", "rouge_l_mean", "chrf_mean",
+        cols = ["dataset_variant", "model", "split", "n", "rouge_l_mean", "chrf_mean",
                 "token_f1_mean", "bertscore_f1_mean", "sim_score_mean"]
         print("\n" + "=" * 80)
         print("RESUMEN FINAL")
