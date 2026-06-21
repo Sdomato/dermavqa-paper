@@ -1,0 +1,10 @@
+{
+  "method": "vlm_zero_shot",
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "split": "valid",
+  "n": 56,
+  "mean_latency_s": 26.05230169903573,
+  "total_time_s": 1458.928895146001,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}
