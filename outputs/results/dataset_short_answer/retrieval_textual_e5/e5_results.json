@@ -1,0 +1,5990 @@
+[
+  {
+    "encounter_id": "ENC00001",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.916052,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00002",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.924676,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00003",
+    "retrieved_encounter_id": "ENC00097",
+    "similarity_score": 0.934588,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00004",
+    "retrieved_encounter_id": "ENC00868",
+    "similarity_score": 0.938892,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00005",
+    "retrieved_encounter_id": "ENC00762",
+    "similarity_score": 0.900655,
+    "retrieved_short_answer_es": "Algo similar a la psoriasis."
+  },
+  {
+    "encounter_id": "ENC00006",
+    "retrieved_encounter_id": "ENC00960",
+    "similarity_score": 0.932523,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00007",
+    "retrieved_encounter_id": "ENC00159",
+    "similarity_score": 0.931483,
+    "retrieved_short_answer_es": "¿Dermatosis purpúrica pigmentada?"
+  },
+  {
+    "encounter_id": "ENC00008",
+    "retrieved_encounter_id": "ENC00788",
+    "similarity_score": 0.951102,
+    "retrieved_short_answer_es": "Dermatitis por Escarabajo"
+  },
+  {
+    "encounter_id": "ENC00009",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.920793,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00010",
+    "retrieved_encounter_id": "ENC00348",
+    "similarity_score": 0.884245,
+    "retrieved_short_answer_es": "Urticaria!!!!!!!"
+  },
+  {
+    "encounter_id": "ENC00011",
+    "retrieved_encounter_id": "ENC00424",
+    "similarity_score": 0.915913,
+    "retrieved_short_answer_es": "Amiloidosis de la piel"
+  },
+  {
+    "encounter_id": "ENC00012",
+    "retrieved_encounter_id": "ENC00472",
+    "similarity_score": 0.92257,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00013",
+    "retrieved_encounter_id": "ENC00043",
+    "similarity_score": 0.929377,
+    "retrieved_short_answer_es": "Patología."
+  },
+  {
+    "encounter_id": "ENC00014",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.934234,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00015",
+    "retrieved_encounter_id": "ENC00909",
+    "similarity_score": 0.905255,
+    "retrieved_short_answer_es": "Linfangioma"
+  },
+  {
+    "encounter_id": "ENC00016",
+    "retrieved_encounter_id": "ENC00641",
+    "similarity_score": 0.90604,
+    "retrieved_short_answer_es": "Prurigo Nodular"
+  },
+  {
+    "encounter_id": "ENC00017",
+    "retrieved_encounter_id": "ENC00275",
+    "similarity_score": 0.917367,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00018",
+    "retrieved_encounter_id": "ENC00988",
+    "similarity_score": 0.89146,
+    "retrieved_short_answer_es": "siringoma"
+  },
+  {
+    "encounter_id": "ENC00019",
+    "retrieved_encounter_id": "ENC00416",
+    "similarity_score": 0.958876,
+    "retrieved_short_answer_es": "¡Causado por picaduras de pulgas!"
+  },
+  {
+    "encounter_id": "ENC00020",
+    "retrieved_encounter_id": "ENC00969",
+    "similarity_score": 0.926185,
+    "retrieved_short_answer_es": "No debería ser herpes simple. El herpes simple no tendría cicatriz."
+  },
+  {
+    "encounter_id": "ENC00021",
+    "retrieved_encounter_id": "ENC00542",
+    "similarity_score": 0.926865,
+    "retrieved_short_answer_es": "Acné. Acné vulgar. Comúnmente ocurre en el pecho superior y la espalda."
+  },
+  {
+    "encounter_id": "ENC00022",
+    "retrieved_encounter_id": "ENC00849",
+    "similarity_score": 0.941925,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00023",
+    "retrieved_encounter_id": "ENC00377",
+    "similarity_score": 0.930297,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00024",
+    "retrieved_encounter_id": "ENC00110",
+    "similarity_score": 0.94209,
+    "retrieved_short_answer_es": "Esporotricosis"
+  },
+  {
+    "encounter_id": "ENC00025",
+    "retrieved_encounter_id": "ENC00404",
+    "similarity_score": 0.943429,
+    "retrieved_short_answer_es": "Debería ser un lipoma, benigno. No hay un problema mayor."
+  },
+  {
+    "encounter_id": "ENC00026",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.927196,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00027",
+    "retrieved_encounter_id": "ENC00755",
+    "similarity_score": 0.92164,
+    "retrieved_short_answer_es": "Use un poco de Ailuosong y tome Cetirizina o Loratadina por vía oral. Durante el tratamiento, coma más frutas y verduras y consuma menos comida picante."
+  },
+  {
+    "encounter_id": "ENC00028",
+    "retrieved_encounter_id": "ENC00348",
+    "similarity_score": 0.930195,
+    "retrieved_short_answer_es": "Urticaria!!!!!!!"
+  },
+  {
+    "encounter_id": "ENC00029",
+    "retrieved_encounter_id": "ENC00473",
+    "similarity_score": 0.937001,
+    "retrieved_short_answer_es": "Nevus anémico"
+  },
+  {
+    "encounter_id": "ENC00030",
+    "retrieved_encounter_id": "ENC00288",
+    "similarity_score": 0.909496,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00031",
+    "retrieved_encounter_id": "ENC00238",
+    "similarity_score": 0.936005,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00032",
+    "retrieved_encounter_id": "ENC00952",
+    "similarity_score": 0.925029,
+    "retrieved_short_answer_es": "eccema queratósico"
+  },
+  {
+    "encounter_id": "ENC00033",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.954736,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00034",
+    "retrieved_encounter_id": "ENC00938",
+    "similarity_score": 0.912942,
+    "retrieved_short_answer_es": "Es necrobiosis lipoidea."
+  },
+  {
+    "encounter_id": "ENC00035",
+    "retrieved_encounter_id": "ENC00731",
+    "similarity_score": 0.925001,
+    "retrieved_short_answer_es": "¿Erupción fija por medicamento? Pura supos"
+  },
+  {
+    "encounter_id": "ENC00036",
+    "retrieved_encounter_id": "ENC00722",
+    "similarity_score": 0.921504,
+    "retrieved_short_answer_es": "Tiña."
+  },
+  {
+    "encounter_id": "ENC00037",
+    "retrieved_encounter_id": "ENC00147",
+    "similarity_score": 0.946456,
+    "retrieved_short_answer_es": "Urticaria Aguda"
+  },
+  {
+    "encounter_id": "ENC00038",
+    "retrieved_encounter_id": "ENC00832",
+    "similarity_score": 0.85768,
+    "retrieved_short_answer_es": "¿Blastomicosis? ¿Esporotricosis?"
+  },
+  {
+    "encounter_id": "ENC00039",
+    "retrieved_encounter_id": "ENC00653",
+    "similarity_score": 0.916917,
+    "retrieved_short_answer_es": "Pilomatrixoma, benigno, no requiere tratamiento, puede ser extirpado quirúrgicamente."
+  },
+  {
+    "encounter_id": "ENC00040",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.932166,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00041",
+    "retrieved_encounter_id": "ENC00759",
+    "similarity_score": 0.931888,
+    "retrieved_short_answer_es": "Dermatitis Estásica"
+  },
+  {
+    "encounter_id": "ENC00042",
+    "retrieved_encounter_id": "ENC00550",
+    "similarity_score": 0.918607,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00043",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.93944,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00044",
+    "retrieved_encounter_id": "ENC00787",
+    "similarity_score": 0.887895,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00045",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.93071,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00046",
+    "retrieved_encounter_id": "ENC00170",
+    "similarity_score": 0.917421,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00047",
+    "retrieved_encounter_id": "ENC00404",
+    "similarity_score": 0.935601,
+    "retrieved_short_answer_es": "Debería ser un lipoma, benigno. No hay un problema mayor."
+  },
+  {
+    "encounter_id": "ENC00048",
+    "retrieved_encounter_id": "ENC00719",
+    "similarity_score": 0.92954,
+    "retrieved_short_answer_es": "Vitíligo"
+  },
+  {
+    "encounter_id": "ENC00049",
+    "retrieved_encounter_id": "ENC00366",
+    "similarity_score": 0.934251,
+    "retrieved_short_answer_es": "¿Dermatitis por picadura de insecto? Aplique compresas frías con agua de amoníaco o bicarbonato de sodio al 5%, use pomada de dapsona externamente y se pueden tomar antihistamínicos orales."
+  },
+  {
+    "encounter_id": "ENC00050",
+    "retrieved_encounter_id": "ENC00265",
+    "similarity_score": 0.944529,
+    "retrieved_short_answer_es": "Considerando la urticaria, tome levocetirizina o loratadina por vía oral."
+  },
+  {
+    "encounter_id": "ENC00051",
+    "retrieved_encounter_id": "ENC00278",
+    "similarity_score": 0.911529,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00052",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.93644,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00053",
+    "retrieved_encounter_id": "ENC00140",
+    "similarity_score": 0.929609,
+    "retrieved_short_answer_es": "Córtelo, haga patología, descarte melanoma."
+  },
+  {
+    "encounter_id": "ENC00054",
+    "retrieved_encounter_id": "ENC00811",
+    "similarity_score": 0.920602,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00055",
+    "retrieved_encounter_id": "ENC00783",
+    "similarity_score": 0.927408,
+    "retrieved_short_answer_es": "Nevus sebáceo"
+  },
+  {
+    "encounter_id": "ENC00056",
+    "retrieved_encounter_id": "ENC00697",
+    "similarity_score": 0.93327,
+    "retrieved_short_answer_es": "Pápulas urticariales."
+  },
+  {
+    "encounter_id": "ENC00057",
+    "retrieved_encounter_id": "ENC00148",
+    "similarity_score": 0.912057,
+    "retrieved_short_answer_es": "Intenta usar Putebi."
+  },
+  {
+    "encounter_id": "ENC00058",
+    "retrieved_encounter_id": "ENC00610",
+    "similarity_score": 0.917816,
+    "retrieved_short_answer_es": "Verrugas filiformes, eliminadas por ionización o láser."
+  },
+  {
+    "encounter_id": "ENC00059",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.927754,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00060",
+    "retrieved_encounter_id": "ENC00978",
+    "similarity_score": 0.929343,
+    "retrieved_short_answer_es": "Herpes simple"
+  },
+  {
+    "encounter_id": "ENC00061",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.94912,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00062",
+    "retrieved_encounter_id": "ENC00017",
+    "similarity_score": 0.90418,
+    "retrieved_short_answer_es": "Considerado como foliculitis debido a una infección por hongos."
+  },
+  {
+    "encounter_id": "ENC00063",
+    "retrieved_encounter_id": "ENC00813",
+    "similarity_score": 0.918427,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00064",
+    "retrieved_encounter_id": "ENC00711",
+    "similarity_score": 0.937804,
+    "retrieved_short_answer_es": "Artritis Psoriásica"
+  },
+  {
+    "encounter_id": "ENC00065",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.937458,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00066",
+    "retrieved_encounter_id": "ENC00412",
+    "similarity_score": 0.939096,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00067",
+    "retrieved_encounter_id": "ENC00729",
+    "similarity_score": 0.929849,
+    "retrieved_short_answer_es": "¿Púrpura? ¿Trastorno circulatorio?"
+  },
+  {
+    "encounter_id": "ENC00068",
+    "retrieved_encounter_id": "ENC00895",
+    "similarity_score": 0.901329,
+    "retrieved_short_answer_es": "¿Eccema? ¿Dermatitis?"
+  },
+  {
+    "encounter_id": "ENC00069",
+    "retrieved_encounter_id": "ENC00219",
+    "similarity_score": 0.905387,
+    "retrieved_short_answer_es": "Intertrigo"
+  },
+  {
+    "encounter_id": "ENC00070",
+    "retrieved_encounter_id": "ENC00747",
+    "similarity_score": 0.88846,
+    "retrieved_short_answer_es": "Nevus Melanocítico"
+  },
+  {
+    "encounter_id": "ENC00071",
+    "retrieved_encounter_id": "ENC00618",
+    "similarity_score": 0.933331,
+    "retrieved_short_answer_es": "Dermatitis Artificial"
+  },
+  {
+    "encounter_id": "ENC00072",
+    "retrieved_encounter_id": "ENC00769",
+    "similarity_score": 0.939225,
+    "retrieved_short_answer_es": "Edema vascular"
+  },
+  {
+    "encounter_id": "ENC00073",
+    "retrieved_encounter_id": "ENC00917",
+    "similarity_score": 0.890372,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00074",
+    "retrieved_encounter_id": "ENC00543",
+    "similarity_score": 0.931565,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00075",
+    "retrieved_encounter_id": "ENC00595",
+    "similarity_score": 0.931248,
+    "retrieved_short_answer_es": "Varicela"
+  },
+  {
+    "encounter_id": "ENC00076",
+    "retrieved_encounter_id": "ENC00955",
+    "similarity_score": 0.932426,
+    "retrieved_short_answer_es": "Necesito ejecutar algunas pruebas."
+  },
+  {
+    "encounter_id": "ENC00077",
+    "retrieved_encounter_id": "ENC00040",
+    "similarity_score": 0.909342,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00078",
+    "retrieved_encounter_id": "ENC00572",
+    "similarity_score": 0.921791,
+    "retrieved_short_answer_es": "Pustulosis Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00079",
+    "retrieved_encounter_id": "ENC00371",
+    "similarity_score": 0.932371,
+    "retrieved_short_answer_es": "Varicela"
+  },
+  {
+    "encounter_id": "ENC00080",
+    "retrieved_encounter_id": "ENC00538",
+    "similarity_score": 0.92115,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00081",
+    "retrieved_encounter_id": "ENC00382",
+    "similarity_score": 0.930859,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00082",
+    "retrieved_encounter_id": "ENC00089",
+    "similarity_score": 0.92624,
+    "retrieved_short_answer_es": "Neurodermatitis Diseminada"
+  },
+  {
+    "encounter_id": "ENC00083",
+    "retrieved_encounter_id": "ENC00674",
+    "similarity_score": 0.923929,
+    "retrieved_short_answer_es": "¿Quiste mucoso? La imagen es realmente poco clara."
+  },
+  {
+    "encounter_id": "ENC00084",
+    "retrieved_encounter_id": "ENC00188",
+    "similarity_score": 0.912344,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00085",
+    "retrieved_encounter_id": "ENC00687",
+    "similarity_score": 0.927477,
+    "retrieved_short_answer_es": "Deberías escuchar al primer doctor."
+  },
+  {
+    "encounter_id": "ENC00086",
+    "retrieved_encounter_id": "ENC00796",
+    "similarity_score": 0.946683,
+    "retrieved_short_answer_es": "Es muy necesario hacer pruebas para RPR y TPPA."
+  },
+  {
+    "encounter_id": "ENC00087",
+    "retrieved_encounter_id": "ENC00141",
+    "similarity_score": 0.884136,
+    "retrieved_short_answer_es": "¿Llagas pustulares? Use Baidobang externamente."
+  },
+  {
+    "encounter_id": "ENC00088",
+    "retrieved_encounter_id": "ENC00963",
+    "similarity_score": 0.916458,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00089",
+    "retrieved_encounter_id": "ENC00091",
+    "similarity_score": 0.931318,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00090",
+    "retrieved_encounter_id": "ENC00771",
+    "similarity_score": 0.91604,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00091",
+    "retrieved_encounter_id": "ENC00089",
+    "similarity_score": 0.931318,
+    "retrieved_short_answer_es": "Neurodermatitis Diseminada"
+  },
+  {
+    "encounter_id": "ENC00092",
+    "retrieved_encounter_id": "ENC00769",
+    "similarity_score": 0.973808,
+    "retrieved_short_answer_es": "Edema vascular"
+  },
+  {
+    "encounter_id": "ENC00093",
+    "retrieved_encounter_id": "ENC00286",
+    "similarity_score": 0.920005,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00094",
+    "retrieved_encounter_id": "ENC00782",
+    "similarity_score": 0.949413,
+    "retrieved_short_answer_es": "¿Urticaria por frío? Relacionada con el cambio climático."
+  },
+  {
+    "encounter_id": "ENC00095",
+    "retrieved_encounter_id": "ENC00996",
+    "similarity_score": 0.920827,
+    "retrieved_short_answer_es": "Neurodermatitis."
+  },
+  {
+    "encounter_id": "ENC00096",
+    "retrieved_encounter_id": "ENC00279",
+    "similarity_score": 0.920984,
+    "retrieved_short_answer_es": "¿Síndrome de Deform"
+  },
+  {
+    "encounter_id": "ENC00097",
+    "retrieved_encounter_id": "ENC00133",
+    "similarity_score": 0.942982,
+    "retrieved_short_answer_es": "eccema"
+  },
+  {
+    "encounter_id": "ENC00098",
+    "retrieved_encounter_id": "ENC00636",
+    "similarity_score": 0.925155,
+    "retrieved_short_answer_es": "Urticaria crónica."
+  },
+  {
+    "encounter_id": "ENC00099",
+    "retrieved_encounter_id": "ENC00997",
+    "similarity_score": 0.900958,
+    "retrieved_short_answer_es": "impétigo"
+  },
+  {
+    "encounter_id": "ENC00100",
+    "retrieved_encounter_id": "ENC00036",
+    "similarity_score": 0.896867,
+    "retrieved_short_answer_es": "Sólo una de mis uñas tiene una lúnula, pero no es gran cosa."
+  },
+  {
+    "encounter_id": "ENC00101",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.947059,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00102",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.92958,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00103",
+    "retrieved_encounter_id": "ENC00432",
+    "similarity_score": 0.925302,
+    "retrieved_short_answer_es": "¿Varicela?"
+  },
+  {
+    "encounter_id": "ENC00104",
+    "retrieved_encounter_id": "ENC00602",
+    "similarity_score": 0.94632,
+    "retrieved_short_answer_es": "Es algo similar a la miliaria, esta enfermedad implica la formación de pequeñas vesículas, sin halo rojo alrededor, que contienen un líquido claro u opaco. Estas vesículas pueden fusionarse para formar ampollas más grandes."
+  },
+  {
+    "encounter_id": "ENC00105",
+    "retrieved_encounter_id": "ENC00313",
+    "similarity_score": 0.90098,
+    "retrieved_short_answer_es": "¿Viruela ovina?"
+  },
+  {
+    "encounter_id": "ENC00106",
+    "retrieved_encounter_id": "ENC00643",
+    "similarity_score": 0.912642,
+    "retrieved_short_answer_es": "No se puede descartar un diagnóstico de ampolla simple."
+  },
+  {
+    "encounter_id": "ENC00107",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.92947,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00108",
+    "retrieved_encounter_id": "ENC00210",
+    "similarity_score": 0.930352,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC00109",
+    "retrieved_encounter_id": "ENC00467",
+    "similarity_score": 0.937926,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00110",
+    "retrieved_encounter_id": "ENC00024",
+    "similarity_score": 0.94209,
+    "retrieved_short_answer_es": "Urticaria al Frío"
+  },
+  {
+    "encounter_id": "ENC00111",
+    "retrieved_encounter_id": "ENC00167",
+    "similarity_score": 0.918129,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00112",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.942445,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00113",
+    "retrieved_encounter_id": "ENC00973",
+    "similarity_score": 0.924443,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00114",
+    "retrieved_encounter_id": "ENC00534",
+    "similarity_score": 0.921322,
+    "retrieved_short_answer_es": "Considere el pie de atleta fúngico"
+  },
+  {
+    "encounter_id": "ENC00115",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.930859,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00116",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.927477,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00117",
+    "retrieved_encounter_id": "ENC00307",
+    "similarity_score": 0.87785,
+    "retrieved_short_answer_es": "Vesicular"
+  },
+  {
+    "encounter_id": "ENC00118",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.929468,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00119",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.93883,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00120",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.921818,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00121",
+    "retrieved_encounter_id": "ENC00344",
+    "similarity_score": 0.929112,
+    "retrieved_short_answer_es": "Urticaria papular."
+  },
+  {
+    "encounter_id": "ENC00122",
+    "retrieved_encounter_id": "ENC00836",
+    "similarity_score": 0.931342,
+    "retrieved_short_answer_es": "Imágenes: Queratodermia palmoplantar Tratamiento: Ungüento de esteroides más ácido retinoico"
+  },
+  {
+    "encounter_id": "ENC00123",
+    "retrieved_encounter_id": "ENC00977",
+    "similarity_score": 0.933085,
+    "retrieved_short_answer_es": "Considerar urticaria."
+  },
+  {
+    "encounter_id": "ENC00124",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.933179,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00125",
+    "retrieved_encounter_id": "ENC00938",
+    "similarity_score": 0.922662,
+    "retrieved_short_answer_es": "Es necrobiosis lipoidea."
+  },
+  {
+    "encounter_id": "ENC00126",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.930311,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00127",
+    "retrieved_encounter_id": "ENC00656",
+    "similarity_score": 0.915907,
+    "retrieved_short_answer_es": "Nevus pigmentado."
+  },
+  {
+    "encounter_id": "ENC00128",
+    "retrieved_encounter_id": "ENC00421",
+    "similarity_score": 0.93872,
+    "retrieved_short_answer_es": "¿Infiltración linfocítica? ¿Dermatitis crónica?"
+  },
+  {
+    "encounter_id": "ENC00129",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.932543,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00130",
+    "retrieved_encounter_id": "ENC00729",
+    "similarity_score": 0.898057,
+    "retrieved_short_answer_es": "¿Púrpura? ¿Trastorno circulatorio?"
+  },
+  {
+    "encounter_id": "ENC00131",
+    "retrieved_encounter_id": "ENC00537",
+    "similarity_score": 0.919737,
+    "retrieved_short_answer_es": "¿Elastofibroma Dorsi?"
+  },
+  {
+    "encounter_id": "ENC00132",
+    "retrieved_encounter_id": "ENC00409",
+    "similarity_score": 0.91495,
+    "retrieved_short_answer_es": "Es congestión."
+  },
+  {
+    "encounter_id": "ENC00133",
+    "retrieved_encounter_id": "ENC00097",
+    "similarity_score": 0.942982,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00134",
+    "retrieved_encounter_id": "ENC00389",
+    "similarity_score": 0.92685,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00135",
+    "retrieved_encounter_id": "ENC00092",
+    "similarity_score": 0.96994,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00136",
+    "retrieved_encounter_id": "ENC00008",
+    "similarity_score": 0.9176,
+    "retrieved_short_answer_es": "¡Como el herpes zóster!"
+  },
+  {
+    "encounter_id": "ENC00137",
+    "retrieved_encounter_id": "ENC00664",
+    "similarity_score": 0.91609,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00138",
+    "retrieved_encounter_id": "ENC00119",
+    "similarity_score": 0.925852,
+    "retrieved_short_answer_es": "Eczema crónico,"
+  },
+  {
+    "encounter_id": "ENC00139",
+    "retrieved_encounter_id": "ENC00520",
+    "similarity_score": 0.924605,
+    "retrieved_short_answer_es": "Pérdida de pigmento"
+  },
+  {
+    "encounter_id": "ENC00140",
+    "retrieved_encounter_id": "ENC00520",
+    "similarity_score": 0.934056,
+    "retrieved_short_answer_es": "Pérdida de pigmento"
+  },
+  {
+    "encounter_id": "ENC00141",
+    "retrieved_encounter_id": "ENC00107",
+    "similarity_score": 0.923979,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00142",
+    "retrieved_encounter_id": "ENC00268",
+    "similarity_score": 0.905333,
+    "retrieved_short_answer_es": "Historial médico, excluyendo la deficiencia de niacina"
+  },
+  {
+    "encounter_id": "ENC00143",
+    "retrieved_encounter_id": "ENC00267",
+    "similarity_score": 0.913472,
+    "retrieved_short_answer_es": "Hemangioma"
+  },
+  {
+    "encounter_id": "ENC00144",
+    "retrieved_encounter_id": "ENC00204",
+    "similarity_score": 0.922217,
+    "retrieved_short_answer_es": "¿Tiña?"
+  },
+  {
+    "encounter_id": "ENC00145",
+    "retrieved_encounter_id": "ENC00711",
+    "similarity_score": 0.923984,
+    "retrieved_short_answer_es": "Artritis Psoriásica"
+  },
+  {
+    "encounter_id": "ENC00146",
+    "retrieved_encounter_id": "ENC00024",
+    "similarity_score": 0.937015,
+    "retrieved_short_answer_es": "Urticaria al Frío"
+  },
+  {
+    "encounter_id": "ENC00147",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.94921,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00148",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.936875,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00149",
+    "retrieved_encounter_id": "ENC00461",
+    "similarity_score": 0.931806,
+    "retrieved_short_answer_es": "Tiña Versicolor."
+  },
+  {
+    "encounter_id": "ENC00150",
+    "retrieved_encounter_id": "ENC00931",
+    "similarity_score": 0.935834,
+    "retrieved_short_answer_es": "eccema asteatósico"
+  },
+  {
+    "encounter_id": "ENC00151",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.936633,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00152",
+    "retrieved_encounter_id": "ENC00628",
+    "similarity_score": 0.919311,
+    "retrieved_short_answer_es": "Láser"
+  },
+  {
+    "encounter_id": "ENC00153",
+    "retrieved_encounter_id": "ENC00936",
+    "similarity_score": 0.919201,
+    "retrieved_short_answer_es": "psoriasis"
+  },
+  {
+    "encounter_id": "ENC00154",
+    "retrieved_encounter_id": "ENC00253",
+    "similarity_score": 0.879014,
+    "retrieved_short_answer_es": "¿Vitiligo?"
+  },
+  {
+    "encounter_id": "ENC00155",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.929579,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00156",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.929619,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00157",
+    "retrieved_encounter_id": "ENC00722",
+    "similarity_score": 0.939056,
+    "retrieved_short_answer_es": "Tiña."
+  },
+  {
+    "encounter_id": "ENC00158",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.935318,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00159",
+    "retrieved_encounter_id": "ENC00843",
+    "similarity_score": 0.940637,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00160",
+    "retrieved_encounter_id": "ENC00565",
+    "similarity_score": 0.91658,
+    "retrieved_short_answer_es": "Verrugas epidérmicas,"
+  },
+  {
+    "encounter_id": "ENC00161",
+    "retrieved_encounter_id": "ENC00848",
+    "similarity_score": 0.928041,
+    "retrieved_short_answer_es": "Sugiere examen patológico Excluir MF"
+  },
+  {
+    "encounter_id": "ENC00162",
+    "retrieved_encounter_id": "ENC00482",
+    "similarity_score": 0.924509,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00163",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.943761,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00164",
+    "retrieved_encounter_id": "ENC00421",
+    "similarity_score": 0.914352,
+    "retrieved_short_answer_es": "¿Infiltración linfocítica? ¿Dermatitis crónica?"
+  },
+  {
+    "encounter_id": "ENC00165",
+    "retrieved_encounter_id": "ENC00977",
+    "similarity_score": 0.932789,
+    "retrieved_short_answer_es": "Considerar urticaria."
+  },
+  {
+    "encounter_id": "ENC00166",
+    "retrieved_encounter_id": "ENC00849",
+    "similarity_score": 0.951212,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00167",
+    "retrieved_encounter_id": "ENC00750",
+    "similarity_score": 0.940358,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00168",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.932435,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00169",
+    "retrieved_encounter_id": "ENC00198",
+    "similarity_score": 0.931157,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00170",
+    "retrieved_encounter_id": "ENC00389",
+    "similarity_score": 0.944169,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00171",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.931489,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00172",
+    "retrieved_encounter_id": "ENC00549",
+    "similarity_score": 0.917229,
+    "retrieved_short_answer_es": "Busca una colina"
+  },
+  {
+    "encounter_id": "ENC00173",
+    "retrieved_encounter_id": "ENC00097",
+    "similarity_score": 0.928517,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00174",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.918093,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00175",
+    "retrieved_encounter_id": "ENC00101",
+    "similarity_score": 0.937708,
+    "retrieved_short_answer_es": "Considerando la dishidrosis, se agrava con las estaciones, y no hay un buen método de tratamiento."
+  },
+  {
+    "encounter_id": "ENC00176",
+    "retrieved_encounter_id": "ENC00198",
+    "similarity_score": 0.950884,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00177",
+    "retrieved_encounter_id": "ENC00894",
+    "similarity_score": 0.909075,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00178",
+    "retrieved_encounter_id": "ENC00725",
+    "similarity_score": 0.933461,
+    "retrieved_short_answer_es": "¿Anemia?"
+  },
+  {
+    "encounter_id": "ENC00179",
+    "retrieved_encounter_id": "ENC00727",
+    "similarity_score": 0.912516,
+    "retrieved_short_answer_es": "Porfiria"
+  },
+  {
+    "encounter_id": "ENC00180",
+    "retrieved_encounter_id": "ENC00868",
+    "similarity_score": 0.926494,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00181",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.924847,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00182",
+    "retrieved_encounter_id": "ENC00994",
+    "similarity_score": 0.897419,
+    "retrieved_short_answer_es": "Tratamiento: Betametasona tópica."
+  },
+  {
+    "encounter_id": "ENC00183",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.931857,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00184",
+    "retrieved_encounter_id": "ENC00486",
+    "similarity_score": 0.943785,
+    "retrieved_short_answer_es": "Erupción Liquenoide por Fricción"
+  },
+  {
+    "encounter_id": "ENC00185",
+    "retrieved_encounter_id": "ENC00293",
+    "similarity_score": 0.909375,
+    "retrieved_short_answer_es": "¡Hemangioma!"
+  },
+  {
+    "encounter_id": "ENC00187",
+    "retrieved_encounter_id": "ENC00400",
+    "similarity_score": 0.904007,
+    "retrieved_short_answer_es": "Tinea manuum, examen de hongos."
+  },
+  {
+    "encounter_id": "ENC00188",
+    "retrieved_encounter_id": "ENC00711",
+    "similarity_score": 0.932626,
+    "retrieved_short_answer_es": "Artritis Psoriásica"
+  },
+  {
+    "encounter_id": "ENC00189",
+    "retrieved_encounter_id": "ENC00305",
+    "similarity_score": 0.925856,
+    "retrieved_short_answer_es": "Eczema Agudo"
+  },
+  {
+    "encounter_id": "ENC00190",
+    "retrieved_encounter_id": "ENC00517",
+    "similarity_score": 0.940138,
+    "retrieved_short_answer_es": "No juegues con arena o barro."
+  },
+  {
+    "encounter_id": "ENC00191",
+    "retrieved_encounter_id": "ENC00238",
+    "similarity_score": 0.926081,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00192",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.929527,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00193",
+    "retrieved_encounter_id": "ENC00043",
+    "similarity_score": 0.93409,
+    "retrieved_short_answer_es": "Patología."
+  },
+  {
+    "encounter_id": "ENC00194",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.908984,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00195",
+    "retrieved_encounter_id": "ENC00700",
+    "similarity_score": 0.904762,
+    "retrieved_short_answer_es": "Sanará por sí solo, no se necesita tratamiento."
+  },
+  {
+    "encounter_id": "ENC00196",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.932728,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00197",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.916165,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00198",
+    "retrieved_encounter_id": "ENC00613",
+    "similarity_score": 0.961832,
+    "retrieved_short_answer_es": "¿Joroba?"
+  },
+  {
+    "encounter_id": "ENC00199",
+    "retrieved_encounter_id": "ENC00489",
+    "similarity_score": 0.908873,
+    "retrieved_short_answer_es": "Nevus sebáceo"
+  },
+  {
+    "encounter_id": "ENC00200",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.927804,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00201",
+    "retrieved_encounter_id": "ENC00796",
+    "similarity_score": 0.915232,
+    "retrieved_short_answer_es": "Es muy necesario hacer pruebas para RPR y TPPA."
+  },
+  {
+    "encounter_id": "ENC00202",
+    "retrieved_encounter_id": "ENC00905",
+    "similarity_score": 0.925544,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00203",
+    "retrieved_encounter_id": "ENC00917",
+    "similarity_score": 0.910218,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00204",
+    "retrieved_encounter_id": "ENC00144",
+    "similarity_score": 0.922217,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00205",
+    "retrieved_encounter_id": "ENC00949",
+    "similarity_score": 0.935373,
+    "retrieved_short_answer_es": "Mastocitosis"
+  },
+  {
+    "encounter_id": "ENC00206",
+    "retrieved_encounter_id": "ENC00379",
+    "similarity_score": 0.926564,
+    "retrieved_short_answer_es": "Verruga Plana"
+  },
+  {
+    "encounter_id": "ENC00207",
+    "retrieved_encounter_id": "ENC00135",
+    "similarity_score": 0.961222,
+    "retrieved_short_answer_es": "Debería ser eccema."
+  },
+  {
+    "encounter_id": "ENC00208",
+    "retrieved_encounter_id": "ENC00571",
+    "similarity_score": 0.925664,
+    "retrieved_short_answer_es": "Herpes Simplex"
+  },
+  {
+    "encounter_id": "ENC00209",
+    "retrieved_encounter_id": "ENC00279",
+    "similarity_score": 0.938705,
+    "retrieved_short_answer_es": "¿Síndrome de Deform"
+  },
+  {
+    "encounter_id": "ENC00210",
+    "retrieved_encounter_id": "ENC01002",
+    "similarity_score": 0.940994,
+    "retrieved_short_answer_es": "liquen plano"
+  },
+  {
+    "encounter_id": "ENC00211",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.961663,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00212",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.926919,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00213",
+    "retrieved_encounter_id": "ENC00389",
+    "similarity_score": 0.919066,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00214",
+    "retrieved_encounter_id": "ENC00043",
+    "similarity_score": 0.93944,
+    "retrieved_short_answer_es": "Patología."
+  },
+  {
+    "encounter_id": "ENC00215",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.939188,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00216",
+    "retrieved_encounter_id": "ENC00025",
+    "similarity_score": 0.913787,
+    "retrieved_short_answer_es": "Las etiquetas de piel pueden ser tratadas externamente con ungüento Wumiao Shuixian."
+  },
+  {
+    "encounter_id": "ENC00217",
+    "retrieved_encounter_id": "ENC00991",
+    "similarity_score": 0.929922,
+    "retrieved_short_answer_es": "verruga plana"
+  },
+  {
+    "encounter_id": "ENC00218",
+    "retrieved_encounter_id": "ENC00781",
+    "similarity_score": 0.912564,
+    "retrieved_short_answer_es": "Musgo Brillante"
+  },
+  {
+    "encounter_id": "ENC00219",
+    "retrieved_encounter_id": "ENC00505",
+    "similarity_score": 0.909101,
+    "retrieved_short_answer_es": "¿Nevus sebáceo?"
+  },
+  {
+    "encounter_id": "ENC00220",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.927238,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00221",
+    "retrieved_encounter_id": "ENC00290",
+    "similarity_score": 0.921374,
+    "retrieved_short_answer_es": "Dermatitis atópica, tratamiento anti-alergia."
+  },
+  {
+    "encounter_id": "ENC00222",
+    "retrieved_encounter_id": "ENC00338",
+    "similarity_score": 0.942142,
+    "retrieved_short_answer_es": "Parece ser un caso de dermatografía."
+  },
+  {
+    "encounter_id": "ENC00223",
+    "retrieved_encounter_id": "ENC00497",
+    "similarity_score": 0.925732,
+    "retrieved_short_answer_es": "LP bulloso"
+  },
+  {
+    "encounter_id": "ENC00224",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.928491,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00225",
+    "retrieved_encounter_id": "ENC00953",
+    "similarity_score": 0.947867,
+    "retrieved_short_answer_es": "urticaria aguda."
+  },
+  {
+    "encounter_id": "ENC00226",
+    "retrieved_encounter_id": "ENC00857",
+    "similarity_score": 0.926965,
+    "retrieved_short_answer_es": "Hipopigmentación puntiforme idiopática"
+  },
+  {
+    "encounter_id": "ENC00227",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.941721,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00228",
+    "retrieved_encounter_id": "ENC00909",
+    "similarity_score": 0.926194,
+    "retrieved_short_answer_es": "Linfangioma"
+  },
+  {
+    "encounter_id": "ENC00229",
+    "retrieved_encounter_id": "ENC00079",
+    "similarity_score": 0.920579,
+    "retrieved_short_answer_es": "Considere la dermatitis fotosensible... Evite la exposición a la luz, puede intentar aplicar medicamentos como la pomada de valerato de betametasona e hidroxicloroquina."
+  },
+  {
+    "encounter_id": "ENC00230",
+    "retrieved_encounter_id": "ENC00999",
+    "similarity_score": 0.910988,
+    "retrieved_short_answer_es": "Puede hacer un examen con lámpara de Wood ."
+  },
+  {
+    "encounter_id": "ENC00231",
+    "retrieved_encounter_id": "ENC00350",
+    "similarity_score": 0.921432,
+    "retrieved_short_answer_es": "Debería ser sarna."
+  },
+  {
+    "encounter_id": "ENC00232",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.937591,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00233",
+    "retrieved_encounter_id": "ENC00523",
+    "similarity_score": 0.929409,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00234",
+    "retrieved_encounter_id": "ENC00592",
+    "similarity_score": 0.940441,
+    "retrieved_short_answer_es": "Atrofia moteada"
+  },
+  {
+    "encounter_id": "ENC00235",
+    "retrieved_encounter_id": "ENC00475",
+    "similarity_score": 0.92348,
+    "retrieved_short_answer_es": "Considerado como dermatosis neutrofílica febril."
+  },
+  {
+    "encounter_id": "ENC00236",
+    "retrieved_encounter_id": "ENC00368",
+    "similarity_score": 0.927545,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00237",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.929416,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00238",
+    "retrieved_encounter_id": "ENC00031",
+    "similarity_score": 0.936005,
+    "retrieved_short_answer_es": "Neurofibroma"
+  },
+  {
+    "encounter_id": "ENC00239",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.926369,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00240",
+    "retrieved_encounter_id": "ENC00762",
+    "similarity_score": 0.919571,
+    "retrieved_short_answer_es": "Algo similar a la psoriasis."
+  },
+  {
+    "encounter_id": "ENC00241",
+    "retrieved_encounter_id": "ENC00917",
+    "similarity_score": 0.886247,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00242",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.926171,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00243",
+    "retrieved_encounter_id": "ENC00491",
+    "similarity_score": 0.92089,
+    "retrieved_short_answer_es": "Dermatitis de Verano."
+  },
+  {
+    "encounter_id": "ENC00244",
+    "retrieved_encounter_id": "ENC00496",
+    "similarity_score": 0.912605,
+    "retrieved_short_answer_es": "Es un hemangioma, debería estar bien."
+  },
+  {
+    "encounter_id": "ENC00245",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.942103,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00246",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.917746,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00247",
+    "retrieved_encounter_id": "ENC00353",
+    "similarity_score": 0.930672,
+    "retrieved_short_answer_es": "Rosácea."
+  },
+  {
+    "encounter_id": "ENC00248",
+    "retrieved_encounter_id": "ENC00863",
+    "similarity_score": 0.91702,
+    "retrieved_short_answer_es": "pitiriasis rosada."
+  },
+  {
+    "encounter_id": "ENC00249",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.940999,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00250",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.951704,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00251",
+    "retrieved_encounter_id": "ENC00767",
+    "similarity_score": 0.932088,
+    "retrieved_short_answer_es": "Tiña versicolor, medicamento antifúngico tópico."
+  },
+  {
+    "encounter_id": "ENC00252",
+    "retrieved_encounter_id": "ENC00997",
+    "similarity_score": 0.928606,
+    "retrieved_short_answer_es": "impétigo"
+  },
+  {
+    "encounter_id": "ENC00253",
+    "retrieved_encounter_id": "ENC00855",
+    "similarity_score": 0.919612,
+    "retrieved_short_answer_es": "herpes zoster"
+  },
+  {
+    "encounter_id": "ENC00254",
+    "retrieved_encounter_id": "ENC00555",
+    "similarity_score": 0.931171,
+    "retrieved_short_answer_es": "Queratosis Pilaris Circunferencial"
+  },
+  {
+    "encounter_id": "ENC00255",
+    "retrieved_encounter_id": "ENC00885",
+    "similarity_score": 0.912114,
+    "retrieved_short_answer_es": "Impétigo"
+  },
+  {
+    "encounter_id": "ENC00256",
+    "retrieved_encounter_id": "ENC00342",
+    "similarity_score": 0.934461,
+    "retrieved_short_answer_es": "Debería ser la muñeca."
+  },
+  {
+    "encounter_id": "ENC00257",
+    "retrieved_encounter_id": "ENC00299",
+    "similarity_score": 0.935521,
+    "retrieved_short_answer_es": "Dermatitis"
+  },
+  {
+    "encounter_id": "ENC00258",
+    "retrieved_encounter_id": "ENC00785",
+    "similarity_score": 0.920658,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00259",
+    "retrieved_encounter_id": "ENC00299",
+    "similarity_score": 0.921646,
+    "retrieved_short_answer_es": "Dermatitis"
+  },
+  {
+    "encounter_id": "ENC00260",
+    "retrieved_encounter_id": "ENC00523",
+    "similarity_score": 0.93741,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00261",
+    "retrieved_encounter_id": "ENC00412",
+    "similarity_score": 0.942776,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00262",
+    "retrieved_encounter_id": "ENC00731",
+    "similarity_score": 0.911442,
+    "retrieved_short_answer_es": "¿Erupción fija por medicamento? Pura supos"
+  },
+  {
+    "encounter_id": "ENC00263",
+    "retrieved_encounter_id": "ENC00978",
+    "similarity_score": 0.915809,
+    "retrieved_short_answer_es": "Herpes simple"
+  },
+  {
+    "encounter_id": "ENC00264",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.937367,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00265",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.9468,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00266",
+    "retrieved_encounter_id": "ENC00426",
+    "similarity_score": 0.92271,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00267",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.929932,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00268",
+    "retrieved_encounter_id": "ENC00097",
+    "similarity_score": 0.928455,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00269",
+    "retrieved_encounter_id": "ENC00344",
+    "similarity_score": 0.931309,
+    "retrieved_short_answer_es": "Urticaria papular."
+  },
+  {
+    "encounter_id": "ENC00270",
+    "retrieved_encounter_id": "ENC00043",
+    "similarity_score": 0.932116,
+    "retrieved_short_answer_es": "Patología."
+  },
+  {
+    "encounter_id": "ENC00271",
+    "retrieved_encounter_id": "ENC00486",
+    "similarity_score": 0.931883,
+    "retrieved_short_answer_es": "Erupción Liquenoide por Fricción"
+  },
+  {
+    "encounter_id": "ENC00272",
+    "retrieved_encounter_id": "ENC00210",
+    "similarity_score": 0.934336,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC00273",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.923737,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00274",
+    "retrieved_encounter_id": "ENC00203",
+    "similarity_score": 0.861317,
+    "retrieved_short_answer_es": "¿Despigmentación por Incontinencia de Pigmento?"
+  },
+  {
+    "encounter_id": "ENC00275",
+    "retrieved_encounter_id": "ENC00421",
+    "similarity_score": 0.935736,
+    "retrieved_short_answer_es": "¿Infiltración linfocítica? ¿Dermatitis crónica?"
+  },
+  {
+    "encounter_id": "ENC00276",
+    "retrieved_encounter_id": "ENC00961",
+    "similarity_score": 0.927929,
+    "retrieved_short_answer_es": "psoriasis"
+  },
+  {
+    "encounter_id": "ENC00277",
+    "retrieved_encounter_id": "ENC00711",
+    "similarity_score": 0.939041,
+    "retrieved_short_answer_es": "Artritis Psoriásica"
+  },
+  {
+    "encounter_id": "ENC00278",
+    "retrieved_encounter_id": "ENC00749",
+    "similarity_score": 0.930944,
+    "retrieved_short_answer_es": "Pénfigo Típico"
+  },
+  {
+    "encounter_id": "ENC00279",
+    "retrieved_encounter_id": "ENC00209",
+    "similarity_score": 0.938705,
+    "retrieved_short_answer_es": "Pseudocorea"
+  },
+  {
+    "encounter_id": "ENC00280",
+    "retrieved_encounter_id": "ENC00429",
+    "similarity_score": 0.947721,
+    "retrieved_short_answer_es": "La imagen no es clara, es difícil de juzgar, pero probablemente sea dermatitis alérgica."
+  },
+  {
+    "encounter_id": "ENC00281",
+    "retrieved_encounter_id": "ENC00836",
+    "similarity_score": 0.935996,
+    "retrieved_short_answer_es": "Imágenes: Queratodermia palmoplantar Tratamiento: Ungüento de esteroides más ácido retinoico"
+  },
+  {
+    "encounter_id": "ENC00282",
+    "retrieved_encounter_id": "ENC00468",
+    "similarity_score": 0.924566,
+    "retrieved_short_answer_es": "Dermatitis de Verano"
+  },
+  {
+    "encounter_id": "ENC00283",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.927613,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00284",
+    "retrieved_encounter_id": "ENC00063",
+    "similarity_score": 0.880214,
+    "retrieved_short_answer_es": "Rosácea."
+  },
+  {
+    "encounter_id": "ENC00285",
+    "retrieved_encounter_id": "ENC00488",
+    "similarity_score": 0.91722,
+    "retrieved_short_answer_es": "Se puede realizar ventosas en el ombligo y se puede tomar gachas de semillas de coix por vía oral."
+  },
+  {
+    "encounter_id": "ENC00286",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.920187,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00287",
+    "retrieved_encounter_id": "ENC00549",
+    "similarity_score": 0.922034,
+    "retrieved_short_answer_es": "Busca una colina"
+  },
+  {
+    "encounter_id": "ENC00288",
+    "retrieved_encounter_id": "ENC00671",
+    "similarity_score": 0.922298,
+    "retrieved_short_answer_es": "Realice una radiografía para verificar deformidades óseas, luego examine la tasa de sedimentación de eritrocitos, anti-O y el factor reumatoide."
+  },
+  {
+    "encounter_id": "ENC00289",
+    "retrieved_encounter_id": "ENC00305",
+    "similarity_score": 0.935499,
+    "retrieved_short_answer_es": "Eczema Agudo"
+  },
+  {
+    "encounter_id": "ENC00290",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.938209,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00291",
+    "retrieved_encounter_id": "ENC00852",
+    "similarity_score": 0.927193,
+    "retrieved_short_answer_es": "No es vitiligo."
+  },
+  {
+    "encounter_id": "ENC00292",
+    "retrieved_encounter_id": "ENC00245",
+    "similarity_score": 0.922632,
+    "retrieved_short_answer_es": "Dermatitis de Contacto"
+  },
+  {
+    "encounter_id": "ENC00293",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.915355,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00294",
+    "retrieved_encounter_id": "ENC00257",
+    "similarity_score": 0.925627,
+    "retrieved_short_answer_es": "Verruga plan"
+  },
+  {
+    "encounter_id": "ENC00295",
+    "retrieved_encounter_id": "ENC00776",
+    "similarity_score": 0.92417,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00296",
+    "retrieved_encounter_id": "ENC00682",
+    "similarity_score": 0.930495,
+    "retrieved_short_answer_es": "¿Musgo brillante? Hagamos una prueba de patología para verificar."
+  },
+  {
+    "encounter_id": "ENC00297",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.936039,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00298",
+    "retrieved_encounter_id": "ENC00419",
+    "similarity_score": 0.936952,
+    "retrieved_short_answer_es": "Tinea manus, también conocida como Viento de Palma de Ganso en la medicina tradicional china."
+  },
+  {
+    "encounter_id": "ENC00299",
+    "retrieved_encounter_id": "ENC00880",
+    "similarity_score": 0.9469,
+    "retrieved_short_answer_es": "¿Urticaria pigmentosa?"
+  },
+  {
+    "encounter_id": "ENC00300",
+    "retrieved_encounter_id": "ENC00015",
+    "similarity_score": 0.899373,
+    "retrieved_short_answer_es": "Intertrigo"
+  },
+  {
+    "encounter_id": "ENC00301",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.928342,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00302",
+    "retrieved_encounter_id": "ENC00432",
+    "similarity_score": 0.93776,
+    "retrieved_short_answer_es": "¿Varicela?"
+  },
+  {
+    "encounter_id": "ENC00303",
+    "retrieved_encounter_id": "ENC00221",
+    "similarity_score": 0.905609,
+    "retrieved_short_answer_es": "Infección causada por rascado de urticaria papular."
+  },
+  {
+    "encounter_id": "ENC00304",
+    "retrieved_encounter_id": "ENC00573",
+    "similarity_score": 0.927279,
+    "retrieved_short_answer_es": "Acné Conglomerado"
+  },
+  {
+    "encounter_id": "ENC00305",
+    "retrieved_encounter_id": "ENC00905",
+    "similarity_score": 0.944809,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00306",
+    "retrieved_encounter_id": "ENC00762",
+    "similarity_score": 0.92389,
+    "retrieved_short_answer_es": "Algo similar a la psoriasis."
+  },
+  {
+    "encounter_id": "ENC00307",
+    "retrieved_encounter_id": "ENC00707",
+    "similarity_score": 0.909603,
+    "retrieved_short_answer_es": "¡Eczema!"
+  },
+  {
+    "encounter_id": "ENC00309",
+    "retrieved_encounter_id": "ENC00877",
+    "similarity_score": 0.925501,
+    "retrieved_short_answer_es": "Yigenmin (un medicamento probiótico tradicional chino) debería funcionar."
+  },
+  {
+    "encounter_id": "ENC00310",
+    "retrieved_encounter_id": "ENC00918",
+    "similarity_score": 0.925135,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00311",
+    "retrieved_encounter_id": "ENC00301",
+    "similarity_score": 0.912152,
+    "retrieved_short_answer_es": "¡¡Intenta usar Meibao para comprobarlo!!"
+  },
+  {
+    "encounter_id": "ENC00312",
+    "retrieved_encounter_id": "ENC00124",
+    "similarity_score": 0.93017,
+    "retrieved_short_answer_es": "¿Eczema?"
+  },
+  {
+    "encounter_id": "ENC00313",
+    "retrieved_encounter_id": "ENC00330",
+    "similarity_score": 0.929311,
+    "retrieved_short_answer_es": "Herpes Zóster Infantil"
+  },
+  {
+    "encounter_id": "ENC00314",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.927487,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00315",
+    "retrieved_encounter_id": "ENC00533",
+    "similarity_score": 0.922287,
+    "retrieved_short_answer_es": "Hay algunos cambios liquenoides. Sin embargo, parece haber una tendencia hacia cambios amiloides en la piel. El diagnóstico patológico es necesario cuando se requiere."
+  },
+  {
+    "encounter_id": "ENC00316",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.930019,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00317",
+    "retrieved_encounter_id": "ENC00474",
+    "similarity_score": 0.931793,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00318",
+    "retrieved_encounter_id": "ENC00225",
+    "similarity_score": 0.90556,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00319",
+    "retrieved_encounter_id": "ENC00210",
+    "similarity_score": 0.924725,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC00320",
+    "retrieved_encounter_id": "ENC00122",
+    "similarity_score": 0.927163,
+    "retrieved_short_answer_es": "Aplique la crema Tecmose externamente, crema de urea en sobres."
+  },
+  {
+    "encounter_id": "ENC00321",
+    "retrieved_encounter_id": "ENC00843",
+    "similarity_score": 0.9433,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00322",
+    "retrieved_encounter_id": "ENC00633",
+    "similarity_score": 0.908598,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00323",
+    "retrieved_encounter_id": "ENC00731",
+    "similarity_score": 0.928932,
+    "retrieved_short_answer_es": "¿Erupción fija por medicamento? Pura supos"
+  },
+  {
+    "encounter_id": "ENC00324",
+    "retrieved_encounter_id": "ENC00814",
+    "similarity_score": 0.912912,
+    "retrieved_short_answer_es": "No lo he visto en la vida diaria, pero si no hay problema con la patología, no hay nada de qué preocuparse. Se puede tratar con láser."
+  },
+  {
+    "encounter_id": "ENC00325",
+    "retrieved_encounter_id": "ENC00505",
+    "similarity_score": 0.912502,
+    "retrieved_short_answer_es": "¿Nevus sebáceo?"
+  },
+  {
+    "encounter_id": "ENC00326",
+    "retrieved_encounter_id": "ENC00306",
+    "similarity_score": 0.921034,
+    "retrieved_short_answer_es": "Cirugía láser"
+  },
+  {
+    "encounter_id": "ENC00327",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.934819,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00328",
+    "retrieved_encounter_id": "ENC00473",
+    "similarity_score": 0.916547,
+    "retrieved_short_answer_es": "Nevus anémico"
+  },
+  {
+    "encounter_id": "ENC00329",
+    "retrieved_encounter_id": "ENC00116",
+    "similarity_score": 0.926496,
+    "retrieved_short_answer_es": "Quiste mucoso"
+  },
+  {
+    "encounter_id": "ENC00330",
+    "retrieved_encounter_id": "ENC00313",
+    "similarity_score": 0.929311,
+    "retrieved_short_answer_es": "¿Viruela ovina?"
+  },
+  {
+    "encounter_id": "ENC00331",
+    "retrieved_encounter_id": "ENC00547",
+    "similarity_score": 0.918312,
+    "retrieved_short_answer_es": "Estrías."
+  },
+  {
+    "encounter_id": "ENC00332",
+    "retrieved_encounter_id": "ENC00367",
+    "similarity_score": 0.947005,
+    "retrieved_short_answer_es": "¿Considerar neurodermatitis?"
+  },
+  {
+    "encounter_id": "ENC00333",
+    "retrieved_encounter_id": "ENC00488",
+    "similarity_score": 0.945612,
+    "retrieved_short_answer_es": "Se puede realizar ventosas en el ombligo y se puede tomar gachas de semillas de coix por vía oral."
+  },
+  {
+    "encounter_id": "ENC00334",
+    "retrieved_encounter_id": "ENC00620",
+    "similarity_score": 0.912801,
+    "retrieved_short_answer_es": "Púrpura Alérgica"
+  },
+  {
+    "encounter_id": "ENC00335",
+    "retrieved_encounter_id": "ENC00149",
+    "similarity_score": 0.907401,
+    "retrieved_short_answer_es": "¡Liquen atrófico! ¡No hay un método de tratamiento especial!"
+  },
+  {
+    "encounter_id": "ENC00336",
+    "retrieved_encounter_id": "ENC00363",
+    "similarity_score": 0.919033,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00337",
+    "retrieved_encounter_id": "ENC00697",
+    "similarity_score": 0.9336,
+    "retrieved_short_answer_es": "Pápulas urticariales."
+  },
+  {
+    "encounter_id": "ENC00338",
+    "retrieved_encounter_id": "ENC00416",
+    "similarity_score": 0.951783,
+    "retrieved_short_answer_es": "¡Causado por picaduras de pulgas!"
+  },
+  {
+    "encounter_id": "ENC00339",
+    "retrieved_encounter_id": "ENC00277",
+    "similarity_score": 0.910825,
+    "retrieved_short_answer_es": "Herpes simple."
+  },
+  {
+    "encounter_id": "ENC00340",
+    "retrieved_encounter_id": "ENC00737",
+    "similarity_score": 0.942226,
+    "retrieved_short_answer_es": "Debería ser dermatitis."
+  },
+  {
+    "encounter_id": "ENC00341",
+    "retrieved_encounter_id": "ENC00640",
+    "similarity_score": 0.932923,
+    "retrieved_short_answer_es": "¿Ampollas? ¿Es este el único lugar en tu cuerpo?"
+  },
+  {
+    "encounter_id": "ENC00342",
+    "retrieved_encounter_id": "ENC00256",
+    "similarity_score": 0.934461,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00344",
+    "retrieved_encounter_id": "ENC00352",
+    "similarity_score": 0.940472,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00345",
+    "retrieved_encounter_id": "ENC00379",
+    "similarity_score": 0.922186,
+    "retrieved_short_answer_es": "Verruga Plana"
+  },
+  {
+    "encounter_id": "ENC00346",
+    "retrieved_encounter_id": "ENC00146",
+    "similarity_score": 0.93563,
+    "retrieved_short_answer_es": "Eczema Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00347",
+    "retrieved_encounter_id": "ENC00957",
+    "similarity_score": 0.920959,
+    "retrieved_short_answer_es": "Despigmentación cutánea"
+  },
+  {
+    "encounter_id": "ENC00348",
+    "retrieved_encounter_id": "ENC00915",
+    "similarity_score": 0.934879,
+    "retrieved_short_answer_es": "urticaria crónica"
+  },
+  {
+    "encounter_id": "ENC00349",
+    "retrieved_encounter_id": "ENC00918",
+    "similarity_score": 0.897116,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00350",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.943083,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00351",
+    "retrieved_encounter_id": "ENC00564",
+    "similarity_score": 0.933941,
+    "retrieved_short_answer_es": "Infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00352",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.946079,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00353",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.933237,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00354",
+    "retrieved_encounter_id": "ENC00569",
+    "similarity_score": 0.895121,
+    "retrieved_short_answer_es": "¿Verrugas blandas infecciosas?"
+  },
+  {
+    "encounter_id": "ENC00355",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.938445,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00356",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.917097,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00357",
+    "retrieved_encounter_id": "ENC00976",
+    "similarity_score": 0.908991,
+    "retrieved_short_answer_es": "foliculitis por malassezia"
+  },
+  {
+    "encounter_id": "ENC00358",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.928422,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00359",
+    "retrieved_encounter_id": "ENC00392",
+    "similarity_score": 0.929253,
+    "retrieved_short_answer_es": "Apoyando la Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00360",
+    "retrieved_encounter_id": "ENC00557",
+    "similarity_score": 0.930376,
+    "retrieved_short_answer_es": "Vitíligo"
+  },
+  {
+    "encounter_id": "ENC00361",
+    "retrieved_encounter_id": "ENC00370",
+    "similarity_score": 0.931367,
+    "retrieved_short_answer_es": "Nevus acrómico."
+  },
+  {
+    "encounter_id": "ENC00362",
+    "retrieved_encounter_id": "ENC00195",
+    "similarity_score": 0.903462,
+    "retrieved_short_answer_es": "La medicina tradicional china trata sin cirugía."
+  },
+  {
+    "encounter_id": "ENC00363",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.937174,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00364",
+    "retrieved_encounter_id": "ENC00762",
+    "similarity_score": 0.945017,
+    "retrieved_short_answer_es": "Algo similar a la psoriasis."
+  },
+  {
+    "encounter_id": "ENC00365",
+    "retrieved_encounter_id": "ENC00916",
+    "similarity_score": 0.918186,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC00366",
+    "retrieved_encounter_id": "ENC00049",
+    "similarity_score": 0.934251,
+    "retrieved_short_answer_es": "Busca una colina"
+  },
+  {
+    "encounter_id": "ENC00367",
+    "retrieved_encounter_id": "ENC00572",
+    "similarity_score": 0.949955,
+    "retrieved_short_answer_es": "Pustulosis Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00368",
+    "retrieved_encounter_id": "ENC00271",
+    "similarity_score": 0.928161,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00369",
+    "retrieved_encounter_id": "ENC00868",
+    "similarity_score": 0.921063,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00370",
+    "retrieved_encounter_id": "ENC00383",
+    "similarity_score": 0.940644,
+    "retrieved_short_answer_es": "Considere el vitiligo"
+  },
+  {
+    "encounter_id": "ENC00371",
+    "retrieved_encounter_id": "ENC00793",
+    "similarity_score": 0.941619,
+    "retrieved_short_answer_es": "Considérelo como herpes zóster. Preste atención al descanso y mejore la nutrición."
+  },
+  {
+    "encounter_id": "ENC00372",
+    "retrieved_encounter_id": "ENC00392",
+    "similarity_score": 0.939299,
+    "retrieved_short_answer_es": "Apoyando la Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00373",
+    "retrieved_encounter_id": "ENC00810",
+    "similarity_score": 0.949094,
+    "retrieved_short_answer_es": "Verruga plantar"
+  },
+  {
+    "encounter_id": "ENC00374",
+    "retrieved_encounter_id": "ENC00444",
+    "similarity_score": 0.933329,
+    "retrieved_short_answer_es": "Pie de atleta"
+  },
+  {
+    "encounter_id": "ENC00375",
+    "retrieved_encounter_id": "ENC00534",
+    "similarity_score": 0.927732,
+    "retrieved_short_answer_es": "Considere el pie de atleta fúngico"
+  },
+  {
+    "encounter_id": "ENC00376",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.924259,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00377",
+    "retrieved_encounter_id": "ENC00770",
+    "similarity_score": 0.945284,
+    "retrieved_short_answer_es": "Parece ser herpes zóster."
+  },
+  {
+    "encounter_id": "ENC00379",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.926775,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00380",
+    "retrieved_encounter_id": "ENC00467",
+    "similarity_score": 0.944855,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00381",
+    "retrieved_encounter_id": "ENC00473",
+    "similarity_score": 0.941546,
+    "retrieved_short_answer_es": "Nevus anémico"
+  },
+  {
+    "encounter_id": "ENC00382",
+    "retrieved_encounter_id": "ENC00081",
+    "similarity_score": 0.930859,
+    "retrieved_short_answer_es": "Erupción inflamatoria"
+  },
+  {
+    "encounter_id": "ENC00383",
+    "retrieved_encounter_id": "ENC00370",
+    "similarity_score": 0.940644,
+    "retrieved_short_answer_es": "Nevus acrómico."
+  },
+  {
+    "encounter_id": "ENC00385",
+    "retrieved_encounter_id": "ENC00358",
+    "similarity_score": 0.921214,
+    "retrieved_short_answer_es": "Neurodermatitis."
+  },
+  {
+    "encounter_id": "ENC00386",
+    "retrieved_encounter_id": "ENC00188",
+    "similarity_score": 0.931043,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00387",
+    "retrieved_encounter_id": "ENC00268",
+    "similarity_score": 0.924226,
+    "retrieved_short_answer_es": "Historial médico, excluyendo la deficiencia de niacina"
+  },
+  {
+    "encounter_id": "ENC00388",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.928714,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00389",
+    "retrieved_encounter_id": "ENC00170",
+    "similarity_score": 0.944169,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00390",
+    "retrieved_encounter_id": "ENC00392",
+    "similarity_score": 0.921157,
+    "retrieved_short_answer_es": "Apoyando la Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00391",
+    "retrieved_encounter_id": "ENC00497",
+    "similarity_score": 0.928767,
+    "retrieved_short_answer_es": "LP bulloso"
+  },
+  {
+    "encounter_id": "ENC00392",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.939299,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00393",
+    "retrieved_encounter_id": "ENC00097",
+    "similarity_score": 0.926377,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00394",
+    "retrieved_encounter_id": "ENC00206",
+    "similarity_score": 0.912371,
+    "retrieved_short_answer_es": "¿Eczema?"
+  },
+  {
+    "encounter_id": "ENC00395",
+    "retrieved_encounter_id": "ENC00572",
+    "similarity_score": 0.920305,
+    "retrieved_short_answer_es": "Pustulosis Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00396",
+    "retrieved_encounter_id": "ENC00464",
+    "similarity_score": 0.923369,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00397",
+    "retrieved_encounter_id": "ENC00229",
+    "similarity_score": 0.918495,
+    "retrieved_short_answer_es": "Realice una patología."
+  },
+  {
+    "encounter_id": "ENC00398",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.924422,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00399",
+    "retrieved_encounter_id": "ENC00381",
+    "similarity_score": 0.919553,
+    "retrieved_short_answer_es": "Como una picadura de insecto"
+  },
+  {
+    "encounter_id": "ENC00400",
+    "retrieved_encounter_id": "ENC00146",
+    "similarity_score": 0.905428,
+    "retrieved_short_answer_es": "Eczema Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00401",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.930851,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00402",
+    "retrieved_encounter_id": "ENC00330",
+    "similarity_score": 0.916399,
+    "retrieved_short_answer_es": "Herpes Zóster Infantil"
+  },
+  {
+    "encounter_id": "ENC00403",
+    "retrieved_encounter_id": "ENC00167",
+    "similarity_score": 0.916456,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00404",
+    "retrieved_encounter_id": "ENC00025",
+    "similarity_score": 0.943429,
+    "retrieved_short_answer_es": "Las etiquetas de piel pueden ser tratadas externamente con ungüento Wumiao Shuixian."
+  },
+  {
+    "encounter_id": "ENC00405",
+    "retrieved_encounter_id": "ENC00754",
+    "similarity_score": 0.930138,
+    "retrieved_short_answer_es": "Alergia a los alimentos"
+  },
+  {
+    "encounter_id": "ENC00406",
+    "retrieved_encounter_id": "ENC00377",
+    "similarity_score": 0.934376,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00407",
+    "retrieved_encounter_id": "ENC00211",
+    "similarity_score": 0.961663,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00408",
+    "retrieved_encounter_id": "ENC00760",
+    "similarity_score": 0.950017,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00409",
+    "retrieved_encounter_id": "ENC00534",
+    "similarity_score": 0.930533,
+    "retrieved_short_answer_es": "Considere el pie de atleta fúngico"
+  },
+  {
+    "encounter_id": "ENC00410",
+    "retrieved_encounter_id": "ENC00389",
+    "similarity_score": 0.915049,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00411",
+    "retrieved_encounter_id": "ENC00572",
+    "similarity_score": 0.932264,
+    "retrieved_short_answer_es": "Pustulosis Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00412",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.944558,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00413",
+    "retrieved_encounter_id": "ENC00538",
+    "similarity_score": 0.923687,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00414",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.938262,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00415",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.950015,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00416",
+    "retrieved_encounter_id": "ENC00019",
+    "similarity_score": 0.958876,
+    "retrieved_short_answer_es": "Herpes Zóster"
+  },
+  {
+    "encounter_id": "ENC00417",
+    "retrieved_encounter_id": "ENC00147",
+    "similarity_score": 0.933185,
+    "retrieved_short_answer_es": "Urticaria Aguda"
+  },
+  {
+    "encounter_id": "ENC00418",
+    "retrieved_encounter_id": "ENC00652",
+    "similarity_score": 0.92017,
+    "retrieved_short_answer_es": "Considere la sarna"
+  },
+  {
+    "encounter_id": "ENC00419",
+    "retrieved_encounter_id": "ENC00451",
+    "similarity_score": 0.938993,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00420",
+    "retrieved_encounter_id": "ENC00043",
+    "similarity_score": 0.923507,
+    "retrieved_short_answer_es": "Patología."
+  },
+  {
+    "encounter_id": "ENC00421",
+    "retrieved_encounter_id": "ENC00128",
+    "similarity_score": 0.93872,
+    "retrieved_short_answer_es": "Eczema Agrietado"
+  },
+  {
+    "encounter_id": "ENC00422",
+    "retrieved_encounter_id": "ENC00978",
+    "similarity_score": 0.906937,
+    "retrieved_short_answer_es": "Herpes simple"
+  },
+  {
+    "encounter_id": "ENC00423",
+    "retrieved_encounter_id": "ENC00564",
+    "similarity_score": 0.924458,
+    "retrieved_short_answer_es": "Infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00424",
+    "retrieved_encounter_id": "ENC00691",
+    "similarity_score": 0.946762,
+    "retrieved_short_answer_es": "Psoriasis Vulgaris"
+  },
+  {
+    "encounter_id": "ENC00425",
+    "retrieved_encounter_id": "ENC00847",
+    "similarity_score": 0.925133,
+    "retrieved_short_answer_es": "Sospecha de tumor"
+  },
+  {
+    "encounter_id": "ENC00426",
+    "retrieved_encounter_id": "ENC00991",
+    "similarity_score": 0.938929,
+    "retrieved_short_answer_es": "verruga plana"
+  },
+  {
+    "encounter_id": "ENC00427",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.930467,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00428",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.902502,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00429",
+    "retrieved_encounter_id": "ENC00280",
+    "similarity_score": 0.947721,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00430",
+    "retrieved_encounter_id": "ENC00682",
+    "similarity_score": 0.899326,
+    "retrieved_short_answer_es": "¿Musgo brillante? Hagamos una prueba de patología para verificar."
+  },
+  {
+    "encounter_id": "ENC00431",
+    "retrieved_encounter_id": "ENC00802",
+    "similarity_score": 0.926322,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00432",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.945167,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00433",
+    "retrieved_encounter_id": "ENC00363",
+    "similarity_score": 0.922453,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00434",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.927208,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00435",
+    "retrieved_encounter_id": "ENC00048",
+    "similarity_score": 0.914573,
+    "retrieved_short_answer_es": "Dermatitis Alérgica"
+  },
+  {
+    "encounter_id": "ENC00436",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.92367,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00437",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.928197,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00438",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.926188,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00439",
+    "retrieved_encounter_id": "ENC00431",
+    "similarity_score": 0.896312,
+    "retrieved_short_answer_es": "Atrofia Cutánea Idiopática"
+  },
+  {
+    "encounter_id": "ENC00440",
+    "retrieved_encounter_id": "ENC00135",
+    "similarity_score": 0.939741,
+    "retrieved_short_answer_es": "Debería ser eccema."
+  },
+  {
+    "encounter_id": "ENC00441",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.932511,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00442",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.932164,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00443",
+    "retrieved_encounter_id": "ENC00431",
+    "similarity_score": 0.92481,
+    "retrieved_short_answer_es": "Atrofia Cutánea Idiopática"
+  },
+  {
+    "encounter_id": "ENC00444",
+    "retrieved_encounter_id": "ENC00374",
+    "similarity_score": 0.933329,
+    "retrieved_short_answer_es": "Dermatitis Estásica"
+  },
+  {
+    "encounter_id": "ENC00445",
+    "retrieved_encounter_id": "ENC00412",
+    "similarity_score": 0.902432,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00446",
+    "retrieved_encounter_id": "ENC00748",
+    "similarity_score": 0.917701,
+    "retrieved_short_answer_es": "Realice una patología."
+  },
+  {
+    "encounter_id": "ENC00447",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.90924,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00448",
+    "retrieved_encounter_id": "ENC00745",
+    "similarity_score": 0.94268,
+    "retrieved_short_answer_es": "Fibroma."
+  },
+  {
+    "encounter_id": "ENC00449",
+    "retrieved_encounter_id": "ENC00976",
+    "similarity_score": 0.928935,
+    "retrieved_short_answer_es": "foliculitis por malassezia"
+  },
+  {
+    "encounter_id": "ENC00450",
+    "retrieved_encounter_id": "ENC00853",
+    "similarity_score": 0.93067,
+    "retrieved_short_answer_es": "Eccema crónico."
+  },
+  {
+    "encounter_id": "ENC00451",
+    "retrieved_encounter_id": "ENC00419",
+    "similarity_score": 0.938993,
+    "retrieved_short_answer_es": "Tinea manus, también conocida como Viento de Palma de Ganso en la medicina tradicional china."
+  },
+  {
+    "encounter_id": "ENC00452",
+    "retrieved_encounter_id": "ENC00256",
+    "similarity_score": 0.927631,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00453",
+    "retrieved_encounter_id": "ENC00661",
+    "similarity_score": 0.926593,
+    "retrieved_short_answer_es": "Erupción Polimorfa Lumínica"
+  },
+  {
+    "encounter_id": "ENC00454",
+    "retrieved_encounter_id": "ENC00836",
+    "similarity_score": 0.939394,
+    "retrieved_short_answer_es": "Imágenes: Queratodermia palmoplantar Tratamiento: Ungüento de esteroides más ácido retinoico"
+  },
+  {
+    "encounter_id": "ENC00455",
+    "retrieved_encounter_id": "ENC00415",
+    "similarity_score": 0.950015,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00456",
+    "retrieved_encounter_id": "ENC00165",
+    "similarity_score": 0.930076,
+    "retrieved_short_answer_es": "Debería ser un callo. La fricción a largo plazo provoca el engrosamiento del estrato córneo."
+  },
+  {
+    "encounter_id": "ENC00457",
+    "retrieved_encounter_id": "ENC00151",
+    "similarity_score": 0.914677,
+    "retrieved_short_answer_es": "¿LED?"
+  },
+  {
+    "encounter_id": "ENC00458",
+    "retrieved_encounter_id": "ENC00429",
+    "similarity_score": 0.927889,
+    "retrieved_short_answer_es": "La imagen no es clara, es difícil de juzgar, pero probablemente sea dermatitis alérgica."
+  },
+  {
+    "encounter_id": "ENC00459",
+    "retrieved_encounter_id": "ENC00812",
+    "similarity_score": 0.935937,
+    "retrieved_short_answer_es": "El azúcar en la sangre está ligeramente"
+  },
+  {
+    "encounter_id": "ENC00460",
+    "retrieved_encounter_id": "ENC00530",
+    "similarity_score": 0.908579,
+    "retrieved_short_answer_es": "¿Liquen Plano?"
+  },
+  {
+    "encounter_id": "ENC00461",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.937501,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00462",
+    "retrieved_encounter_id": "ENC00813",
+    "similarity_score": 0.937677,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00463",
+    "retrieved_encounter_id": "ENC00960",
+    "similarity_score": 0.938523,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00464",
+    "retrieved_encounter_id": "ENC00396",
+    "similarity_score": 0.923369,
+    "retrieved_short_answer_es": "Considerando erupción cutánea"
+  },
+  {
+    "encounter_id": "ENC00465",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.922792,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00466",
+    "retrieved_encounter_id": "ENC00799",
+    "similarity_score": 0.941646,
+    "retrieved_short_answer_es": "¿Linfangioma? ¿R-D?"
+  },
+  {
+    "encounter_id": "ENC00467",
+    "retrieved_encounter_id": "ENC00380",
+    "similarity_score": 0.944855,
+    "retrieved_short_answer_es": "Hay muy poco daño en la piel. Si hay grandes parches rojos y caspa en el tronco, debe considerarse como pitiriasis rosada."
+  },
+  {
+    "encounter_id": "ENC00468",
+    "retrieved_encounter_id": "ENC00903",
+    "similarity_score": 0.94586,
+    "retrieved_short_answer_es": "Tendría que comprobar si es alérgico."
+  },
+  {
+    "encounter_id": "ENC00469",
+    "retrieved_encounter_id": "ENC00787",
+    "similarity_score": 0.92017,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00470",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.945319,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00471",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.922212,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00472",
+    "retrieved_encounter_id": "ENC00012",
+    "similarity_score": 0.92257,
+    "retrieved_short_answer_es": "Poroceratosis"
+  },
+  {
+    "encounter_id": "ENC00473",
+    "retrieved_encounter_id": "ENC00381",
+    "similarity_score": 0.941546,
+    "retrieved_short_answer_es": "Como una picadura de insecto"
+  },
+  {
+    "encounter_id": "ENC00474",
+    "retrieved_encounter_id": "ENC00482",
+    "similarity_score": 0.938148,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00475",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.946855,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00476",
+    "retrieved_encounter_id": "ENC00025",
+    "similarity_score": 0.925105,
+    "retrieved_short_answer_es": "Las etiquetas de piel pueden ser tratadas externamente con ungüento Wumiao Shuixian."
+  },
+  {
+    "encounter_id": "ENC00477",
+    "retrieved_encounter_id": "ENC00669",
+    "similarity_score": 0.92987,
+    "retrieved_short_answer_es": "No se puede descartar tiña capitis, no se puede descartar tricotilomanía."
+  },
+  {
+    "encounter_id": "ENC00478",
+    "retrieved_encounter_id": "ENC00963",
+    "similarity_score": 0.92982,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00479",
+    "retrieved_encounter_id": "ENC00843",
+    "similarity_score": 0.91137,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00480",
+    "retrieved_encounter_id": "ENC00564",
+    "similarity_score": 0.934214,
+    "retrieved_short_answer_es": "Infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00481",
+    "retrieved_encounter_id": "ENC00953",
+    "similarity_score": 0.939558,
+    "retrieved_short_answer_es": "urticaria aguda."
+  },
+  {
+    "encounter_id": "ENC00482",
+    "retrieved_encounter_id": "ENC00474",
+    "similarity_score": 0.938148,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00483",
+    "retrieved_encounter_id": "ENC00632",
+    "similarity_score": 0.923446,
+    "retrieved_short_answer_es": "30 gramos de Tribulus terrestris"
+  },
+  {
+    "encounter_id": "ENC00484",
+    "retrieved_encounter_id": "ENC00146",
+    "similarity_score": 0.907545,
+    "retrieved_short_answer_es": "Eczema Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00485",
+    "retrieved_encounter_id": "ENC00873",
+    "similarity_score": 0.919891,
+    "retrieved_short_answer_es": "onicomicosis. Tratamiento con antifúngicos."
+  },
+  {
+    "encounter_id": "ENC00486",
+    "retrieved_encounter_id": "ENC00184",
+    "similarity_score": 0.943785,
+    "retrieved_short_answer_es": "Para la tiña versicolor, use champú de selenio sulfuro o ketoconazol para bañarse, y aplique crema tópica de terbinafina externamente."
+  },
+  {
+    "encounter_id": "ENC00487",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.941951,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00488",
+    "retrieved_encounter_id": "ENC00333",
+    "similarity_score": 0.945612,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00489",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.927807,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00490",
+    "retrieved_encounter_id": "ENC00687",
+    "similarity_score": 0.931166,
+    "retrieved_short_answer_es": "Deberías escuchar al primer doctor."
+  },
+  {
+    "encounter_id": "ENC00491",
+    "retrieved_encounter_id": "ENC00682",
+    "similarity_score": 0.930267,
+    "retrieved_short_answer_es": "¿Musgo brillante? Hagamos una prueba de patología para verificar."
+  },
+  {
+    "encounter_id": "ENC00492",
+    "retrieved_encounter_id": "ENC00193",
+    "similarity_score": 0.920014,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00493",
+    "retrieved_encounter_id": "ENC00712",
+    "similarity_score": 0.913241,
+    "retrieved_short_answer_es": "Fibroma"
+  },
+  {
+    "encounter_id": "ENC00494",
+    "retrieved_encounter_id": "ENC00601",
+    "similarity_score": 0.925814,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00495",
+    "retrieved_encounter_id": "ENC00894",
+    "similarity_score": 0.918075,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00496",
+    "retrieved_encounter_id": "ENC00184",
+    "similarity_score": 0.926486,
+    "retrieved_short_answer_es": "Para la tiña versicolor, use champú de selenio sulfuro o ketoconazol para bañarse, y aplique crema tópica de terbinafina externamente."
+  },
+  {
+    "encounter_id": "ENC00497",
+    "retrieved_encounter_id": "ENC00290",
+    "similarity_score": 0.93338,
+    "retrieved_short_answer_es": "Dermatitis atópica, tratamiento anti-alergia."
+  },
+  {
+    "encounter_id": "ENC00498",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.932616,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00499",
+    "retrieved_encounter_id": "ENC00875",
+    "similarity_score": 0.927528,
+    "retrieved_short_answer_es": "dermatitis arenosa"
+  },
+  {
+    "encounter_id": "ENC00500",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.940169,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00501",
+    "retrieved_encounter_id": "ENC00033",
+    "similarity_score": 0.915718,
+    "retrieved_short_answer_es": "La imagen no está clara, está borrosa. Parece púrpura."
+  },
+  {
+    "encounter_id": "ENC00502",
+    "retrieved_encounter_id": "ENC00950",
+    "similarity_score": 0.928357,
+    "retrieved_short_answer_es": "Liquen plano lineal."
+  },
+  {
+    "encounter_id": "ENC00503",
+    "retrieved_encounter_id": "ENC00290",
+    "similarity_score": 0.926104,
+    "retrieved_short_answer_es": "Dermatitis atópica, tratamiento anti-alergia."
+  },
+  {
+    "encounter_id": "ENC00504",
+    "retrieved_encounter_id": "ENC00342",
+    "similarity_score": 0.911758,
+    "retrieved_short_answer_es": "Debería ser la muñeca."
+  },
+  {
+    "encounter_id": "ENC00505",
+    "retrieved_encounter_id": "ENC00325",
+    "similarity_score": 0.912502,
+    "retrieved_short_answer_es": "Esclerodermia."
+  },
+  {
+    "encounter_id": "ENC00506",
+    "retrieved_encounter_id": "ENC00235",
+    "similarity_score": 0.904242,
+    "retrieved_short_answer_es": "Es una alergia. Ve a un hospital grande para verificar la fuente de la alergia."
+  },
+  {
+    "encounter_id": "ENC00507",
+    "retrieved_encounter_id": "ENC00980",
+    "similarity_score": 0.91756,
+    "retrieved_short_answer_es": "eccema agudo"
+  },
+  {
+    "encounter_id": "ENC00508",
+    "retrieved_encounter_id": "ENC00467",
+    "similarity_score": 0.940458,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00509",
+    "retrieved_encounter_id": "ENC00545",
+    "similarity_score": 0.913654,
+    "retrieved_short_answer_es": "Para los forúnculos, los antibióticos son es"
+  },
+  {
+    "encounter_id": "ENC00510",
+    "retrieved_encounter_id": "ENC00419",
+    "similarity_score": 0.92291,
+    "retrieved_short_answer_es": "Tinea manus, también conocida como Viento de Palma de Ganso en la medicina tradicional china."
+  },
+  {
+    "encounter_id": "ENC00511",
+    "retrieved_encounter_id": "ENC00938",
+    "similarity_score": 0.915062,
+    "retrieved_short_answer_es": "Es necrobiosis lipoidea."
+  },
+  {
+    "encounter_id": "ENC00512",
+    "retrieved_encounter_id": "ENC00936",
+    "similarity_score": 0.913924,
+    "retrieved_short_answer_es": "psoriasis"
+  },
+  {
+    "encounter_id": "ENC00513",
+    "retrieved_encounter_id": "ENC00777",
+    "similarity_score": 0.926834,
+    "retrieved_short_answer_es": "¿Miliaria?"
+  },
+  {
+    "encounter_id": "ENC00514",
+    "retrieved_encounter_id": "ENC00593",
+    "similarity_score": 0.913881,
+    "retrieved_short_answer_es": "¿Foliculitis?"
+  },
+  {
+    "encounter_id": "ENC00515",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.935817,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00516",
+    "retrieved_encounter_id": "ENC00543",
+    "similarity_score": 0.946559,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00517",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.940138,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00518",
+    "retrieved_encounter_id": "ENC00803",
+    "similarity_score": 0.927602,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00519",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.933445,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00520",
+    "retrieved_encounter_id": "ENC00140",
+    "similarity_score": 0.934056,
+    "retrieved_short_answer_es": "Córtelo, haga patología, descarte melanoma."
+  },
+  {
+    "encounter_id": "ENC00521",
+    "retrieved_encounter_id": "ENC00565",
+    "similarity_score": 0.909158,
+    "retrieved_short_answer_es": "Verrugas epidérmicas,"
+  },
+  {
+    "encounter_id": "ENC00522",
+    "retrieved_encounter_id": "ENC00332",
+    "similarity_score": 0.914348,
+    "retrieved_short_answer_es": "Liquen Escleroso"
+  },
+  {
+    "encounter_id": "ENC00523",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.93956,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00524",
+    "retrieved_encounter_id": "ENC00151",
+    "similarity_score": 0.922151,
+    "retrieved_short_answer_es": "¿LED?"
+  },
+  {
+    "encounter_id": "ENC00525",
+    "retrieved_encounter_id": "ENC00206",
+    "similarity_score": 0.923528,
+    "retrieved_short_answer_es": "¿Eczema?"
+  },
+  {
+    "encounter_id": "ENC00526",
+    "retrieved_encounter_id": "ENC00279",
+    "similarity_score": 0.925547,
+    "retrieved_short_answer_es": "¿Síndrome de Deform"
+  },
+  {
+    "encounter_id": "ENC00527",
+    "retrieved_encounter_id": "ENC00853",
+    "similarity_score": 0.928312,
+    "retrieved_short_answer_es": "Eccema crónico."
+  },
+  {
+    "encounter_id": "ENC00528",
+    "retrieved_encounter_id": "ENC00542",
+    "similarity_score": 0.928513,
+    "retrieved_short_answer_es": "Acné. Acné vulgar. Comúnmente ocurre en el pecho superior y la espalda."
+  },
+  {
+    "encounter_id": "ENC00529",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.924901,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00530",
+    "retrieved_encounter_id": "ENC00676",
+    "similarity_score": 0.931616,
+    "retrieved_short_answer_es": "Erupción fija por"
+  },
+  {
+    "encounter_id": "ENC00532",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.951704,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00533",
+    "retrieved_encounter_id": "ENC00315",
+    "similarity_score": 0.922287,
+    "retrieved_short_answer_es": "Eczema crónico."
+  },
+  {
+    "encounter_id": "ENC00534",
+    "retrieved_encounter_id": "ENC00957",
+    "similarity_score": 0.939358,
+    "retrieved_short_answer_es": "Despigmentación cutánea"
+  },
+  {
+    "encounter_id": "ENC00535",
+    "retrieved_encounter_id": "ENC00857",
+    "similarity_score": 0.924231,
+    "retrieved_short_answer_es": "Hipopigmentación puntiforme idiopática"
+  },
+  {
+    "encounter_id": "ENC00536",
+    "retrieved_encounter_id": "ENC00366",
+    "similarity_score": 0.928446,
+    "retrieved_short_answer_es": "¿Dermatitis por picadura de insecto? Aplique compresas frías con agua de amoníaco o bicarbonato de sodio al 5%, use pomada de dapsona externamente y se pueden tomar antihistamínicos orales."
+  },
+  {
+    "encounter_id": "ENC00537",
+    "retrieved_encounter_id": "ENC00767",
+    "similarity_score": 0.92845,
+    "retrieved_short_answer_es": "Tiña versicolor, medicamento antifúngico tópico."
+  },
+  {
+    "encounter_id": "ENC00538",
+    "retrieved_encounter_id": "ENC00889",
+    "similarity_score": 0.934956,
+    "retrieved_short_answer_es": "Habitual."
+  },
+  {
+    "encounter_id": "ENC00539",
+    "retrieved_encounter_id": "ENC00907",
+    "similarity_score": 0.943493,
+    "retrieved_short_answer_es": "hematoma subungueal"
+  },
+  {
+    "encounter_id": "ENC00540",
+    "retrieved_encounter_id": "ENC00033",
+    "similarity_score": 0.954736,
+    "retrieved_short_answer_es": "La imagen no está clara, está borrosa. Parece púrpura."
+  },
+  {
+    "encounter_id": "ENC00541",
+    "retrieved_encounter_id": "ENC00794",
+    "similarity_score": 0.93117,
+    "retrieved_short_answer_es": "Pitiriasis."
+  },
+  {
+    "encounter_id": "ENC00542",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.928943,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00543",
+    "retrieved_encounter_id": "ENC00744",
+    "similarity_score": 0.949677,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00544",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.885328,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00545",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.926932,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00546",
+    "retrieved_encounter_id": "ENC00188",
+    "similarity_score": 0.923169,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00547",
+    "retrieved_encounter_id": "ENC00331",
+    "similarity_score": 0.918312,
+    "retrieved_short_answer_es": "Parecen pápulas urticariales."
+  },
+  {
+    "encounter_id": "ENC00548",
+    "retrieved_encounter_id": "ENC00991",
+    "similarity_score": 0.932276,
+    "retrieved_short_answer_es": "verruga plana"
+  },
+  {
+    "encounter_id": "ENC00549",
+    "retrieved_encounter_id": "ENC00290",
+    "similarity_score": 0.923765,
+    "retrieved_short_answer_es": "Dermatitis atópica, tratamiento anti-alergia."
+  },
+  {
+    "encounter_id": "ENC00550",
+    "retrieved_encounter_id": "ENC00515",
+    "similarity_score": 0.933295,
+    "retrieved_short_answer_es": "Erupción Liquenoide por Fricción"
+  },
+  {
+    "encounter_id": "ENC00551",
+    "retrieved_encounter_id": "ENC00280",
+    "similarity_score": 0.921763,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00552",
+    "retrieved_encounter_id": "ENC00515",
+    "similarity_score": 0.929533,
+    "retrieved_short_answer_es": "Erupción Liquenoide por Fricción"
+  },
+  {
+    "encounter_id": "ENC00553",
+    "retrieved_encounter_id": "ENC00155",
+    "similarity_score": 0.912146,
+    "retrieved_short_answer_es": "Como la psoriasis"
+  },
+  {
+    "encounter_id": "ENC00554",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.882072,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00555",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.940051,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00556",
+    "retrieved_encounter_id": "ENC00227",
+    "similarity_score": 0.937298,
+    "retrieved_short_answer_es": "¿Congénito?"
+  },
+  {
+    "encounter_id": "ENC00557",
+    "retrieved_encounter_id": "ENC00360",
+    "similarity_score": 0.930376,
+    "retrieved_short_answer_es": "¿Nevus acrómico?"
+  },
+  {
+    "encounter_id": "ENC00558",
+    "retrieved_encounter_id": "ENC00225",
+    "similarity_score": 0.936592,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00559",
+    "retrieved_encounter_id": "ENC00538",
+    "similarity_score": 0.933676,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00560",
+    "retrieved_encounter_id": "ENC00569",
+    "similarity_score": 0.937085,
+    "retrieved_short_answer_es": "¿Verrugas blandas infecciosas?"
+  },
+  {
+    "encounter_id": "ENC00561",
+    "retrieved_encounter_id": "ENC00149",
+    "similarity_score": 0.921968,
+    "retrieved_short_answer_es": "¡Liquen atrófico! ¡No hay un método de tratamiento especial!"
+  },
+  {
+    "encounter_id": "ENC00562",
+    "retrieved_encounter_id": "ENC00159",
+    "similarity_score": 0.925067,
+    "retrieved_short_answer_es": "¿Dermatosis purpúrica pigmentada?"
+  },
+  {
+    "encounter_id": "ENC00563",
+    "retrieved_encounter_id": "ENC00358",
+    "similarity_score": 0.924656,
+    "retrieved_short_answer_es": "Neurodermatitis."
+  },
+  {
+    "encounter_id": "ENC00564",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.943863,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00565",
+    "retrieved_encounter_id": "ENC00466",
+    "similarity_score": 0.940958,
+    "retrieved_short_answer_es": "Acné"
+  },
+  {
+    "encounter_id": "ENC00566",
+    "retrieved_encounter_id": "ENC00487",
+    "similarity_score": 0.920835,
+    "retrieved_short_answer_es": "Hemangioma."
+  },
+  {
+    "encounter_id": "ENC00567",
+    "retrieved_encounter_id": "ENC00475",
+    "similarity_score": 0.909945,
+    "retrieved_short_answer_es": "Considerado como dermatosis neutrofílica febril."
+  },
+  {
+    "encounter_id": "ENC00568",
+    "retrieved_encounter_id": "ENC00126",
+    "similarity_score": 0.919603,
+    "retrieved_short_answer_es": "Consideración: ¿Tinea corporis?"
+  },
+  {
+    "encounter_id": "ENC00569",
+    "retrieved_encounter_id": "ENC00560",
+    "similarity_score": 0.937085,
+    "retrieved_short_answer_es": "Foliculitis por Malassezia"
+  },
+  {
+    "encounter_id": "ENC00570",
+    "retrieved_encounter_id": "ENC00254",
+    "similarity_score": 0.915163,
+    "retrieved_short_answer_es": "El estrato córneo es la capa protectora del tejido de la piel. No es aconsejable usar productos que exfolien el estrato córneo durante mucho tiempo, ya que esto puede dañar la función de barrera de la piel, dejándola sin inmunidad y la capacidad de resistir invasiones bacterianas externas. El uso de ciertos líquidos incluso puede llevar a la proliferación de folículos pilosos. Lavarse la cara con agua limpia es económico y respetuoso con el medio ambiente."
+  },
+  {
+    "encounter_id": "ENC00571",
+    "retrieved_encounter_id": "ENC00978",
+    "similarity_score": 0.933764,
+    "retrieved_short_answer_es": "Herpes simple"
+  },
+  {
+    "encounter_id": "ENC00572",
+    "retrieved_encounter_id": "ENC00579",
+    "similarity_score": 0.957701,
+    "retrieved_short_answer_es": "Síndrome de P"
+  },
+  {
+    "encounter_id": "ENC00573",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.930247,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00574",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.920099,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00575",
+    "retrieved_encounter_id": "ENC00977",
+    "similarity_score": 0.937119,
+    "retrieved_short_answer_es": "Considerar urticaria."
+  },
+  {
+    "encounter_id": "ENC00576",
+    "retrieved_encounter_id": "ENC00776",
+    "similarity_score": 0.890412,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00577",
+    "retrieved_encounter_id": "ENC00714",
+    "similarity_score": 0.917887,
+    "retrieved_short_answer_es": "La psoriasis puede ser completamente curada por la medicina tradicional china."
+  },
+  {
+    "encounter_id": "ENC00578",
+    "retrieved_encounter_id": "ENC00849",
+    "similarity_score": 0.902728,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00579",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.95877,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00580",
+    "retrieved_encounter_id": "ENC00415",
+    "similarity_score": 0.927818,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00581",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.912883,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00582",
+    "retrieved_encounter_id": "ENC00185",
+    "similarity_score": 0.898615,
+    "retrieved_short_answer_es": "Pobre bebé, este lunar no es fácil de manejar."
+  },
+  {
+    "encounter_id": "ENC00583",
+    "retrieved_encounter_id": "ENC00488",
+    "similarity_score": 0.910252,
+    "retrieved_short_answer_es": "Se puede realizar ventosas en el ombligo y se puede tomar gachas de semillas de coix por vía oral."
+  },
+  {
+    "encounter_id": "ENC00584",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.931461,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00585",
+    "retrieved_encounter_id": "ENC00952",
+    "similarity_score": 0.923485,
+    "retrieved_short_answer_es": "eccema queratósico"
+  },
+  {
+    "encounter_id": "ENC00586",
+    "retrieved_encounter_id": "ENC00963",
+    "similarity_score": 0.92758,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00587",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.921614,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00588",
+    "retrieved_encounter_id": "ENC00380",
+    "similarity_score": 0.929407,
+    "retrieved_short_answer_es": "Hay muy poco daño en la piel. Si hay grandes parches rojos y caspa en el tronco, debe considerarse como pitiriasis rosada."
+  },
+  {
+    "encounter_id": "ENC00589",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.952008,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00590",
+    "retrieved_encounter_id": "ENC00671",
+    "similarity_score": 0.916175,
+    "retrieved_short_answer_es": "Realice una radiografía para verificar deformidades óseas, luego examine la tasa de sedimentación de eritrocitos, anti-O y el factor reumatoide."
+  },
+  {
+    "encounter_id": "ENC00591",
+    "retrieved_encounter_id": "ENC00849",
+    "similarity_score": 0.907171,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00592",
+    "retrieved_encounter_id": "ENC00234",
+    "similarity_score": 0.940441,
+    "retrieved_short_answer_es": "1 ¿SK? 2 ¿AK?"
+  },
+  {
+    "encounter_id": "ENC00593",
+    "retrieved_encounter_id": "ENC00514",
+    "similarity_score": 0.913881,
+    "retrieved_short_answer_es": "Examen de hongos, Itraconazol"
+  },
+  {
+    "encounter_id": "ENC00594",
+    "retrieved_encounter_id": "ENC00516",
+    "similarity_score": 0.937439,
+    "retrieved_short_answer_es": "Piel Divina"
+  },
+  {
+    "encounter_id": "ENC00595",
+    "retrieved_encounter_id": "ENC00075",
+    "similarity_score": 0.931248,
+    "retrieved_short_answer_es": "¿Queratosis pilar?"
+  },
+  {
+    "encounter_id": "ENC00596",
+    "retrieved_encounter_id": "ENC00271",
+    "similarity_score": 0.924438,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00597",
+    "retrieved_encounter_id": "ENC00599",
+    "similarity_score": 0.88082,
+    "retrieved_short_answer_es": "Tiña del Cabello"
+  },
+  {
+    "encounter_id": "ENC00598",
+    "retrieved_encounter_id": "ENC00151",
+    "similarity_score": 0.928837,
+    "retrieved_short_answer_es": "¿LED?"
+  },
+  {
+    "encounter_id": "ENC00599",
+    "retrieved_encounter_id": "ENC00879",
+    "similarity_score": 0.919141,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00600",
+    "retrieved_encounter_id": "ENC00321",
+    "similarity_score": 0.923649,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00601",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.939148,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00602",
+    "retrieved_encounter_id": "ENC00104",
+    "similarity_score": 0.94632,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00603",
+    "retrieved_encounter_id": "ENC00277",
+    "similarity_score": 0.917611,
+    "retrieved_short_answer_es": "Herpes simple."
+  },
+  {
+    "encounter_id": "ENC00604",
+    "retrieved_encounter_id": "ENC00676",
+    "similarity_score": 0.917983,
+    "retrieved_short_answer_es": "Erupción fija por"
+  },
+  {
+    "encounter_id": "ENC00605",
+    "retrieved_encounter_id": "ENC00008",
+    "similarity_score": 0.915542,
+    "retrieved_short_answer_es": "¡Como el herpes zóster!"
+  },
+  {
+    "encounter_id": "ENC00606",
+    "retrieved_encounter_id": "ENC00432",
+    "similarity_score": 0.937974,
+    "retrieved_short_answer_es": "¿Varicela?"
+  },
+  {
+    "encounter_id": "ENC00607",
+    "retrieved_encounter_id": "ENC00909",
+    "similarity_score": 0.889064,
+    "retrieved_short_answer_es": "Linfangioma"
+  },
+  {
+    "encounter_id": "ENC00608",
+    "retrieved_encounter_id": "ENC00440",
+    "similarity_score": 0.933291,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00609",
+    "retrieved_encounter_id": "ENC00633",
+    "similarity_score": 0.940456,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00610",
+    "retrieved_encounter_id": "ENC00942",
+    "similarity_score": 0.92147,
+    "retrieved_short_answer_es": "Se puede dejar sin tratar."
+  },
+  {
+    "encounter_id": "ENC00611",
+    "retrieved_encounter_id": "ENC00280",
+    "similarity_score": 0.922688,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00612",
+    "retrieved_encounter_id": "ENC00783",
+    "similarity_score": 0.92805,
+    "retrieved_short_answer_es": "Nevus sebáceo"
+  },
+  {
+    "encounter_id": "ENC00613",
+    "retrieved_encounter_id": "ENC00198",
+    "similarity_score": 0.961832,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00614",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.938063,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00615",
+    "retrieved_encounter_id": "ENC00801",
+    "similarity_score": 0.921366,
+    "retrieved_short_answer_es": "¿Pitiriasis Rosada o Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00616",
+    "retrieved_encounter_id": "ENC00781",
+    "similarity_score": 0.938133,
+    "retrieved_short_answer_es": "Musgo Brillante"
+  },
+  {
+    "encounter_id": "ENC00617",
+    "retrieved_encounter_id": "ENC00755",
+    "similarity_score": 0.951045,
+    "retrieved_short_answer_es": "Use un poco de Ailuosong y tome Cetirizina o Loratadina por vía oral. Durante el tratamiento, coma más frutas y verduras y consuma menos comida picante."
+  },
+  {
+    "encounter_id": "ENC00618",
+    "retrieved_encounter_id": "ENC00071",
+    "similarity_score": 0.933331,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00619",
+    "retrieved_encounter_id": "ENC00083",
+    "similarity_score": 0.91819,
+    "retrieved_short_answer_es": "Dermatitis Periungueal Crónica"
+  },
+  {
+    "encounter_id": "ENC00620",
+    "retrieved_encounter_id": "ENC00631",
+    "similarity_score": 0.939256,
+    "retrieved_short_answer_es": "¿Histiocitosis?"
+  },
+  {
+    "encounter_id": "ENC00621",
+    "retrieved_encounter_id": "ENC00682",
+    "similarity_score": 0.934061,
+    "retrieved_short_answer_es": "¿Musgo brillante? Hagamos una prueba de patología para verificar."
+  },
+  {
+    "encounter_id": "ENC00622",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.917075,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00623",
+    "retrieved_encounter_id": "ENC00731",
+    "similarity_score": 0.909946,
+    "retrieved_short_answer_es": "¿Erupción fija por medicamento? Pura supos"
+  },
+  {
+    "encounter_id": "ENC00624",
+    "retrieved_encounter_id": "ENC00211",
+    "similarity_score": 0.94759,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00625",
+    "retrieved_encounter_id": "ENC00271",
+    "similarity_score": 0.919457,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00626",
+    "retrieved_encounter_id": "ENC00875",
+    "similarity_score": 0.914135,
+    "retrieved_short_answer_es": "dermatitis arenosa"
+  },
+  {
+    "encounter_id": "ENC00627",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.918349,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00628",
+    "retrieved_encounter_id": "ENC00152",
+    "similarity_score": 0.919311,
+    "retrieved_short_answer_es": "La cirugía es fundamental."
+  },
+  {
+    "encounter_id": "ENC00629",
+    "retrieved_encounter_id": "ENC00041",
+    "similarity_score": 0.925017,
+    "retrieved_short_answer_es": "Amiloidosis de la piel"
+  },
+  {
+    "encounter_id": "ENC00630",
+    "retrieved_encounter_id": "ENC00572",
+    "similarity_score": 0.952175,
+    "retrieved_short_answer_es": "Pustulosis Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00631",
+    "retrieved_encounter_id": "ENC00620",
+    "similarity_score": 0.939256,
+    "retrieved_short_answer_es": "Púrpura Alérgica"
+  },
+  {
+    "encounter_id": "ENC00632",
+    "retrieved_encounter_id": "ENC00215",
+    "similarity_score": 0.937773,
+    "retrieved_short_answer_es": "Psoriasis Pustulosa"
+  },
+  {
+    "encounter_id": "ENC00633",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.941088,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00634",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.917855,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00635",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.934549,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00636",
+    "retrieved_encounter_id": "ENC00915",
+    "similarity_score": 0.934329,
+    "retrieved_short_answer_es": "urticaria crónica"
+  },
+  {
+    "encounter_id": "ENC00637",
+    "retrieved_encounter_id": "ENC00516",
+    "similarity_score": 0.934667,
+    "retrieved_short_answer_es": "Piel Divina"
+  },
+  {
+    "encounter_id": "ENC00639",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.94396,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00640",
+    "retrieved_encounter_id": "ENC00671",
+    "similarity_score": 0.939867,
+    "retrieved_short_answer_es": "Realice una radiografía para verificar deformidades óseas, luego examine la tasa de sedimentación de eritrocitos, anti-O y el factor reumatoide."
+  },
+  {
+    "encounter_id": "ENC00641",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.941218,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00642",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.933676,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00643",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.931253,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00644",
+    "retrieved_encounter_id": "ENC00211",
+    "similarity_score": 0.947947,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00645",
+    "retrieved_encounter_id": "ENC00198",
+    "similarity_score": 0.931184,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00646",
+    "retrieved_encounter_id": "ENC00091",
+    "similarity_score": 0.926522,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00647",
+    "retrieved_encounter_id": "ENC00367",
+    "similarity_score": 0.931406,
+    "retrieved_short_answer_es": "¿Considerar neurodermatitis?"
+  },
+  {
+    "encounter_id": "ENC00648",
+    "retrieved_encounter_id": "ENC00265",
+    "similarity_score": 0.933586,
+    "retrieved_short_answer_es": "Considerando la urticaria, tome levocetirizina o loratadina por vía oral."
+  },
+  {
+    "encounter_id": "ENC00650",
+    "retrieved_encounter_id": "ENC00119",
+    "similarity_score": 0.930718,
+    "retrieved_short_answer_es": "Eczema crónico,"
+  },
+  {
+    "encounter_id": "ENC00651",
+    "retrieved_encounter_id": "ENC00487",
+    "similarity_score": 0.941951,
+    "retrieved_short_answer_es": "Hemangioma."
+  },
+  {
+    "encounter_id": "ENC00652",
+    "retrieved_encounter_id": "ENC00697",
+    "similarity_score": 0.939345,
+    "retrieved_short_answer_es": "Pápulas urticariales."
+  },
+  {
+    "encounter_id": "ENC00653",
+    "retrieved_encounter_id": "ENC00762",
+    "similarity_score": 0.935473,
+    "retrieved_short_answer_es": "Algo similar a la psoriasis."
+  },
+  {
+    "encounter_id": "ENC00654",
+    "retrieved_encounter_id": "ENC00443",
+    "similarity_score": 0.904723,
+    "retrieved_short_answer_es": "Ictiosis"
+  },
+  {
+    "encounter_id": "ENC00655",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.927696,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00656",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.92666,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC00657",
+    "retrieved_encounter_id": "ENC00193",
+    "similarity_score": 0.928269,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00658",
+    "retrieved_encounter_id": "ENC00467",
+    "similarity_score": 0.910867,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00659",
+    "retrieved_encounter_id": "ENC00917",
+    "similarity_score": 0.875088,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00660",
+    "retrieved_encounter_id": "ENC00256",
+    "similarity_score": 0.933531,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00661",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.932652,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00662",
+    "retrieved_encounter_id": "ENC00371",
+    "similarity_score": 0.908329,
+    "retrieved_short_answer_es": "Varicela"
+  },
+  {
+    "encounter_id": "ENC00663",
+    "retrieved_encounter_id": "ENC00630",
+    "similarity_score": 0.932675,
+    "retrieved_short_answer_es": "Erisipela complicada por infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00664",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.934637,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00665",
+    "retrieved_encounter_id": "ENC00984",
+    "similarity_score": 0.928528,
+    "retrieved_short_answer_es": "pioderma"
+  },
+  {
+    "encounter_id": "ENC00666",
+    "retrieved_encounter_id": "ENC00275",
+    "similarity_score": 0.91968,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00667",
+    "retrieved_encounter_id": "ENC00232",
+    "similarity_score": 0.925174,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00668",
+    "retrieved_encounter_id": "ENC00742",
+    "similarity_score": 0.91985,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00669",
+    "retrieved_encounter_id": "ENC00477",
+    "similarity_score": 0.92987,
+    "retrieved_short_answer_es": "Verifique si hay una falta de zinc."
+  },
+  {
+    "encounter_id": "ENC00670",
+    "retrieved_encounter_id": "ENC00640",
+    "similarity_score": 0.93481,
+    "retrieved_short_answer_es": "¿Ampollas? ¿Es este el único lugar en tu cuerpo?"
+  },
+  {
+    "encounter_id": "ENC00671",
+    "retrieved_encounter_id": "ENC00640",
+    "similarity_score": 0.939867,
+    "retrieved_short_answer_es": "¿Ampollas? ¿Es este el único lugar en tu cuerpo?"
+  },
+  {
+    "encounter_id": "ENC00672",
+    "retrieved_encounter_id": "ENC00392",
+    "similarity_score": 0.914254,
+    "retrieved_short_answer_es": "Apoyando la Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00673",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.94029,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00674",
+    "retrieved_encounter_id": "ENC00755",
+    "similarity_score": 0.937479,
+    "retrieved_short_answer_es": "Use un poco de Ailuosong y tome Cetirizina o Loratadina por vía oral. Durante el tratamiento, coma más frutas y verduras y consuma menos comida picante."
+  },
+  {
+    "encounter_id": "ENC00675",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.927915,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00676",
+    "retrieved_encounter_id": "ENC00104",
+    "similarity_score": 0.939259,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00677",
+    "retrieved_encounter_id": "ENC00475",
+    "similarity_score": 0.943209,
+    "retrieved_short_answer_es": "Considerado como dermatosis neutrofílica febril."
+  },
+  {
+    "encounter_id": "ENC00678",
+    "retrieved_encounter_id": "ENC00249",
+    "similarity_score": 0.92756,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00679",
+    "retrieved_encounter_id": "ENC00534",
+    "similarity_score": 0.932722,
+    "retrieved_short_answer_es": "Considere el pie de atleta fúngico"
+  },
+  {
+    "encounter_id": "ENC00680",
+    "retrieved_encounter_id": "ENC00379",
+    "similarity_score": 0.920125,
+    "retrieved_short_answer_es": "Verruga Plana"
+  },
+  {
+    "encounter_id": "ENC00681",
+    "retrieved_encounter_id": "ENC00228",
+    "similarity_score": 0.913203,
+    "retrieved_short_answer_es": "Agujero de dil"
+  },
+  {
+    "encounter_id": "ENC00682",
+    "retrieved_encounter_id": "ENC00473",
+    "similarity_score": 0.940789,
+    "retrieved_short_answer_es": "Nevus anémico"
+  },
+  {
+    "encounter_id": "ENC00683",
+    "retrieved_encounter_id": "ENC00523",
+    "similarity_score": 0.90867,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00685",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.923726,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00686",
+    "retrieved_encounter_id": "ENC00486",
+    "similarity_score": 0.929401,
+    "retrieved_short_answer_es": "Erupción Liquenoide por Fricción"
+  },
+  {
+    "encounter_id": "ENC00687",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.940989,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00688",
+    "retrieved_encounter_id": "ENC00690",
+    "similarity_score": 0.921568,
+    "retrieved_short_answer_es": "Ungüento de Eritromicina"
+  },
+  {
+    "encounter_id": "ENC00689",
+    "retrieved_encounter_id": "ENC00198",
+    "similarity_score": 0.953646,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00690",
+    "retrieved_encounter_id": "ENC00688",
+    "similarity_score": 0.921568,
+    "retrieved_short_answer_es": "Verruga común grande"
+  },
+  {
+    "encounter_id": "ENC00691",
+    "retrieved_encounter_id": "ENC00424",
+    "similarity_score": 0.946762,
+    "retrieved_short_answer_es": "Amiloidosis de la piel"
+  },
+  {
+    "encounter_id": "ENC00692",
+    "retrieved_encounter_id": "ENC00528",
+    "similarity_score": 0.916259,
+    "retrieved_short_answer_es": "Acné"
+  },
+  {
+    "encounter_id": "ENC00693",
+    "retrieved_encounter_id": "ENC00810",
+    "similarity_score": 0.946625,
+    "retrieved_short_answer_es": "Verruga plantar"
+  },
+  {
+    "encounter_id": "ENC00694",
+    "retrieved_encounter_id": "ENC00389",
+    "similarity_score": 0.939769,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00695",
+    "retrieved_encounter_id": "ENC00332",
+    "similarity_score": 0.927358,
+    "retrieved_short_answer_es": "Liquen Escleroso"
+  },
+  {
+    "encounter_id": "ENC00696",
+    "retrieved_encounter_id": "ENC00342",
+    "similarity_score": 0.915704,
+    "retrieved_short_answer_es": "Debería ser la muñeca."
+  },
+  {
+    "encounter_id": "ENC00697",
+    "retrieved_encounter_id": "ENC00963",
+    "similarity_score": 0.945429,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00698",
+    "retrieved_encounter_id": "ENC00158",
+    "similarity_score": 0.927759,
+    "retrieved_short_answer_es": "Psoriasis."
+  },
+  {
+    "encounter_id": "ENC00699",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.933616,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00700",
+    "retrieved_encounter_id": "ENC00877",
+    "similarity_score": 0.922837,
+    "retrieved_short_answer_es": "Yigenmin (un medicamento probiótico tradicional chino) debería funcionar."
+  },
+  {
+    "encounter_id": "ENC00701",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.924858,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00702",
+    "retrieved_encounter_id": "ENC00804",
+    "similarity_score": 0.927624,
+    "retrieved_short_answer_es": "¡Pitiriasis Blanca!"
+  },
+  {
+    "encounter_id": "ENC00703",
+    "retrieved_encounter_id": "ENC00330",
+    "similarity_score": 0.91594,
+    "retrieved_short_answer_es": "Herpes Zóster Infantil"
+  },
+  {
+    "encounter_id": "ENC00704",
+    "retrieved_encounter_id": "ENC00978",
+    "similarity_score": 0.919886,
+    "retrieved_short_answer_es": "Herpes simple"
+  },
+  {
+    "encounter_id": "ENC00705",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.932522,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00706",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.897113,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00707",
+    "retrieved_encounter_id": "ENC00307",
+    "similarity_score": 0.909603,
+    "retrieved_short_answer_es": "Vesicular"
+  },
+  {
+    "encounter_id": "ENC00708",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.936012,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00709",
+    "retrieved_encounter_id": "ENC00383",
+    "similarity_score": 0.909319,
+    "retrieved_short_answer_es": "Considere el vitiligo"
+  },
+  {
+    "encounter_id": "ENC00710",
+    "retrieved_encounter_id": "ENC00989",
+    "similarity_score": 0.918142,
+    "retrieved_short_answer_es": "linfangioma"
+  },
+  {
+    "encounter_id": "ENC00711",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.941024,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00712",
+    "retrieved_encounter_id": "ENC00953",
+    "similarity_score": 0.930322,
+    "retrieved_short_answer_es": "urticaria aguda."
+  },
+  {
+    "encounter_id": "ENC00713",
+    "retrieved_encounter_id": "ENC00547",
+    "similarity_score": 0.917903,
+    "retrieved_short_answer_es": "Estrías."
+  },
+  {
+    "encounter_id": "ENC00714",
+    "retrieved_encounter_id": "ENC00013",
+    "similarity_score": 0.928674,
+    "retrieved_short_answer_es": "Considere la Dermatitis Estásica, también conocida como Eczema Venoso."
+  },
+  {
+    "encounter_id": "ENC00715",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.912696,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00716",
+    "retrieved_encounter_id": "ENC00647",
+    "similarity_score": 0.930082,
+    "retrieved_short_answer_es": "Verrugas, láser"
+  },
+  {
+    "encounter_id": "ENC00717",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.9321,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00718",
+    "retrieved_encounter_id": "ENC00826",
+    "similarity_score": 0.927028,
+    "retrieved_short_answer_es": "Herpes Simplex"
+  },
+  {
+    "encounter_id": "ENC00719",
+    "retrieved_encounter_id": "ENC00777",
+    "similarity_score": 0.932801,
+    "retrieved_short_answer_es": "¿Miliaria?"
+  },
+  {
+    "encounter_id": "ENC00720",
+    "retrieved_encounter_id": "ENC00275",
+    "similarity_score": 0.916147,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00721",
+    "retrieved_encounter_id": "ENC00133",
+    "similarity_score": 0.907569,
+    "retrieved_short_answer_es": "eccema"
+  },
+  {
+    "encounter_id": "ENC00722",
+    "retrieved_encounter_id": "ENC00157",
+    "similarity_score": 0.939056,
+    "retrieved_short_answer_es": "Es onicomicosis... La onicomicosis es causada por una infección fúngica..."
+  },
+  {
+    "encounter_id": "ENC00723",
+    "retrieved_encounter_id": "ENC00386",
+    "similarity_score": 0.922242,
+    "retrieved_short_answer_es": "Fibroma"
+  },
+  {
+    "encounter_id": "ENC00724",
+    "retrieved_encounter_id": "ENC00579",
+    "similarity_score": 0.957751,
+    "retrieved_short_answer_es": "Síndrome de P"
+  },
+  {
+    "encounter_id": "ENC00725",
+    "retrieved_encounter_id": "ENC00178",
+    "similarity_score": 0.933461,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00726",
+    "retrieved_encounter_id": "ENC00601",
+    "similarity_score": 0.926519,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00727",
+    "retrieved_encounter_id": "ENC00519",
+    "similarity_score": 0.917267,
+    "retrieved_short_answer_es": "El eccema debe ser tratado con precisión. Evite el contacto con agua, aplique ungüento externamente, use guantes de algodón y calcetines de algodón. Tome gránulos orales de Astragalus membranaceus y pastillas de Vitamina E. Pruebe esto y vea si hay algún cambio después de un mes."
+  },
+  {
+    "encounter_id": "ENC00728",
+    "retrieved_encounter_id": "ENC00802",
+    "similarity_score": 0.938368,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00729",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.933871,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00730",
+    "retrieved_encounter_id": "ENC00973",
+    "similarity_score": 0.92518,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00731",
+    "retrieved_encounter_id": "ENC00676",
+    "similarity_score": 0.929664,
+    "retrieved_short_answer_es": "Erupción fija por"
+  },
+  {
+    "encounter_id": "ENC00732",
+    "retrieved_encounter_id": "ENC00316",
+    "similarity_score": 0.917739,
+    "retrieved_short_answer_es": "¿Queratosis Circunferencial?"
+  },
+  {
+    "encounter_id": "ENC00733",
+    "retrieved_encounter_id": "ENC00671",
+    "similarity_score": 0.929989,
+    "retrieved_short_answer_es": "Realice una radiografía para verificar deformidades óseas, luego examine la tasa de sedimentación de eritrocitos, anti-O y el factor reumatoide."
+  },
+  {
+    "encounter_id": "ENC00734",
+    "retrieved_encounter_id": "ENC00880",
+    "similarity_score": 0.930915,
+    "retrieved_short_answer_es": "¿Urticaria pigmentosa?"
+  },
+  {
+    "encounter_id": "ENC00735",
+    "retrieved_encounter_id": "ENC00737",
+    "similarity_score": 0.943219,
+    "retrieved_short_answer_es": "Debería ser dermatitis."
+  },
+  {
+    "encounter_id": "ENC00736",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.940436,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00737",
+    "retrieved_encounter_id": "ENC00416",
+    "similarity_score": 0.957475,
+    "retrieved_short_answer_es": "¡Causado por picaduras de pulgas!"
+  },
+  {
+    "encounter_id": "ENC00738",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.937139,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00739",
+    "retrieved_encounter_id": "ENC00488",
+    "similarity_score": 0.902698,
+    "retrieved_short_answer_es": "Se puede realizar ventosas en el ombligo y se puede tomar gachas de semillas de coix por vía oral."
+  },
+  {
+    "encounter_id": "ENC00740",
+    "retrieved_encounter_id": "ENC00633",
+    "similarity_score": 0.925822,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00741",
+    "retrieved_encounter_id": "ENC00227",
+    "similarity_score": 0.936259,
+    "retrieved_short_answer_es": "¿Congénito?"
+  },
+  {
+    "encounter_id": "ENC00742",
+    "retrieved_encounter_id": "ENC00008",
+    "similarity_score": 0.92892,
+    "retrieved_short_answer_es": "¡Como el herpes zóster!"
+  },
+  {
+    "encounter_id": "ENC00743",
+    "retrieved_encounter_id": "ENC00984",
+    "similarity_score": 0.926322,
+    "retrieved_short_answer_es": "pioderma"
+  },
+  {
+    "encounter_id": "ENC00744",
+    "retrieved_encounter_id": "ENC00543",
+    "similarity_score": 0.949677,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00745",
+    "retrieved_encounter_id": "ENC00448",
+    "similarity_score": 0.94268,
+    "retrieved_short_answer_es": "Cic"
+  },
+  {
+    "encounter_id": "ENC00746",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.951961,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00747",
+    "retrieved_encounter_id": "ENC00932",
+    "similarity_score": 0.904112,
+    "retrieved_short_answer_es": "Debería ser onicomicosis."
+  },
+  {
+    "encounter_id": "ENC00748",
+    "retrieved_encounter_id": "ENC00671",
+    "similarity_score": 0.932629,
+    "retrieved_short_answer_es": "Realice una radiografía para verificar deformidades óseas, luego examine la tasa de sedimentación de eritrocitos, anti-O y el factor reumatoide."
+  },
+  {
+    "encounter_id": "ENC00749",
+    "retrieved_encounter_id": "ENC00278",
+    "similarity_score": 0.930944,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00750",
+    "retrieved_encounter_id": "ENC00167",
+    "similarity_score": 0.940358,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00751",
+    "retrieved_encounter_id": "ENC00592",
+    "similarity_score": 0.917886,
+    "retrieved_short_answer_es": "Atrofia moteada"
+  },
+  {
+    "encounter_id": "ENC00752",
+    "retrieved_encounter_id": "ENC00475",
+    "similarity_score": 0.946855,
+    "retrieved_short_answer_es": "Considerado como dermatosis neutrofílica febril."
+  },
+  {
+    "encounter_id": "ENC00753",
+    "retrieved_encounter_id": "ENC00848",
+    "similarity_score": 0.926326,
+    "retrieved_short_answer_es": "Sugiere examen patológico Excluir MF"
+  },
+  {
+    "encounter_id": "ENC00754",
+    "retrieved_encounter_id": "ENC00405",
+    "similarity_score": 0.930138,
+    "retrieved_short_answer_es": "Leucodermia Solar"
+  },
+  {
+    "encounter_id": "ENC00755",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.951045,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00756",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.938431,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00757",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.928908,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00758",
+    "retrieved_encounter_id": "ENC00633",
+    "similarity_score": 0.91543,
+    "retrieved_short_answer_es": "Tiña crural"
+  },
+  {
+    "encounter_id": "ENC00759",
+    "retrieved_encounter_id": "ENC00166",
+    "similarity_score": 0.933044,
+    "retrieved_short_answer_es": "Psoriasis Vulgaris"
+  },
+  {
+    "encounter_id": "ENC00760",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.950017,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00761",
+    "retrieved_encounter_id": "ENC00488",
+    "similarity_score": 0.916836,
+    "retrieved_short_answer_es": "Se puede realizar ventosas en el ombligo y se puede tomar gachas de semillas de coix por vía oral."
+  },
+  {
+    "encounter_id": "ENC00762",
+    "retrieved_encounter_id": "ENC00364",
+    "similarity_score": 0.945017,
+    "retrieved_short_answer_es": "Dermatitis arenosa."
+  },
+  {
+    "encounter_id": "ENC00763",
+    "retrieved_encounter_id": "ENC00752",
+    "similarity_score": 0.926437,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00764",
+    "retrieved_encounter_id": "ENC00741",
+    "similarity_score": 0.929507,
+    "retrieved_short_answer_es": "Dermatitis por Escarabajo"
+  },
+  {
+    "encounter_id": "ENC00765",
+    "retrieved_encounter_id": "ENC00785",
+    "similarity_score": 0.933278,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00766",
+    "retrieved_encounter_id": "ENC00427",
+    "similarity_score": 0.916292,
+    "retrieved_short_answer_es": "Tiña Corporal"
+  },
+  {
+    "encounter_id": "ENC00767",
+    "retrieved_encounter_id": "ENC00448",
+    "similarity_score": 0.940333,
+    "retrieved_short_answer_es": "Cic"
+  },
+  {
+    "encounter_id": "ENC00768",
+    "retrieved_encounter_id": "ENC00965",
+    "similarity_score": 0.904959,
+    "retrieved_short_answer_es": "Parece que es un habón."
+  },
+  {
+    "encounter_id": "ENC00769",
+    "retrieved_encounter_id": "ENC00092",
+    "similarity_score": 0.973808,
+    "retrieved_short_answer_es": "Roseola"
+  },
+  {
+    "encounter_id": "ENC00770",
+    "retrieved_encounter_id": "ENC00746",
+    "similarity_score": 0.948398,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00771",
+    "retrieved_encounter_id": "ENC00056",
+    "similarity_score": 0.918329,
+    "retrieved_short_answer_es": "Erupción cut"
+  },
+  {
+    "encounter_id": "ENC00772",
+    "retrieved_encounter_id": "ENC00519",
+    "similarity_score": 0.926384,
+    "retrieved_short_answer_es": "El eccema debe ser tratado con precisión. Evite el contacto con agua, aplique ungüento externamente, use guantes de algodón y calcetines de algodón. Tome gránulos orales de Astragalus membranaceus y pastillas de Vitamina E. Pruebe esto y vea si hay algún cambio después de un mes."
+  },
+  {
+    "encounter_id": "ENC00773",
+    "retrieved_encounter_id": "ENC00227",
+    "similarity_score": 0.941721,
+    "retrieved_short_answer_es": "¿Congénito?"
+  },
+  {
+    "encounter_id": "ENC00774",
+    "retrieved_encounter_id": "ENC00382",
+    "similarity_score": 0.923956,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00775",
+    "retrieved_encounter_id": "ENC00214",
+    "similarity_score": 0.933973,
+    "retrieved_short_answer_es": "Parece ser eccema en las manos, no sarna."
+  },
+  {
+    "encounter_id": "ENC00776",
+    "retrieved_encounter_id": "ENC00295",
+    "similarity_score": 0.92417,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00777",
+    "retrieved_encounter_id": "ENC00245",
+    "similarity_score": 0.936645,
+    "retrieved_short_answer_es": "Dermatitis de Contacto"
+  },
+  {
+    "encounter_id": "ENC00778",
+    "retrieved_encounter_id": "ENC00711",
+    "similarity_score": 0.930076,
+    "retrieved_short_answer_es": "Artritis Psoriásica"
+  },
+  {
+    "encounter_id": "ENC00779",
+    "retrieved_encounter_id": "ENC00735",
+    "similarity_score": 0.942019,
+    "retrieved_short_answer_es": "La condición es el resultado del rascado repetido del paciente. Este paciente no es muy joven, ¿verdad? ¡Su piel está tan seca! Reducir la frecuencia de lavado y rascado, y aplicar un poco de ungüento general, mejorará rápidamente la condición."
+  },
+  {
+    "encounter_id": "ENC00780",
+    "retrieved_encounter_id": "ENC00129",
+    "similarity_score": 0.931617,
+    "retrieved_short_answer_es": "Esto es acné."
+  },
+  {
+    "encounter_id": "ENC00781",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.94003,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00782",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.949413,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00783",
+    "retrieved_encounter_id": "ENC00612",
+    "similarity_score": 0.92805,
+    "retrieved_short_answer_es": "Fibroma"
+  },
+  {
+    "encounter_id": "ENC00784",
+    "retrieved_encounter_id": "ENC00875",
+    "similarity_score": 0.918199,
+    "retrieved_short_answer_es": "dermatitis arenosa"
+  },
+  {
+    "encounter_id": "ENC00785",
+    "retrieved_encounter_id": "ENC00765",
+    "similarity_score": 0.933278,
+    "retrieved_short_answer_es": "Consideración: Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00786",
+    "retrieved_encounter_id": "ENC00722",
+    "similarity_score": 0.925865,
+    "retrieved_short_answer_es": "Tiña."
+  },
+  {
+    "encounter_id": "ENC00787",
+    "retrieved_encounter_id": "ENC00305",
+    "similarity_score": 0.926238,
+    "retrieved_short_answer_es": "Eczema Agudo"
+  },
+  {
+    "encounter_id": "ENC00788",
+    "retrieved_encounter_id": "ENC00008",
+    "similarity_score": 0.951102,
+    "retrieved_short_answer_es": "¡Como el herpes zóster!"
+  },
+  {
+    "encounter_id": "ENC00789",
+    "retrieved_encounter_id": "ENC00689",
+    "similarity_score": 0.921371,
+    "retrieved_short_answer_es": "Eczema Crónico"
+  },
+  {
+    "encounter_id": "ENC00790",
+    "retrieved_encounter_id": "ENC00632",
+    "similarity_score": 0.911045,
+    "retrieved_short_answer_es": "30 gramos de Tribulus terrestris"
+  },
+  {
+    "encounter_id": "ENC00791",
+    "retrieved_encounter_id": "ENC00952",
+    "similarity_score": 0.931035,
+    "retrieved_short_answer_es": "eccema queratósico"
+  },
+  {
+    "encounter_id": "ENC00792",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.932962,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00793",
+    "retrieved_encounter_id": "ENC00416",
+    "similarity_score": 0.951724,
+    "retrieved_short_answer_es": "¡Causado por picaduras de pulgas!"
+  },
+  {
+    "encounter_id": "ENC00794",
+    "retrieved_encounter_id": "ENC00261",
+    "similarity_score": 0.935664,
+    "retrieved_short_answer_es": "Prúrigo, intenta usar parches Fujining."
+  },
+  {
+    "encounter_id": "ENC00795",
+    "retrieved_encounter_id": "ENC00952",
+    "similarity_score": 0.924088,
+    "retrieved_short_answer_es": "eccema queratósico"
+  },
+  {
+    "encounter_id": "ENC00796",
+    "retrieved_encounter_id": "ENC00886",
+    "similarity_score": 0.947533,
+    "retrieved_short_answer_es": "Según los síntomas que has descrito y la foto, debería ser queloide. No hay necesidad de pensar en sífilis secundaria en este momento."
+  },
+  {
+    "encounter_id": "ENC00797",
+    "retrieved_encounter_id": "ENC00991",
+    "similarity_score": 0.930733,
+    "retrieved_short_answer_es": "verruga plana"
+  },
+  {
+    "encounter_id": "ENC00798",
+    "retrieved_encounter_id": "ENC00370",
+    "similarity_score": 0.932351,
+    "retrieved_short_answer_es": "Nevus acrómico."
+  },
+  {
+    "encounter_id": "ENC00799",
+    "retrieved_encounter_id": "ENC00466",
+    "similarity_score": 0.941646,
+    "retrieved_short_answer_es": "Acné"
+  },
+  {
+    "encounter_id": "ENC00800",
+    "retrieved_encounter_id": "ENC00139",
+    "similarity_score": 0.904779,
+    "retrieved_short_answer_es": "¿Leucoplasia idiopática?"
+  },
+  {
+    "encounter_id": "ENC00801",
+    "retrieved_encounter_id": "ENC00615",
+    "similarity_score": 0.921366,
+    "retrieved_short_answer_es": "Hipopigmentación postinflamatoria"
+  },
+  {
+    "encounter_id": "ENC00802",
+    "retrieved_encounter_id": "ENC00728",
+    "similarity_score": 0.938368,
+    "retrieved_short_answer_es": "Verruga"
+  },
+  {
+    "encounter_id": "ENC00803",
+    "retrieved_encounter_id": "ENC00770",
+    "similarity_score": 0.934836,
+    "retrieved_short_answer_es": "Parece ser herpes zóster."
+  },
+  {
+    "encounter_id": "ENC00804",
+    "retrieved_encounter_id": "ENC00702",
+    "similarity_score": 0.927624,
+    "retrieved_short_answer_es": "Alergia"
+  },
+  {
+    "encounter_id": "ENC00805",
+    "retrieved_encounter_id": "ENC00008",
+    "similarity_score": 0.868257,
+    "retrieved_short_answer_es": "¡Como el herpes zóster!"
+  },
+  {
+    "encounter_id": "ENC00806",
+    "retrieved_encounter_id": "ENC00610",
+    "similarity_score": 0.893122,
+    "retrieved_short_answer_es": "Verrugas filiformes, eliminadas por ionización o láser."
+  },
+  {
+    "encounter_id": "ENC00807",
+    "retrieved_encounter_id": "ENC00456",
+    "similarity_score": 0.918299,
+    "retrieved_short_answer_es": "Debería buscar tratamiento con el uso externo de la medicina tradicional china, que implica medicamentos con límites de toxicidad fuerte."
+  },
+  {
+    "encounter_id": "ENC00808",
+    "retrieved_encounter_id": "ENC00848",
+    "similarity_score": 0.938409,
+    "retrieved_short_answer_es": "Sugiere examen patológico Excluir MF"
+  },
+  {
+    "encounter_id": "ENC00809",
+    "retrieved_encounter_id": "ENC00101",
+    "similarity_score": 0.935742,
+    "retrieved_short_answer_es": "Considerando la dishidrosis, se agrava con las estaciones, y no hay un buen método de tratamiento."
+  },
+  {
+    "encounter_id": "ENC00810",
+    "retrieved_encounter_id": "ENC00373",
+    "similarity_score": 0.949094,
+    "retrieved_short_answer_es": "Es solo un callo, ¿verdad? Las verrugas no crecen así."
+  },
+  {
+    "encounter_id": "ENC00811",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.928843,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00812",
+    "retrieved_encounter_id": "ENC00459",
+    "similarity_score": 0.935937,
+    "retrieved_short_answer_es": "Paroniquia ..."
+  },
+  {
+    "encounter_id": "ENC00813",
+    "retrieved_encounter_id": "ENC00462",
+    "similarity_score": 0.937677,
+    "retrieved_short_answer_es": "Nevus sebáceo"
+  },
+  {
+    "encounter_id": "ENC00814",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.929636,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00815",
+    "retrieved_encounter_id": "ENC00785",
+    "similarity_score": 0.921179,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00816",
+    "retrieved_encounter_id": "ENC00440",
+    "similarity_score": 0.914905,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00817",
+    "retrieved_encounter_id": "ENC00755",
+    "similarity_score": 0.910741,
+    "retrieved_short_answer_es": "Use un poco de Ailuosong y tome Cetirizina o Loratadina por vía oral. Durante el tratamiento, coma más frutas y verduras y consuma menos comida picante."
+  },
+  {
+    "encounter_id": "ENC00818",
+    "retrieved_encounter_id": "ENC00643",
+    "similarity_score": 0.914769,
+    "retrieved_short_answer_es": "No se puede descartar un diagnóstico de ampolla simple."
+  },
+  {
+    "encounter_id": "ENC00819",
+    "retrieved_encounter_id": "ENC00231",
+    "similarity_score": 0.906142,
+    "retrieved_short_answer_es": "Infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00820",
+    "retrieved_encounter_id": "ENC00676",
+    "similarity_score": 0.92656,
+    "retrieved_short_answer_es": "Erupción fija por"
+  },
+  {
+    "encounter_id": "ENC00821",
+    "retrieved_encounter_id": "ENC00799",
+    "similarity_score": 0.911129,
+    "retrieved_short_answer_es": "¿Linfangioma? ¿R-D?"
+  },
+  {
+    "encounter_id": "ENC00822",
+    "retrieved_encounter_id": "ENC00955",
+    "similarity_score": 0.942152,
+    "retrieved_short_answer_es": "Necesito ejecutar algunas pruebas."
+  },
+  {
+    "encounter_id": "ENC00823",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.924718,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00824",
+    "retrieved_encounter_id": "ENC00696",
+    "similarity_score": 0.909134,
+    "retrieved_short_answer_es": "Tiña Capitis"
+  },
+  {
+    "encounter_id": "ENC00825",
+    "retrieved_encounter_id": "ENC00083",
+    "similarity_score": 0.906873,
+    "retrieved_short_answer_es": "Dermatitis Periungueal Crónica"
+  },
+  {
+    "encounter_id": "ENC00826",
+    "retrieved_encounter_id": "ENC00455",
+    "similarity_score": 0.928528,
+    "retrieved_short_answer_es": "El diagnóstico inicial es: Eczema Infantil."
+  },
+  {
+    "encounter_id": "ENC00827",
+    "retrieved_encounter_id": "ENC00407",
+    "similarity_score": 0.93608,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00828",
+    "retrieved_encounter_id": "ENC00681",
+    "similarity_score": 0.893304,
+    "retrieved_short_answer_es": "Xian, Tiña Versicolor,"
+  },
+  {
+    "encounter_id": "ENC00829",
+    "retrieved_encounter_id": "ENC00677",
+    "similarity_score": 0.93519,
+    "retrieved_short_answer_es": "¿Esporotricosis?"
+  },
+  {
+    "encounter_id": "ENC00830",
+    "retrieved_encounter_id": "ENC00612",
+    "similarity_score": 0.917645,
+    "retrieved_short_answer_es": "Fibroma"
+  },
+  {
+    "encounter_id": "ENC00831",
+    "retrieved_encounter_id": "ENC00348",
+    "similarity_score": 0.923101,
+    "retrieved_short_answer_es": "Urticaria!!!!!!!"
+  },
+  {
+    "encounter_id": "ENC00832",
+    "retrieved_encounter_id": "ENC00465",
+    "similarity_score": 0.920914,
+    "retrieved_short_answer_es": "También necesitamos descartar el nevus verrugoso."
+  },
+  {
+    "encounter_id": "ENC00833",
+    "retrieved_encounter_id": "ENC00101",
+    "similarity_score": 0.947059,
+    "retrieved_short_answer_es": "Considerando la dishidrosis, se agrava con las estaciones, y no hay un buen método de tratamiento."
+  },
+  {
+    "encounter_id": "ENC00834",
+    "retrieved_encounter_id": "ENC00190",
+    "similarity_score": 0.911366,
+    "retrieved_short_answer_es": "Miliaria"
+  },
+  {
+    "encounter_id": "ENC00835",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.922407,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00836",
+    "retrieved_encounter_id": "ENC00454",
+    "similarity_score": 0.939394,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00837",
+    "retrieved_encounter_id": "ENC00094",
+    "similarity_score": 0.936077,
+    "retrieved_short_answer_es": "Sangrado capilar, púrpura"
+  },
+  {
+    "encounter_id": "ENC00838",
+    "retrieved_encounter_id": "ENC00952",
+    "similarity_score": 0.936759,
+    "retrieved_short_answer_es": "eccema queratósico"
+  },
+  {
+    "encounter_id": "ENC00839",
+    "retrieved_encounter_id": "ENC00392",
+    "similarity_score": 0.91651,
+    "retrieved_short_answer_es": "Apoyando la Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00840",
+    "retrieved_encounter_id": "ENC00545",
+    "similarity_score": 0.912511,
+    "retrieved_short_answer_es": "Para los forúnculos, los antibióticos son es"
+  },
+  {
+    "encounter_id": "ENC00841",
+    "retrieved_encounter_id": "ENC00437",
+    "similarity_score": 0.910176,
+    "retrieved_short_answer_es": "Dermatitis por Escarabajo"
+  },
+  {
+    "encounter_id": "ENC00842",
+    "retrieved_encounter_id": "ENC00379",
+    "similarity_score": 0.918659,
+    "retrieved_short_answer_es": "Verruga Plana"
+  },
+  {
+    "encounter_id": "ENC00843",
+    "retrieved_encounter_id": "ENC00321",
+    "similarity_score": 0.9433,
+    "retrieved_short_answer_es": "Culebrilla"
+  },
+  {
+    "encounter_id": "ENC00844",
+    "retrieved_encounter_id": "ENC00101",
+    "similarity_score": 0.934362,
+    "retrieved_short_answer_es": "Considerando la dishidrosis, se agrava con las estaciones, y no hay un buen método de tratamiento."
+  },
+  {
+    "encounter_id": "ENC00845",
+    "retrieved_encounter_id": "ENC00519",
+    "similarity_score": 0.924422,
+    "retrieved_short_answer_es": "El eccema debe ser tratado con precisión. Evite el contacto con agua, aplique ungüento externamente, use guantes de algodón y calcetines de algodón. Tome gránulos orales de Astragalus membranaceus y pastillas de Vitamina E. Pruebe esto y vea si hay algún cambio después de un mes."
+  },
+  {
+    "encounter_id": "ENC00846",
+    "retrieved_encounter_id": "ENC00984",
+    "similarity_score": 0.896298,
+    "retrieved_short_answer_es": "pioderma"
+  },
+  {
+    "encounter_id": "ENC00847",
+    "retrieved_encounter_id": "ENC00425",
+    "similarity_score": 0.925133,
+    "retrieved_short_answer_es": "Acrodermatitis crónica"
+  },
+  {
+    "encounter_id": "ENC00848",
+    "retrieved_encounter_id": "ENC00808",
+    "similarity_score": 0.938409,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00849",
+    "retrieved_encounter_id": "ENC00166",
+    "similarity_score": 0.951212,
+    "retrieved_short_answer_es": "Psoriasis Vulgaris"
+  },
+  {
+    "encounter_id": "ENC00850",
+    "retrieved_encounter_id": "ENC00579",
+    "similarity_score": 0.908522,
+    "retrieved_short_answer_es": "Síndrome de P"
+  },
+  {
+    "encounter_id": "ENC00851",
+    "retrieved_encounter_id": "ENC00372",
+    "similarity_score": 0.921502,
+    "retrieved_short_answer_es": "Acrodermatitis Crónica"
+  },
+  {
+    "encounter_id": "ENC00852",
+    "retrieved_encounter_id": "ENC00291",
+    "similarity_score": 0.927193,
+    "retrieved_short_answer_es": "¿Esporotricosis?"
+  },
+  {
+    "encounter_id": "ENC00853",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.950474,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00854",
+    "retrieved_encounter_id": "ENC00519",
+    "similarity_score": 0.925278,
+    "retrieved_short_answer_es": "El eccema debe ser tratado con precisión. Evite el contacto con agua, aplique ungüento externamente, use guantes de algodón y calcetines de algodón. Tome gránulos orales de Astragalus membranaceus y pastillas de Vitamina E. Pruebe esto y vea si hay algún cambio después de un mes."
+  },
+  {
+    "encounter_id": "ENC00855",
+    "retrieved_encounter_id": "ENC00299",
+    "similarity_score": 0.92715,
+    "retrieved_short_answer_es": "Dermatitis"
+  },
+  {
+    "encounter_id": "ENC00856",
+    "retrieved_encounter_id": "ENC00915",
+    "similarity_score": 0.948036,
+    "retrieved_short_answer_es": "urticaria crónica"
+  },
+  {
+    "encounter_id": "ENC00857",
+    "retrieved_encounter_id": "ENC00226",
+    "similarity_score": 0.926965,
+    "retrieved_short_answer_es": "Pólipo cutáneo"
+  },
+  {
+    "encounter_id": "ENC00858",
+    "retrieved_encounter_id": "ENC00989",
+    "similarity_score": 0.93492,
+    "retrieved_short_answer_es": "linfangioma"
+  },
+  {
+    "encounter_id": "ENC00859",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.928749,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00860",
+    "retrieved_encounter_id": "ENC00584",
+    "similarity_score": 0.927519,
+    "retrieved_short_answer_es": "Se necesitan más pruebas como RPR y anti-TP para descartar ciertas enfermedades."
+  },
+  {
+    "encounter_id": "ENC00861",
+    "retrieved_encounter_id": "ENC00542",
+    "similarity_score": 0.923858,
+    "retrieved_short_answer_es": "Acné. Acné vulgar. Comúnmente ocurre en el pecho superior y la espalda."
+  },
+  {
+    "encounter_id": "ENC00862",
+    "retrieved_encounter_id": "ENC00993",
+    "similarity_score": 0.901891,
+    "retrieved_short_answer_es": "Enfermedad micelial por esporas. Tratamiento IK."
+  },
+  {
+    "encounter_id": "ENC00863",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.931807,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00864",
+    "retrieved_encounter_id": "ENC00470",
+    "similarity_score": 0.929637,
+    "retrieved_short_answer_es": "Es varicela."
+  },
+  {
+    "encounter_id": "ENC00865",
+    "retrieved_encounter_id": "ENC00933",
+    "similarity_score": 0.931666,
+    "retrieved_short_answer_es": "Eccema crónico"
+  },
+  {
+    "encounter_id": "ENC00866",
+    "retrieved_encounter_id": "ENC00565",
+    "similarity_score": 0.929593,
+    "retrieved_short_answer_es": "Verrugas epidérmicas,"
+  },
+  {
+    "encounter_id": "ENC00867",
+    "retrieved_encounter_id": "ENC00137",
+    "similarity_score": 0.901797,
+    "retrieved_short_answer_es": "Púrpura"
+  },
+  {
+    "encounter_id": "ENC00868",
+    "retrieved_encounter_id": "ENC00004",
+    "similarity_score": 0.938892,
+    "retrieved_short_answer_es": "¿Acroqueratosis?"
+  },
+  {
+    "encounter_id": "ENC00869",
+    "retrieved_encounter_id": "ENC00260",
+    "similarity_score": 0.925608,
+    "retrieved_short_answer_es": "Infección por hongos, pie de atleta."
+  },
+  {
+    "encounter_id": "ENC00870",
+    "retrieved_encounter_id": "ENC00741",
+    "similarity_score": 0.933627,
+    "retrieved_short_answer_es": "Dermatitis por Escarabajo"
+  },
+  {
+    "encounter_id": "ENC00871",
+    "retrieved_encounter_id": "ENC00881",
+    "similarity_score": 0.909147,
+    "retrieved_short_answer_es": "Acné."
+  },
+  {
+    "encounter_id": "ENC00872",
+    "retrieved_encounter_id": "ENC00891",
+    "similarity_score": 0.914216,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00873",
+    "retrieved_encounter_id": "ENC00157",
+    "similarity_score": 0.933394,
+    "retrieved_short_answer_es": "Es onicomicosis... La onicomicosis es causada por una infección fúngica..."
+  },
+  {
+    "encounter_id": "ENC00874",
+    "retrieved_encounter_id": "ENC00630",
+    "similarity_score": 0.925213,
+    "retrieved_short_answer_es": "Erisipela complicada por infección fúngica."
+  },
+  {
+    "encounter_id": "ENC00875",
+    "retrieved_encounter_id": "ENC00927",
+    "similarity_score": 0.930619,
+    "retrieved_short_answer_es": "Psoriasis."
+  },
+  {
+    "encounter_id": "ENC00876",
+    "retrieved_encounter_id": "ENC00935",
+    "similarity_score": 0.942503,
+    "retrieved_short_answer_es": "liquen plano"
+  },
+  {
+    "encounter_id": "ENC00877",
+    "retrieved_encounter_id": "ENC00028",
+    "similarity_score": 0.92683,
+    "retrieved_short_answer_es": "Hagamos una prueba de alérgenos."
+  },
+  {
+    "encounter_id": "ENC00878",
+    "retrieved_encounter_id": "ENC00955",
+    "similarity_score": 0.939969,
+    "retrieved_short_answer_es": "Necesito ejecutar algunas pruebas."
+  },
+  {
+    "encounter_id": "ENC00879",
+    "retrieved_encounter_id": "ENC00061",
+    "similarity_score": 0.928786,
+    "retrieved_short_answer_es": "Neurodermatitis diseminada o generalizada"
+  },
+  {
+    "encounter_id": "ENC00880",
+    "retrieved_encounter_id": "ENC00299",
+    "similarity_score": 0.9469,
+    "retrieved_short_answer_es": "Dermatitis"
+  },
+  {
+    "encounter_id": "ENC00881",
+    "retrieved_encounter_id": "ENC00933",
+    "similarity_score": 0.939017,
+    "retrieved_short_answer_es": "Eccema crónico"
+  },
+  {
+    "encounter_id": "ENC00882",
+    "retrieved_encounter_id": "ENC00323",
+    "similarity_score": 0.909593,
+    "retrieved_short_answer_es": "Se estima que está relacionado con la cirrosis alcohólica."
+  },
+  {
+    "encounter_id": "ENC00883",
+    "retrieved_encounter_id": "ENC00594",
+    "similarity_score": 0.933083,
+    "retrieved_short_answer_es": "Parece tiña."
+  },
+  {
+    "encounter_id": "ENC00884",
+    "retrieved_encounter_id": "ENC00731",
+    "similarity_score": 0.916701,
+    "retrieved_short_answer_es": "¿Erupción fija por medicamento? Pura supos"
+  },
+  {
+    "encounter_id": "ENC00885",
+    "retrieved_encounter_id": "ENC00257",
+    "similarity_score": 0.931035,
+    "retrieved_short_answer_es": "Verruga plan"
+  },
+  {
+    "encounter_id": "ENC00886",
+    "retrieved_encounter_id": "ENC00796",
+    "similarity_score": 0.947533,
+    "retrieved_short_answer_es": "Es muy necesario hacer pruebas para RPR y TPPA."
+  },
+  {
+    "encounter_id": "ENC00887",
+    "retrieved_encounter_id": "ENC00632",
+    "similarity_score": 0.914243,
+    "retrieved_short_answer_es": "30 gramos de Tribulus terrestris"
+  },
+  {
+    "encounter_id": "ENC00888",
+    "retrieved_encounter_id": "ENC00639",
+    "similarity_score": 0.919868,
+    "retrieved_short_answer_es": "¿Tienes alguna mascota en casa?"
+  },
+  {
+    "encounter_id": "ENC00889",
+    "retrieved_encounter_id": "ENC00538",
+    "similarity_score": 0.934956,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00890",
+    "retrieved_encounter_id": "ENC00642",
+    "similarity_score": 0.931267,
+    "retrieved_short_answer_es": "Foliculitis"
+  },
+  {
+    "encounter_id": "ENC00891",
+    "retrieved_encounter_id": "ENC00210",
+    "similarity_score": 0.935385,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC00892",
+    "retrieved_encounter_id": "ENC00959",
+    "similarity_score": 0.921422,
+    "retrieved_short_answer_es": "Dermatitis arenosa"
+  },
+  {
+    "encounter_id": "ENC00893",
+    "retrieved_encounter_id": "ENC00970",
+    "similarity_score": 0.919319,
+    "retrieved_short_answer_es": "eccema fisurado"
+  },
+  {
+    "encounter_id": "ENC00894",
+    "retrieved_encounter_id": "ENC00440",
+    "similarity_score": 0.93304,
+    "retrieved_short_answer_es": "Dermatitis Seborreica"
+  },
+  {
+    "encounter_id": "ENC00895",
+    "retrieved_encounter_id": "ENC00441",
+    "similarity_score": 0.928369,
+    "retrieved_short_answer_es": "Manténgase alejado de los alé"
+  },
+  {
+    "encounter_id": "ENC00896",
+    "retrieved_encounter_id": "ENC00221",
+    "similarity_score": 0.889996,
+    "retrieved_short_answer_es": "Infección causada por rascado de urticaria papular."
+  },
+  {
+    "encounter_id": "ENC00897",
+    "retrieved_encounter_id": "ENC00917",
+    "similarity_score": 0.918723,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00898",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.919025,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00899",
+    "retrieved_encounter_id": "ENC00458",
+    "similarity_score": 0.918727,
+    "retrieved_short_answer_es": "Cicatriz"
+  },
+  {
+    "encounter_id": "ENC00900",
+    "retrieved_encounter_id": "ENC00724",
+    "similarity_score": 0.941301,
+    "retrieved_short_answer_es": "Eczema."
+  },
+  {
+    "encounter_id": "ENC00901",
+    "retrieved_encounter_id": "ENC00620",
+    "similarity_score": 0.925436,
+    "retrieved_short_answer_es": "Púrpura Alérgica"
+  },
+  {
+    "encounter_id": "ENC00902",
+    "retrieved_encounter_id": "ENC00497",
+    "similarity_score": 0.926424,
+    "retrieved_short_answer_es": "LP bulloso"
+  },
+  {
+    "encounter_id": "ENC00903",
+    "retrieved_encounter_id": "ENC00468",
+    "similarity_score": 0.94586,
+    "retrieved_short_answer_es": "Dermatitis de Verano"
+  },
+  {
+    "encounter_id": "ENC00904",
+    "retrieved_encounter_id": "ENC00381",
+    "similarity_score": 0.934116,
+    "retrieved_short_answer_es": "Como una picadura de insecto"
+  },
+  {
+    "encounter_id": "ENC00905",
+    "retrieved_encounter_id": "ENC00408",
+    "similarity_score": 0.945825,
+    "retrieved_short_answer_es": "Psoralea"
+  },
+  {
+    "encounter_id": "ENC00906",
+    "retrieved_encounter_id": "ENC00510",
+    "similarity_score": 0.914105,
+    "retrieved_short_answer_es": "Eczema agrietado, tratamiento: 30g de Portulaca oleracea, 30g de Inula japonica, 30g de corteza de Hibiscus syriacus, 10g de borneol (paquete individual), 30g de Sophora flavescens, 30g de Phellodendron amurense, 30g de semilla de Coix, 30g de Poria cocos. Excepto el borneol, remoje el resto durante media hora primero, luego hiérvalos en el agua de remojo durante media hora. Vierta el agua medicinal en un recipiente, agregue agua y hiérvala por segunda vez, también durante media hora. Luego vierta el agua medicinal hervida en el mismo recipiente, agregue agua y hiérvala por tercera vez. Vierta el agua medicinal hervida en el mismo recipiente, muela el borneol en polvo y viértalo en el agua medicinal hervida. Cuando la temperatura del agua alcance entre 30 y 40 grados, use una toalla o gasa para empapar en el agua medicinal y aplíquela durante 20 a 30 minutos cada vez. Después de la aplicación, use una pomada tópica. Una dosis de medicina puede usarse 7 veces, y puede diluirse con agua hervida o calentarse antes de cada uso. Después, aplique externamente la pomada de Dexametasona."
+  },
+  {
+    "encounter_id": "ENC00907",
+    "retrieved_encounter_id": "ENC00539",
+    "similarity_score": 0.943493,
+    "retrieved_short_answer_es": "Tiña"
+  },
+  {
+    "encounter_id": "ENC00908",
+    "retrieved_encounter_id": "ENC00367",
+    "similarity_score": 0.919904,
+    "retrieved_short_answer_es": "¿Considerar neurodermatitis?"
+  },
+  {
+    "encounter_id": "ENC00909",
+    "retrieved_encounter_id": "ENC00946",
+    "similarity_score": 0.963212,
+    "retrieved_short_answer_es": "tiña corporal"
+  },
+  {
+    "encounter_id": "ENC00910",
+    "retrieved_encounter_id": "ENC00156",
+    "similarity_score": 0.917411,
+    "retrieved_short_answer_es": "Miliaria."
+  },
+  {
+    "encounter_id": "ENC00911",
+    "retrieved_encounter_id": "ENC00245",
+    "similarity_score": 0.919201,
+    "retrieved_short_answer_es": "Dermatitis de Contacto"
+  },
+  {
+    "encounter_id": "ENC00912",
+    "retrieved_encounter_id": "ENC00145",
+    "similarity_score": 0.908561,
+    "retrieved_short_answer_es": "Prurito."
+  },
+  {
+    "encounter_id": "ENC00913",
+    "retrieved_encounter_id": "ENC00482",
+    "similarity_score": 0.922137,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00914",
+    "retrieved_encounter_id": "ENC00948",
+    "similarity_score": 0.933958,
+    "retrieved_short_answer_es": "Queratosis verrugosa"
+  },
+  {
+    "encounter_id": "ENC00915",
+    "retrieved_encounter_id": "ENC00856",
+    "similarity_score": 0.948036,
+    "retrieved_short_answer_es": "¿Queratosis folicular?"
+  },
+  {
+    "encounter_id": "ENC00916",
+    "retrieved_encounter_id": "ENC00426",
+    "similarity_score": 0.91937,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00917",
+    "retrieved_encounter_id": "ENC00031",
+    "similarity_score": 0.92022,
+    "retrieved_short_answer_es": "Neurofibroma"
+  },
+  {
+    "encounter_id": "ENC00918",
+    "retrieved_encounter_id": "ENC00257",
+    "similarity_score": 0.926973,
+    "retrieved_short_answer_es": "Verruga plan"
+  },
+  {
+    "encounter_id": "ENC00919",
+    "retrieved_encounter_id": "ENC00462",
+    "similarity_score": 0.914231,
+    "retrieved_short_answer_es": "Nevus sebáceo"
+  },
+  {
+    "encounter_id": "ENC00920",
+    "retrieved_encounter_id": "ENC00317",
+    "similarity_score": 0.922098,
+    "retrieved_short_answer_es": "Queratolisis Exfoliativa"
+  },
+  {
+    "encounter_id": "ENC00921",
+    "retrieved_encounter_id": "ENC00811",
+    "similarity_score": 0.921716,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00922",
+    "retrieved_encounter_id": "ENC00482",
+    "similarity_score": 0.928145,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00923",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.930167,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00924",
+    "retrieved_encounter_id": "ENC00891",
+    "similarity_score": 0.921073,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00925",
+    "retrieved_encounter_id": "ENC00879",
+    "similarity_score": 0.911553,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00926",
+    "retrieved_encounter_id": "ENC00915",
+    "similarity_score": 0.929739,
+    "retrieved_short_answer_es": "urticaria crónica"
+  },
+  {
+    "encounter_id": "ENC00927",
+    "retrieved_encounter_id": "ENC00875",
+    "similarity_score": 0.930619,
+    "retrieved_short_answer_es": "dermatitis arenosa"
+  },
+  {
+    "encounter_id": "ENC00928",
+    "retrieved_encounter_id": "ENC00837",
+    "similarity_score": 0.923327,
+    "retrieved_short_answer_es": "Erupción de sudor..."
+  },
+  {
+    "encounter_id": "ENC00929",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.917528,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00930",
+    "retrieved_encounter_id": "ENC00927",
+    "similarity_score": 0.901924,
+    "retrieved_short_answer_es": "Psoriasis."
+  },
+  {
+    "encounter_id": "ENC00931",
+    "retrieved_encounter_id": "ENC00150",
+    "similarity_score": 0.935834,
+    "retrieved_short_answer_es": "Eritema Multiforme"
+  },
+  {
+    "encounter_id": "ENC00932",
+    "retrieved_encounter_id": "ENC00873",
+    "similarity_score": 0.905101,
+    "retrieved_short_answer_es": "onicomicosis. Tratamiento con antifúngicos."
+  },
+  {
+    "encounter_id": "ENC00933",
+    "retrieved_encounter_id": "ENC00579",
+    "similarity_score": 0.943641,
+    "retrieved_short_answer_es": "Síndrome de P"
+  },
+  {
+    "encounter_id": "ENC00934",
+    "retrieved_encounter_id": "ENC00948",
+    "similarity_score": 0.907136,
+    "retrieved_short_answer_es": "Queratosis verrugosa"
+  },
+  {
+    "encounter_id": "ENC00935",
+    "retrieved_encounter_id": "ENC00876",
+    "similarity_score": 0.942503,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC00936",
+    "retrieved_encounter_id": "ENC00367",
+    "similarity_score": 0.945306,
+    "retrieved_short_answer_es": "¿Considerar neurodermatitis?"
+  },
+  {
+    "encounter_id": "ENC00937",
+    "retrieved_encounter_id": "ENC00944",
+    "similarity_score": 0.920937,
+    "retrieved_short_answer_es": "urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00938",
+    "retrieved_encounter_id": "ENC00955",
+    "similarity_score": 0.936179,
+    "retrieved_short_answer_es": "Necesito ejecutar algunas pruebas."
+  },
+  {
+    "encounter_id": "ENC00939",
+    "retrieved_encounter_id": "ENC00147",
+    "similarity_score": 0.923388,
+    "retrieved_short_answer_es": "Urticaria Aguda"
+  },
+  {
+    "encounter_id": "ENC00940",
+    "retrieved_encounter_id": "ENC00225",
+    "similarity_score": 0.925237,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00941",
+    "retrieved_encounter_id": "ENC00250",
+    "similarity_score": 0.927777,
+    "retrieved_short_answer_es": "Eczema, la piel está bastante seca."
+  },
+  {
+    "encounter_id": "ENC00942",
+    "retrieved_encounter_id": "ENC00936",
+    "similarity_score": 0.92948,
+    "retrieved_short_answer_es": "psoriasis"
+  },
+  {
+    "encounter_id": "ENC00943",
+    "retrieved_encounter_id": "ENC00694",
+    "similarity_score": 0.933112,
+    "retrieved_short_answer_es": "Nevus Lineal"
+  },
+  {
+    "encounter_id": "ENC00944",
+    "retrieved_encounter_id": "ENC00963",
+    "similarity_score": 0.934609,
+    "retrieved_short_answer_es": "eritema multiforme"
+  },
+  {
+    "encounter_id": "ENC00945",
+    "retrieved_encounter_id": "ENC00569",
+    "similarity_score": 0.926443,
+    "retrieved_short_answer_es": "¿Verrugas blandas infecciosas?"
+  },
+  {
+    "encounter_id": "ENC00946",
+    "retrieved_encounter_id": "ENC00909",
+    "similarity_score": 0.963212,
+    "retrieved_short_answer_es": "Linfangioma"
+  },
+  {
+    "encounter_id": "ENC00947",
+    "retrieved_encounter_id": "ENC00652",
+    "similarity_score": 0.922321,
+    "retrieved_short_answer_es": "Considere la sarna"
+  },
+  {
+    "encounter_id": "ENC00948",
+    "retrieved_encounter_id": "ENC00880",
+    "similarity_score": 0.94118,
+    "retrieved_short_answer_es": "¿Urticaria pigmentosa?"
+  },
+  {
+    "encounter_id": "ENC00949",
+    "retrieved_encounter_id": "ENC00205",
+    "similarity_score": 0.935373,
+    "retrieved_short_answer_es": "Granuloma Anular"
+  },
+  {
+    "encounter_id": "ENC00950",
+    "retrieved_encounter_id": "ENC00550",
+    "similarity_score": 0.929117,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00951",
+    "retrieved_encounter_id": "ENC00702",
+    "similarity_score": 0.922849,
+    "retrieved_short_answer_es": "Alergia"
+  },
+  {
+    "encounter_id": "ENC00952",
+    "retrieved_encounter_id": "ENC00101",
+    "similarity_score": 0.941044,
+    "retrieved_short_answer_es": "Considerando la dishidrosis, se agrava con las estaciones, y no hay un buen método de tratamiento."
+  },
+  {
+    "encounter_id": "ENC00953",
+    "retrieved_encounter_id": "ENC00225",
+    "similarity_score": 0.947867,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00954",
+    "retrieved_encounter_id": "ENC01000",
+    "similarity_score": 0.926551,
+    "retrieved_short_answer_es": "urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00955",
+    "retrieved_encounter_id": "ENC00849",
+    "similarity_score": 0.946347,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00956",
+    "retrieved_encounter_id": "ENC00833",
+    "similarity_score": 0.930405,
+    "retrieved_short_answer_es": "Eczema crónico, no fácil de tratar..."
+  },
+  {
+    "encounter_id": "ENC00957",
+    "retrieved_encounter_id": "ENC00534",
+    "similarity_score": 0.939358,
+    "retrieved_short_answer_es": "Considere el pie de atleta fúngico"
+  },
+  {
+    "encounter_id": "ENC00958",
+    "retrieved_encounter_id": "ENC00938",
+    "similarity_score": 0.929153,
+    "retrieved_short_answer_es": "Es necrobiosis lipoidea."
+  },
+  {
+    "encounter_id": "ENC00959",
+    "retrieved_encounter_id": "ENC00892",
+    "similarity_score": 0.921422,
+    "retrieved_short_answer_es": "Eccema vesicular"
+  },
+  {
+    "encounter_id": "ENC00960",
+    "retrieved_encounter_id": "ENC00543",
+    "similarity_score": 0.945583,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00961",
+    "retrieved_encounter_id": "ENC00276",
+    "similarity_score": 0.927929,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00962",
+    "retrieved_encounter_id": "ENC00543",
+    "similarity_score": 0.926747,
+    "retrieved_short_answer_es": "Neurodermatitis"
+  },
+  {
+    "encounter_id": "ENC00963",
+    "retrieved_encounter_id": "ENC00697",
+    "similarity_score": 0.945429,
+    "retrieved_short_answer_es": "Pápulas urticariales."
+  },
+  {
+    "encounter_id": "ENC00964",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.931751,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC00965",
+    "retrieved_encounter_id": "ENC00464",
+    "similarity_score": 0.911336,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00966",
+    "retrieved_encounter_id": "ENC00575",
+    "similarity_score": 0.909826,
+    "retrieved_short_answer_es": "Psoriasis"
+  },
+  {
+    "encounter_id": "ENC00967",
+    "retrieved_encounter_id": "ENC00729",
+    "similarity_score": 0.92309,
+    "retrieved_short_answer_es": "¿Púrpura? ¿Trastorno circulatorio?"
+  },
+  {
+    "encounter_id": "ENC00968",
+    "retrieved_encounter_id": "ENC00540",
+    "similarity_score": 0.904763,
+    "retrieved_short_answer_es": "Dermatitis periférica."
+  },
+  {
+    "encounter_id": "ENC00969",
+    "retrieved_encounter_id": "ENC00980",
+    "similarity_score": 0.940405,
+    "retrieved_short_answer_es": "eccema agudo"
+  },
+  {
+    "encounter_id": "ENC00970",
+    "retrieved_encounter_id": "ENC00909",
+    "similarity_score": 0.925817,
+    "retrieved_short_answer_es": "Linfangioma"
+  },
+  {
+    "encounter_id": "ENC00971",
+    "retrieved_encounter_id": "ENC00108",
+    "similarity_score": 0.923576,
+    "retrieved_short_answer_es": "Dermatitis por Arena"
+  },
+  {
+    "encounter_id": "ENC00972",
+    "retrieved_encounter_id": "ENC00146",
+    "similarity_score": 0.922264,
+    "retrieved_short_answer_es": "Eczema Palmoplantar"
+  },
+  {
+    "encounter_id": "ENC00973",
+    "retrieved_encounter_id": "ENC00729",
+    "similarity_score": 0.928501,
+    "retrieved_short_answer_es": "¿Púrpura? ¿Trastorno circulatorio?"
+  },
+  {
+    "encounter_id": "ENC00974",
+    "retrieved_encounter_id": "ENC00245",
+    "similarity_score": 0.928979,
+    "retrieved_short_answer_es": "Dermatitis de Contacto"
+  },
+  {
+    "encounter_id": "ENC00975",
+    "retrieved_encounter_id": "ENC00302",
+    "similarity_score": 0.9194,
+    "retrieved_short_answer_es": "¿Erisipela?"
+  },
+  {
+    "encounter_id": "ENC00976",
+    "retrieved_encounter_id": "ENC00449",
+    "similarity_score": 0.928935,
+    "retrieved_short_answer_es": "Por supuesto."
+  },
+  {
+    "encounter_id": "ENC00977",
+    "retrieved_encounter_id": "ENC00532",
+    "similarity_score": 0.938436,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC00978",
+    "retrieved_encounter_id": "ENC00412",
+    "similarity_score": 0.940282,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00979",
+    "retrieved_encounter_id": "ENC00974",
+    "similarity_score": 0.923296,
+    "retrieved_short_answer_es": "¿Psoriasis?"
+  },
+  {
+    "encounter_id": "ENC00980",
+    "retrieved_encounter_id": "ENC00969",
+    "similarity_score": 0.940405,
+    "retrieved_short_answer_es": "No debería ser herpes simple. El herpes simple no tendría cicatriz."
+  },
+  {
+    "encounter_id": "ENC00981",
+    "retrieved_encounter_id": "ENC00676",
+    "similarity_score": 0.931192,
+    "retrieved_short_answer_es": "Erupción fija por"
+  },
+  {
+    "encounter_id": "ENC00982",
+    "retrieved_encounter_id": "ENC00323",
+    "similarity_score": 0.928091,
+    "retrieved_short_answer_es": "Se estima que está relacionado con la cirrosis alcohólica."
+  },
+  {
+    "encounter_id": "ENC00983",
+    "retrieved_encounter_id": "ENC00774",
+    "similarity_score": 0.918165,
+    "retrieved_short_answer_es": "Retíralo con pinzas y aplica yodo."
+  },
+  {
+    "encounter_id": "ENC00984",
+    "retrieved_encounter_id": "ENC00991",
+    "similarity_score": 0.939754,
+    "retrieved_short_answer_es": "verruga plana"
+  },
+  {
+    "encounter_id": "ENC00985",
+    "retrieved_encounter_id": "ENC00037",
+    "similarity_score": 0.936285,
+    "retrieved_short_answer_es": "Urticaria"
+  },
+  {
+    "encounter_id": "ENC00986",
+    "retrieved_encounter_id": "ENC00863",
+    "similarity_score": 0.923966,
+    "retrieved_short_answer_es": "pitiriasis rosada."
+  },
+  {
+    "encounter_id": "ENC00987",
+    "retrieved_encounter_id": "ENC00853",
+    "similarity_score": 0.93003,
+    "retrieved_short_answer_es": "Eccema crónico."
+  },
+  {
+    "encounter_id": "ENC00988",
+    "retrieved_encounter_id": "ENC00444",
+    "similarity_score": 0.933257,
+    "retrieved_short_answer_es": "Pie de atleta"
+  },
+  {
+    "encounter_id": "ENC00989",
+    "retrieved_encounter_id": "ENC00858",
+    "similarity_score": 0.93492,
+    "retrieved_short_answer_es": "vasculitis..."
+  },
+  {
+    "encounter_id": "ENC00990",
+    "retrieved_encounter_id": "ENC00278",
+    "similarity_score": 0.894397,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00991",
+    "retrieved_encounter_id": "ENC00984",
+    "similarity_score": 0.939754,
+    "retrieved_short_answer_es": "pioderma"
+  },
+  {
+    "encounter_id": "ENC00992",
+    "retrieved_encounter_id": "ENC00885",
+    "similarity_score": 0.928173,
+    "retrieved_short_answer_es": "Impétigo"
+  },
+  {
+    "encounter_id": "ENC00993",
+    "retrieved_encounter_id": "ENC00674",
+    "similarity_score": 0.924651,
+    "retrieved_short_answer_es": "¿Quiste mucoso? La imagen es realmente poco clara."
+  },
+  {
+    "encounter_id": "ENC00994",
+    "retrieved_encounter_id": "ENC00254",
+    "similarity_score": 0.915184,
+    "retrieved_short_answer_es": "El estrato córneo es la capa protectora del tejido de la piel. No es aconsejable usar productos que exfolien el estrato córneo durante mucho tiempo, ya que esto puede dañar la función de barrera de la piel, dejándola sin inmunidad y la capacidad de resistir invasiones bacterianas externas. El uso de ciertos líquidos incluso puede llevar a la proliferación de folículos pilosos. Lavarse la cara con agua limpia es económico y respetuoso con el medio ambiente."
+  },
+  {
+    "encounter_id": "ENC00995",
+    "retrieved_encounter_id": "ENC00773",
+    "similarity_score": 0.931903,
+    "retrieved_short_answer_es": "Foliculitis favus"
+  },
+  {
+    "encounter_id": "ENC00996",
+    "retrieved_encounter_id": "ENC00427",
+    "similarity_score": 0.928653,
+    "retrieved_short_answer_es": "Tiña Corporal"
+  },
+  {
+    "encounter_id": "ENC00997",
+    "retrieved_encounter_id": "ENC00252",
+    "similarity_score": 0.928606,
+    "retrieved_short_answer_es": "Debería ser Tiña Corporis."
+  },
+  {
+    "encounter_id": "ENC00998",
+    "retrieved_encounter_id": "ENC00464",
+    "similarity_score": 0.923055,
+    "retrieved_short_answer_es": "Eczema"
+  },
+  {
+    "encounter_id": "ENC00999",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.930419,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  },
+  {
+    "encounter_id": "ENC01000",
+    "retrieved_encounter_id": "ENC00323",
+    "similarity_score": 0.927451,
+    "retrieved_short_answer_es": "Se estima que está relacionado con la cirrosis alcohólica."
+  },
+  {
+    "encounter_id": "ENC01001",
+    "retrieved_encounter_id": "ENC00767",
+    "similarity_score": 0.931953,
+    "retrieved_short_answer_es": "Tiña versicolor, medicamento antifúngico tópico."
+  },
+  {
+    "encounter_id": "ENC01002",
+    "retrieved_encounter_id": "ENC00210",
+    "similarity_score": 0.940994,
+    "retrieved_short_answer_es": "Eritrasma"
+  },
+  {
+    "encounter_id": "ENC01003",
+    "retrieved_encounter_id": "ENC00868",
+    "similarity_score": 0.931666,
+    "retrieved_short_answer_es": "Eccema"
+  },
+  {
+    "encounter_id": "ENC01004",
+    "retrieved_encounter_id": "ENC00617",
+    "similarity_score": 0.93836,
+    "retrieved_short_answer_es": "Urticaria papular"
+  },
+  {
+    "encounter_id": "ENC01005",
+    "retrieved_encounter_id": "ENC00885",
+    "similarity_score": 0.915722,
+    "retrieved_short_answer_es": "Impétigo"
+  },
+  {
+    "encounter_id": "ENC01006",
+    "retrieved_encounter_id": "ENC00161",
+    "similarity_score": 0.924594,
+    "retrieved_short_answer_es": "Sarna"
+  },
+  {
+    "encounter_id": "ENC01007",
+    "retrieved_encounter_id": "ENC00651",
+    "similarity_score": 0.902578,
+    "retrieved_short_answer_es": "Hemangioma Cereza"
+  }
+]
