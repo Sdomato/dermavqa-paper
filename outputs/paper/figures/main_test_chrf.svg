@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-label="Main test comparison: chrF">
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}.title{font-size:22px;font-weight:700}.axis-label{font-size:14px;font-weight:600}.tick{font-size:11px;fill:#555}.label{font-size:12px}.value{font-size:12px;font-weight:700}.axis{stroke:#333;stroke-width:1.3}.grid{stroke:#ddd;stroke-width:1}
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<text x="450.0" y="32" text-anchor="middle" class="title">Main test comparison: chrF</text>
+<text x="22" y="225.0" transform="rotate(-90 22 225.0)" text-anchor="middle" class="axis-label">chrF (0-1 normalized)</text>
+<line x1="80" y1="70" x2="80" y2="380" class="axis"/>
+<line x1="80" y1="380" x2="860" y2="380" class="axis"/>
+<line x1="75" y1="380.0" x2="860" y2="380.0" class="grid"/>
+<text x="70" y="384.0" text-anchor="end" class="tick">0.00</text>
+<line x1="75" y1="318.0" x2="860" y2="318.0" class="grid"/>
+<text x="70" y="322.0" text-anchor="end" class="tick">0.09</text>
+<line x1="75" y1="256.0" x2="860" y2="256.0" class="grid"/>
+<text x="70" y="260.0" text-anchor="end" class="tick">0.17</text>
+<line x1="75" y1="194.0" x2="860" y2="194.0" class="grid"/>
+<text x="70" y="198.0" text-anchor="end" class="tick">0.26</text>
+<line x1="75" y1="132.0" x2="860" y2="132.0" class="grid"/>
+<text x="70" y="136.0" text-anchor="end" class="tick">0.35</text>
+<line x1="75" y1="70.0" x2="860" y2="70.0" class="grid"/>
+<text x="70" y="74.0" text-anchor="end" class="tick">0.43</text>
+<rect x="80.0" y="175.8" width="81.8" height="204.2" fill="#4C78A8" rx="3"/>
+<text x="120.9" y="167.8" text-anchor="middle" class="value">0.286</text>
+<text x="120.9" y="408.0" text-anchor="middle" class="label">Enriched</text>
+<text x="120.9" y="424.0" text-anchor="middle" class="label">TF-IDF</text>
+<rect x="179.8" y="160.1" width="81.8" height="219.9" fill="#72B7B2" rx="3"/>
+<text x="220.6" y="152.1" text-anchor="middle" class="value">0.308</text>
+<text x="220.6" y="408.0" text-anchor="middle" class="label">Enriched</text>
+<text x="220.6" y="424.0" text-anchor="middle" class="label">E5</text>
+<rect x="279.5" y="159.4" width="81.8" height="220.6" fill="#54A24B" rx="3"/>
+<text x="320.4" y="151.4" text-anchor="middle" class="value">0.309</text>
+<text x="320.4" y="408.0" text-anchor="middle" class="label">Enriched</text>
+<text x="320.4" y="424.0" text-anchor="middle" class="label">SBERT</text>
+<rect x="379.2" y="117.3" width="81.8" height="262.7" fill="#E45756" rx="3"/>
+<text x="420.1" y="109.3" text-anchor="middle" class="value">0.368</text>
+<text x="420.1" y="408.0" text-anchor="middle" class="label">Enriched</text>
+<text x="420.1" y="424.0" text-anchor="middle" class="label">VLM LoRA case-avg</text>
+<rect x="479.0" y="274.3" width="81.8" height="105.7" fill="#F58518" rx="3"/>
+<text x="519.9" y="266.3" text-anchor="middle" class="value">0.148</text>
+<text x="519.9" y="408.0" text-anchor="middle" class="label">Longest</text>
+<text x="519.9" y="424.0" text-anchor="middle" class="label">TF-IDF train-only</text>
+<rect x="578.8" y="250.1" width="81.8" height="129.9" fill="#B279A2" rx="3"/>
+<text x="619.6" y="242.1" text-anchor="middle" class="value">0.182</text>
+<text x="619.6" y="408.0" text-anchor="middle" class="label">Longest</text>
+<text x="619.6" y="424.0" text-anchor="middle" class="label">VLM zero-shot</text>
+<rect x="678.5" y="267.9" width="81.8" height="112.1" fill="#FF9DA6" rx="3"/>
+<text x="719.4" y="259.9" text-anchor="middle" class="value">0.157</text>
+<text x="719.4" y="408.0" text-anchor="middle" class="label">Longest</text>
+<text x="719.4" y="424.0" text-anchor="middle" class="label">VLM LoRA</text>
+<rect x="778.2" y="316.5" width="81.8" height="63.5" fill="#9D755D" rx="3"/>
+<text x="819.1" y="308.5" text-anchor="middle" class="value">0.089</text>
+<text x="819.1" y="408.0" text-anchor="middle" class="label">Short</text>
+<text x="819.1" y="424.0" text-anchor="middle" class="label">TF-IDF train-only</text>
+</svg>

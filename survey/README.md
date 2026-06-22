@@ -24,6 +24,13 @@ dominio medico multimodal y subrepresentado en espanol.
   `dataset_enriched`, metricas, artefactos, observaciones y pendientes.
 - `final_comparison_snapshot.md`: foto comparativa actual entre retrieval,
   VLM zero-shot, LoRA sobre respuesta larga y LoRA sobre enriquecido.
+- `paper_results_interpretation.md`: lectura de resultados, claim principal,
+  limitaciones y texto sugerido para el paper.
+- `../paper/draft.md`: borrador narrativo completo del paper.
+- `../notebooks/04_paper_results.ipynb`: regeneracion de tablas y figuras
+  paper-ready desde los artefactos versionados.
+- `../src/evaluate_retrieval_heldout.py`: baseline TF-IDF held-out train-only
+  para evitar leakage en las comparaciones principales longest/short.
 
 - `STRUCTURE.md`: convencion canonica de carpetas y artefactos del repo
   (raiz de resultados, que se versiona, resolucion de imagenes).
@@ -45,6 +52,7 @@ dominio medico multimodal y subrepresentado en espanol.
   evaluacion (`transformers`, `peft`, `accelerate`, `bert-score`, `sacrebleu`).
 - `src/` contiene el pipeline modular: construccion de datasets, baselines de
   retrieval (textual/visual/multimodal), VLM (zero-shot + LoRA) y evaluacion.
+- `outputs/paper/` contiene tablas y figuras SVG listas para usar en el paper.
   Ver el README raiz y `STRUCTURE.md`.
 - `config.yaml` define paths relativos para datos y salidas.
 

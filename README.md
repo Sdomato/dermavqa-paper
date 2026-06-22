@@ -32,12 +32,14 @@ LoRA sobre enriquecido (Santino), ambos contra retrieval multimodal (Damián).
 │   ├── valid_ht.json          # 56 casos
 │   ├── test_ht_spanishtestsetcorrected.json  # 100 casos (test ES canónico)
 │   └── images_final/          # 2.945 imágenes (copiar manualmente tras clonar — ver Datos)
-├── notebooks/                 # Exploración (01) y baseline textual (02)
+├── notebooks/                 # Exploración, baselines, VLM enriched y resultados paper-ready
+├── paper/                     # Borrador narrativo del paper
 ├── src/                        # Pipeline modular (ver Scripts)
 ├── outputs/                   # Raíz canónica de artefactos (ver survey/STRUCTURE.md)
 │   ├── datasets/              # Datasets procesados (versionados): long / short / enriched.zip
 │   ├── results/<dataset>/<método>/   # Predicciones + artefactos por método (CSV livianos versionados; .npy/adapters NO)
-│   └── metrics/<dataset>/     # Métricas resumidas por dataset (versionado)
+│   ├── metrics/<dataset>/     # Métricas resumidas por dataset (versionado)
+│   └── paper/{tables,figures}/ # Tablas y figuras finales para el paper (versionado)
 ├── survey/                    # Survey, planes de ejecución, notas metodológicas y STRUCTURE.md
 ├── config.yaml.example        # Plantilla de config (copiar a config.yaml)
 └── requirements.txt
@@ -45,7 +47,9 @@ LoRA sobre enriquecido (Santino), ambos contra retrieval multimodal (Damián).
 
 > **Convención de carpetas (unificada):** la raíz canónica de resultados es
 > `outputs/` — el código escribe en `outputs/results/` (predicciones) y
-> `outputs/metrics/` (métricas). El antiguo `results/` de la raíz quedó
+> `outputs/metrics/` (métricas) y `outputs/paper/` (tablas/figuras finales).
+> El borrador narrativo vive en `paper/draft.md`.
+> El antiguo `results/` de la raíz quedó
 > deprecado y su contenido (enriched) se migró a
 > `outputs/metrics/dataset_enriched/`. Layout completo en `survey/STRUCTURE.md`.
 
@@ -121,6 +125,7 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 | `train_enriched.py` | Mismo fine-tuning QLoRA que `train_longest.py`, pero sobre `dataset_enriched`. |
 | `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA. |
 | `evaluate_predictions.py` | Mismas métricas que `evaluate_retrieval.py` sobre los CSV de predicciones del VLM (comparabilidad). |
+| `build_paper_results.py` | Consolida métricas y genera tablas/figuras SVG paper-ready en `outputs/paper/`. |
 
 ## Cómo correr el pipeline
 
@@ -161,6 +166,12 @@ python -m src.vlm_infer_enriched --split test \
 python -m src.evaluate_predictions \
     outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_test.csv \
     --no-bertscore
+
+# 6. Retrieval held-out train-only para longest/short
+python -m src.evaluate_retrieval_heldout --dataset all
+
+# 7. Tablas y figuras paper-ready (CPU, sin dependencias pesadas)
+python -m src.build_paper_results
 ```
 
 ## Protocolo de evaluación (común al equipo)
@@ -213,5 +224,6 @@ costos y escritura del paper.
 
 - **No** subir imágenes, claves, `.env`, checkpoints pesados ni caches.
 - Subir notebooks, scripts, métricas resumidas y docs del survey.
+- Subir tablas/figuras finales de paper bajo `outputs/paper/`.
 - Mantener nombres de carpetas consistentes por dataset y método.
 - El adapter LoRA va documentado aparte si pesa.

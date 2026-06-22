@@ -12,7 +12,7 @@ abrir un PR para reconciliarlo.
 │   ├── train.json valid_ht.json test_ht*.json   # casos crudos por split
 │   ├── df_*.csv  *.json             # metadatos y mapas de IDs
 │   └── images_final/                # imágenes en subdirs images_{train,valid,test}/
-├── notebooks/                       # 01_explore, 02_text_retrieval_baseline
+├── notebooks/                       # 01_explore, 02/03 baselines, 04 paper results
 ├── src/                             # pipeline modular (ver README → Scripts)
 ├── outputs/                         # ← RAÍZ CANÓNICA de artefactos generados
 │   ├── datasets/                    # datasets procesados (VERSIONADO)
@@ -20,7 +20,8 @@ abrir un PR para reconciliarlo.
 │   │   ├── dataset_short_answer.{json,csv}
 │   │   └── dermavqa_iiyi_llm_synthesized_answer_finetune.zip   # enriched
 │   ├── results/<dataset>/<método>/  # predicciones + artefactos por método
-│   └── metrics/<dataset>/           # métricas resumidas (VERSIONADO)
+│   ├── metrics/<dataset>/           # métricas resumidas (VERSIONADO)
+│   └── paper/{tables,figures}/      # tablas y figuras finales del paper
 ├── survey/                          # survey, planes, notas, este STRUCTURE.md
 ├── README.md  requirements.txt  config.yaml.example  .gitignore
 ```
@@ -36,6 +37,9 @@ retrieval_visual, retrieval_multimodal, vlm_zero_shot, vlm_lora}`
 | `outputs/datasets/` | Datasets procesados | Sí: `*.json`, `*.csv`, `*.zip` |
 | `outputs/metrics/<dataset>/` | Resúmenes de métricas (`metrics_summary.csv`, `bertscore_summary.csv`, `metrics_{valid,test}.csv`, `manual_review_*.csv`) | Sí (CSV livianos) |
 | `outputs/results/<dataset>/<método>/` | Predicciones (`predictions_{valid,test}.csv`, `*_results.json`), `runtime_*.json`, `manual_review_20.csv` | CSV/JSON livianos sí; ver excepciones |
+| `outputs/paper/tables/` | Tablas finales comparativas, reportes Markdown y candidatos de revisión manual | Sí (`*.csv`, `*.md`) |
+| `outputs/paper/figures/` | Figuras finales del paper en SVG | Sí (`*.svg`, `README.md`); no usar para imágenes clínicas |
+| `paper/` | Borrador narrativo del paper y notas de escritura | S? (`*.md`) |
 | `data/iiyi/images_final/` | Imágenes (~1.2 GB) | **No** — copiar manual tras clonar |
 
 ### Excepciones que NO se versionan (`.gitignore`)
@@ -43,6 +47,8 @@ retrieval_visual, retrieval_multimodal, vlm_zero_shot, vlm_lora}`
 - Bajo `outputs/results/**`: `*.npy`, `*.npz`, `*.pt`, `*.bin`, `*.safetensors`
   y carpetas `final_adapter/` (matrices de similitud y checkpoints pesados).
 - `checkpoints/`, `wandb/`, `runs/`, `config.yaml`, `.env`, caches.
+- Figuras intermedias fuera de `outputs/paper/`; las figuras finales se
+  versionan como SVG, no como capturas de imágenes clínicas.
 - El antiguo `/results/` de la raíz (deprecado, anclado con `/` para no pisar
   `outputs/results/`).
 

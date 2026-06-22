@@ -15,6 +15,7 @@ outputs/*
 !outputs/datasets/
 !outputs/metrics/
 !outputs/results/
+!outputs/paper/
 
 # Datasets: version json/csv/zip only
 outputs/datasets/*
@@ -23,6 +24,18 @@ outputs/datasets/*
 !outputs/datasets/*.zip
 
 # Metrics: descend into the dir and version everything in it (light CSVs)
+
+# Paper-ready tables and figures; keep raw clinical images ignored above.
+outputs/paper/*
+!outputs/paper/README.md
+!outputs/paper/tables/
+!outputs/paper/figures/
+outputs/paper/tables/*
+outputs/paper/figures/*
+!outputs/paper/tables/*.csv
+!outputs/paper/tables/*.md
+!outputs/paper/figures/*.svg
+!outputs/paper/figures/*.md
 
 # Predictions/results: descend, but ignore heavy artifacts (keep light CSV/JSON)
 outputs/results/**/*.npy

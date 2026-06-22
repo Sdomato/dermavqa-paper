@@ -1,0 +1,10 @@
+dataset_variant,split,case_count,image_row_count
+dataset_longest_answer,train,842,2473
+dataset_longest_answer,valid,56,157
+dataset_longest_answer,test,100,314
+dataset_short_answer,train,842,2473
+dataset_short_answer,valid,56,157
+dataset_short_answer,test,100,314
+dataset_enriched,train,842,2473
+dataset_enriched,valid,56,157
+dataset_enriched,test,100,314
