@@ -8,7 +8,8 @@ Este runbook deja reproducible la corrida de Santino para fine-tunear
 - Dataset: `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip`.
 - Notebook: `notebooks/03_dataset_enriched_vlm_lora.ipynb`.
 - Entrada: imagen + `question_es`.
-- Target: `answer_es` enriquecida, o `synthesized_answer_es` si existe.
+- Target: `synthesized_answer_es` si existe; en el artefacto compacto actual,
+  `answer_es` enriquecida.
 - Salida: `outputs/results/dataset_enriched/vlm_lora/`.
 
 ## 1. Control de gasto
@@ -68,7 +69,10 @@ gsutil -m cp -r data/iiyi/images_final gs://DERMAVQA_BUCKET/images_final
 En la VM:
 
 ```bash
-mkdir -p /mnt/disks/dermavqa/images_final
+git clone REPO_URL dermavqa-paper
+cd dermavqa-paper
+git checkout develop
+mkdir -p outputs/datasets /mnt/disks/dermavqa/images_final
 gsutil cp gs://DERMAVQA_BUCKET/dermavqa_iiyi_llm_synthesized_answer_finetune.zip outputs/datasets/
 gsutil -m cp -r gs://DERMAVQA_BUCKET/images_final/* /mnt/disks/dermavqa/images_final/
 ```
@@ -76,6 +80,7 @@ gsutil -m cp -r gs://DERMAVQA_BUCKET/images_final/* /mnt/disks/dermavqa/images_f
 Alternativa sin bucket:
 
 ```bash
+gcloud compute ssh dermavqa-vlm-lora-l4 --zone=ZONE --command "mkdir -p ~/dermavqa-paper/outputs/datasets /mnt/disks/dermavqa/images_final"
 gcloud compute scp --recurse data/iiyi/images_final dermavqa-vlm-lora-l4:/mnt/disks/dermavqa/images_final --zone=ZONE
 gcloud compute scp outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip dermavqa-vlm-lora-l4:~/dermavqa-paper/outputs/datasets/ --zone=ZONE
 ```
@@ -83,9 +88,7 @@ gcloud compute scp outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetun
 ## 4. Setup en la VM
 
 ```bash
-git clone REPO_URL dermavqa-paper
 cd dermavqa-paper
-git checkout develop
 
 python -m venv .venv
 source .venv/bin/activate
@@ -93,10 +96,12 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m pip install jupyterlab
 
-export DERMAVQA_VLM_MODEL="Qwen/Qwen2.5-VL-3B-Instruct"
 export DERMAVQA_IMAGE_ROOT="/mnt/disks/dermavqa/images_final"
-export DERMAVQA_VLM_LORA_OUTPUT_DIR="$PWD/outputs/results/dataset_enriched/vlm_lora"
 ```
+
+Nota: los scripts leen `DERMAVQA_IMAGE_ROOT` para resolver imagenes. El modelo
+se cambia con `--model`; el output queda fijo en
+`outputs/results/dataset_enriched/vlm_lora/`.
 
 Si el modelo pide autenticacion de Hugging Face:
 
@@ -127,13 +132,27 @@ Ese comando ejecuta:
 3. `src.vlm_infer_enriched --split test`: genera `predictions_test.csv`.
 4. `src.evaluate_predictions`: calcula metricas automaticas valid/test.
 
+### Corrida realizada
+
+La corrida de `dataset_enriched` ya fue ejecutada con `--epochs 1` en una VM
+Google Cloud con NVIDIA L4. Resultado operativo:
+
+- `n_train`: 2473 filas por imagen.
+- `n_eval`: 157 filas por imagen.
+- tiempo de entrenamiento: 4636.4 s (77.3 min).
+- VRAM pico: 6.73 GB.
+- adapter final: 160.1 MB.
+- inferencia valid: 157 filas, 15.96 s/ejemplo.
+- inferencia test: 314 filas, 14.97 s/ejemplo.
+- metricas finales: `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
+
 Si despues queremos la corrida de 3 epochs para comparar con "dataset completo x3":
 
 ```bash
 bash scripts/run_enriched_vlm_lora.sh --epochs 3
 ```
 
-## 6. Outputs esperados
+## 6. Outputs generados/esperados
 
 ```text
 outputs/results/dataset_enriched/vlm_lora/
@@ -182,8 +201,9 @@ gcloud compute instances delete dermavqa-vlm-lora-l4 --zone=ZONE
 
 Aplicar en este orden:
 
-1. Bajar `MAX_IMAGE_PIXELS`.
-2. Bajar `MAX_TEXT_TOKENS`.
-3. Reducir `SMOKE_MAX_EVAL_SAMPLES`.
-4. Mantener `PER_DEVICE_TRAIN_BATCH_SIZE=1`.
-5. Usar solo smoke test para confirmar pipeline y pasar a una GPU mayor si hace falta.
+1. Confirmar primero `python -m src.train_enriched --dry-run --limit 5`.
+2. Mantener `--batch-size 1` y subir `--grad-accum` si se necesita compensar.
+3. Bajar `--limit` para hacer smoke tests mas chicos.
+4. Si el OOM ocurre durante vision, reducir el `max_pixels` hardcodeado en
+   `src/train_enriched.py` / `src/vlm_infer_enriched.py`.
+5. Si persiste, pasar a una GPU mayor o reducir el modelo con `--model`.

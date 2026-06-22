@@ -70,7 +70,7 @@ La comparación estrella del trabajo es:
 Objetivo: predecir la respuesta larga a partir de imagen(es) + pregunta, sin entrenar.
 
 - [x] Script `src/vlm_infer.py` (validado en CPU con `--dry-run`):
-  - Carga `Qwen/Qwen2.5-VL-7B-Instruct` (4-bit para que entre en T4/L4).
+- Carga `Qwen/Qwen2.5-VL-3B-Instruct` (4-bit para que entre en T4/L4).
   - Para cada caso de un split arma el mensaje chat:
     system (prompt de dermatólogo en español) + user con `image_ids` (todas) +
     `build_query_text(record)` como texto.
@@ -162,7 +162,8 @@ que lea mis CSVs de predicciones reusando sus funciones de métrica.
 - [ ] Estructura: motivación · datasets (3 variantes) · métodos (retrieval
       textual/visual/multimodal + VLM zero-shot/LoRA) · resultados · limitaciones ·
       **conclusión retrieval vs fine-tuning**.
-- [ ] Pedir y consolidar resultados de Santino (LoRA enriquecido) y Damián (retrieval).
+- [ ] Consolidar resultados ya disponibles de Santino (LoRA enriquecido) y
+      Damián (retrieval), usando `survey/final_comparison_snapshot.md` como base.
 - [ ] Tablas: métricas por dataset; **comparación estrella enriquecido-LoRA (Santino)
       vs longest-LoRA (yo)**, cada modelo contra su propio target + cruce opcional.
 - [ ] La decisión final NO se basa en una sola métrica: combinar chrF + BERTScore +

@@ -26,9 +26,13 @@ El trabajo se organiza alrededor de tres variantes de dataset:
   `outputs/metrics/dataset_enriched/retrieval_textual/`.
 - Las visualizaciones del baseline textual enriquecido ya estan agregadas:
   `chrF`, `sacreBLEU`, BERTScore F1 y ganador en valid por `chrF`.
-- El notebook de LoRA/QLoRA sobre `dataset_enriched` ya esta preparado en
-  `notebooks/03_dataset_enriched_vlm_lora.ipynb`; queda pendiente ejecutarlo
-  en un entorno con GPU e imagenes montadas para producir predicciones finales.
+- El notebook/script de LoRA/QLoRA sobre `dataset_enriched` ya esta preparado y
+  ejecutado con Qwen2.5-VL-3B en una VM L4; los resultados estan en
+  `outputs/results/dataset_enriched/vlm_lora/` y
+  `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
+- La corrida enriquecida esta documentada en
+  `survey/enriched_vlm_experiments.md` y la comparacion preliminar en
+  `survey/final_comparison_snapshot.md`.
 - La documentacion y validacion basica de `dataset_enriched` ya esta cerrada en
   `outputs/datasets/README.md` y `survey/dataset_notes.md`.
 - Pendiente especifico: costo aproximado de la sintesis LLM, porque no hay logs
@@ -73,7 +77,7 @@ Entregables:
 - Dataset enriquecido documentado.
 - Notebook/resultados de retrieval textual enriquecido con plots.
 - Notebook de LoRA/QLoRA sobre dataset enriquecido.
-- Predicciones y metricas en valid/test.
+- Predicciones y metricas en valid/test ya generadas para `dataset_enriched`.
 
 ### Damian
 

@@ -116,7 +116,7 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 ### VLM (Matías)
 | Script | Qué hace |
 | --- | --- |
-| `vlm_infer.py` | Inferencia Qwen2.5-VL-7B 4-bit zero-shot; `--adapter <path>` para LoRA. `--dry-run` valida prompts/imágenes sin GPU. |
+| `vlm_infer.py` | Inferencia Qwen2.5-VL-3B 4-bit zero-shot; `--adapter <path>` para LoRA. `--dry-run` valida prompts/imágenes sin GPU. |
 | `train_longest.py` | Fine-tuning QLoRA (r=16, α=32) sobre `train`, selección con `valid`. `--dry-run` valida el formato chat sin GPU. |
 | `train_enriched.py` | Mismo fine-tuning QLoRA que `train_longest.py`, pero sobre `dataset_enriched`. |
 | `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA. |
@@ -180,11 +180,15 @@ python -m src.evaluate_predictions \
 - Datasets `longest` / `short` / `enriched` construidos y versionados.
 - Baselines de retrieval textual corridos (TF-IDF, E5, SBERT) sobre long y short.
 - Retrieval textual enriquecido corrido (en `outputs/metrics/dataset_enriched/`).
-- VLM zero-shot, QLoRA y evaluador escritos y validados **sin GPU** (`--dry-run`).
+- VLM zero-shot y LoRA sobre `dataset_longest_answer` corridos con Qwen2.5-VL-3B.
+- LoRA/QLoRA sobre `dataset_enriched` corrido en Google Cloud L4 por 1 epoch.
+- Predicciones y métricas de `dataset_enriched/vlm_lora` guardadas en
+  `outputs/results/dataset_enriched/vlm_lora/` y
+  `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
 
-**Falta una sesión de GPU:** zero-shot real sobre valid/test, fine-tuning QLoRA,
-inferencia con adapter, métricas finales y tabla comparativa. Luego: revisión
-clínica manual de ~20 casos, tabla de costos y escritura del paper.
+**Falta:** revisión clínica manual de ~20 casos, tabla comparativa final
+normalizada, análisis cruzado entre targets si se decide hacerlo, tabla de
+costos y escritura del paper.
 
 ### Resultados de retrieval textual disponibles (longest_answer, n=998)
 
@@ -195,6 +199,15 @@ clínica manual de ~20 casos, tabla de costos y escritura del paper.
 | SBERT | 0.174 | 0.088 | 0.085 | 0.657 |
 
 (fuente: `outputs/metrics/dataset_longest_answer/metrics_summary.csv`)
+
+### Resultados VLM enriquecido disponibles (dataset_enriched)
+
+| Split | n por imagen | chrF mean | ROUGE-L | token-F1 | sacreBLEU | BERTScore-F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| valid | 157 | 0.361 | 0.243 | 0.305 | 10.904 | 0.737 |
+| test | 314 | 0.365 | 0.254 | 0.317 | 11.598 | 0.738 |
+
+(fuente: `outputs/metrics/dataset_enriched/metrics_mixed.csv`)
 
 ## Convenciones de colaboración
 

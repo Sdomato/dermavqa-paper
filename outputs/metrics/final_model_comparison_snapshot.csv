@@ -1,0 +1,9 @@
+dataset_variant,target,method,model,split,unit,n,sacrebleu,chrf_corpus,chrf_mean,rouge_l_mean,token_f1_mean,bertscore_f1_mean,mean_latency_s,source,notes
+dataset_enriched,enriched_answer,retrieval_tfidf,TF-IDF,test,case,100,8.266,26.990,,,,0.716,,outputs/metrics/dataset_enriched/retrieval_textual,chrF corpus in 0-100 scale from retrieval notebook
+dataset_enriched,enriched_answer,retrieval_e5,intfloat/multilingual-e5-small,test,case,100,8.555,30.091,,,,0.714,,outputs/metrics/dataset_enriched/retrieval_textual,chrF corpus in 0-100 scale from retrieval notebook
+dataset_enriched,enriched_answer,retrieval_sbert,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,test,case,100,8.795,29.816,,,,0.720,,outputs/metrics/dataset_enriched/retrieval_textual,chrF corpus in 0-100 scale from retrieval notebook
+dataset_enriched,enriched_answer,vlm_lora,Qwen/Qwen2.5-VL-3B-Instruct,test,image,314,11.598,35.691,0.365,0.254,0.317,0.738,14.97,outputs/metrics/dataset_enriched/metrics_mixed.csv,evaluated per image
+dataset_longest_answer,longest_answer,retrieval_multimodal,alpha0.60,all,case,998,,,0.165,0.084,0.082,0.657,,outputs/metrics/dataset_longest_answer/metrics_summary.csv,all-split retrieval summary
+dataset_longest_answer,longest_answer,retrieval_sbert,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,all,case,998,,,0.174,0.088,0.085,0.657,,outputs/metrics/dataset_longest_answer/metrics_summary.csv,all-split retrieval summary
+dataset_longest_answer,longest_answer,vlm_zero_shot,Qwen/Qwen2.5-VL-3B-Instruct,test,case,100,0.409,20.548,0.182,0.072,0.092,0.628,26.74,outputs/metrics/dataset_longest_answer/metrics_mixed.csv,evaluated per case
+dataset_longest_answer,longest_answer,vlm_lora,Qwen/Qwen2.5-VL-3B-Instruct,test,case,100,,,0.157,0.112,0.131,0.667,12.54,outputs/metrics/dataset_longest_answer/per_case_vlm_lora_test_ht_spanishtestsetcorrected.csv,sacreBLEU and corpus chrF not present in current metrics_mixed
