@@ -118,6 +118,8 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 | --- | --- |
 | `vlm_infer.py` | Inferencia Qwen2.5-VL-7B 4-bit zero-shot; `--adapter <path>` para LoRA. `--dry-run` valida prompts/imágenes sin GPU. |
 | `train_longest.py` | Fine-tuning QLoRA (r=16, α=32) sobre `train`, selección con `valid`. `--dry-run` valida el formato chat sin GPU. |
+| `train_enriched.py` | Mismo fine-tuning QLoRA que `train_longest.py`, pero sobre `dataset_enriched`. |
+| `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA. |
 | `evaluate_predictions.py` | Mismas métricas que `evaluate_retrieval.py` sobre los CSV de predicciones del VLM (comparabilidad). |
 
 ## Cómo correr el pipeline
@@ -144,6 +146,16 @@ python -m src.train_longest --dry-run --limit 5
 python -m src.train_longest
 python -m src.vlm_infer --split test \
     --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
+
+# 4b. Fine-tuning QLoRA equivalente sobre dataset_enriched (Santino)
+python -m src.train_enriched --dry-run --limit 5
+python -m src.train_enriched
+# O en una sola corrida: entrenamiento + valid/test + metricas
+bash scripts/run_enriched_vlm_lora.sh --epochs 1
+python -m src.vlm_infer_enriched --split valid \
+    --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
+python -m src.vlm_infer_enriched --split test \
+    --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
 
 # 5. Evaluación unificada (sin GPU si se omite BERTScore)
 python -m src.evaluate_predictions \

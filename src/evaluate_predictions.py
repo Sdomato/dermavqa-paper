@@ -1,51 +1,31 @@
 """
-Evaluación de predicciones VLM (zero-shot / LoRA) sobre dataset_longest_answer.
+Evaluacion de predicciones VLM/retrieval generativas.
 
-Toma uno o más CSV de predicciones con el esquema canónico del plan de equipo
-(columnas predicted_answer_es y reference_answer_es) y calcula las MISMAS
-métricas que usa src/evaluate_retrieval.py para los baselines de retrieval, de
-modo que VLM zero-shot, VLM LoRA y retrieval multimodal sean directamente
-comparables.
+Toma uno o mas CSV de predicciones con columnas:
+  - predicted_answer_es
+  - reference_answer_es
 
-Métricas por caso:
-  - chrF        (sacrebleu)          <- métrica automática principal para español
-  - ROUGE-L F1  (rouge_score)
-  - token-F1    (overlap de tokens normalizados)
-  - BERTScore F1 multilingüe         (opcional, --no-bertscore para saltar)
-  - cosine sim. semántica con E5     (opcional, --cosine)
+Si el CSV trae dataset_variant, escribe metricas en:
+  outputs/metrics/<dataset_variant>/
 
-Métricas a nivel corpus (en el summary):
-  - sacreBLEU corpus
-  - chrF corpus
-
-Las fórmulas léxicas y de BERTScore replican exactamente las de
-evaluate_retrieval.py (mismo modelo bert-base-multilingual-cased, mismo
-use_stemmer=False, misma normalización) para garantizar comparabilidad. Se
-inlinean acá en vez de importarlas porque evaluate_retrieval.py importa
-bert_score/torch a nivel de módulo, lo que impediría correr solo las métricas
-léxicas en CPU.
-
-Salida:
-  outputs/metrics/dataset_longest_answer/metrics_<split>.csv       (una fila por método)
-  outputs/metrics/dataset_longest_answer/per_case_<method>_<split>.csv
+Esto permite comparar directamente `dataset_longest_answer` y `dataset_enriched`
+con las mismas metricas.
 
 Uso:
-    # Evaluar un CSV de predicciones
     python -m src.evaluate_predictions \
-        outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_valid.csv
+        outputs/results/dataset_longest_answer/vlm_lora/predictions_valid.csv
 
-    # Evaluar varios y armar tabla comparativa (mismo split)
     python -m src.evaluate_predictions \
-        outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_test.csv \
-        outputs/results/dataset_longest_answer/vlm_lora/predictions_test.csv
+        outputs/results/dataset_enriched/vlm_lora/predictions_valid.csv \
+        outputs/results/dataset_enriched/vlm_lora/predictions_test.csv
 
-    # Solo métricas léxicas (sin torch), útil para validar en local
     python -m src.evaluate_predictions <csv> --no-bertscore
 """
 
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -54,12 +34,30 @@ import pandas as pd
 
 from src.retrieval_utils import PROJECT_ROOT
 
-METRICS_ROOT = PROJECT_ROOT / "outputs" / "metrics" / "dataset_longest_answer"
+METRICS_BASE = PROJECT_ROOT / "outputs" / "metrics"
+DEFAULT_DATASET_VARIANT = "dataset_longest_answer"
 BERTSCORE_MODEL = "bert-base-multilingual-cased"
 E5_MODEL_ID = "intfloat/multilingual-e5-base"
 
 
-# ── métricas léxicas (idénticas a evaluate_retrieval.py) ─────────────────────────
+def normalize_dataset_variant(value: Any, csv_path: Path) -> str:
+    text = str(value or "").strip()
+    if not text:
+        path_text = str(csv_path).replace("\\", "/")
+        if "dataset_enriched" in path_text:
+            return "dataset_enriched"
+        if "dataset_longest_answer" in path_text:
+            return "dataset_longest_answer"
+        return DEFAULT_DATASET_VARIANT
+    aliases = {
+        "longest_answer": "dataset_longest_answer",
+        "dataset_longest_answer": "dataset_longest_answer",
+        "enriched": "dataset_enriched",
+        "llm_synthesized_answer": "dataset_enriched",
+        "dataset_enriched": "dataset_enriched",
+    }
+    return aliases.get(text, text)
+
 
 def normalize(text: str) -> str:
     return " ".join(str(text).lower().split())
@@ -72,13 +70,12 @@ def token_f1(pred: str, ref: str) -> float:
     ref_tokens = normalize(ref).split()
     if not pred_tokens or not ref_tokens:
         return 0.0
-    # Usar Counter para respetar duplicados (set perdería tokens repetidos).
     common = sum((Counter(pred_tokens) & Counter(ref_tokens)).values())
     if not common:
         return 0.0
-    p = common / len(pred_tokens)
-    r = common / len(ref_tokens)
-    return 2 * p * r / (p + r)
+    precision = common / len(pred_tokens)
+    recall = common / len(ref_tokens)
+    return 2 * precision * recall / (precision + recall)
 
 
 def compute_rouge_l(predictions: list[str], references: list[str]) -> list[float]:
@@ -86,8 +83,8 @@ def compute_rouge_l(predictions: list[str], references: list[str]) -> list[float
 
     scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=False)
     return [
-        scorer.score(ref, pred)["rougeL"].fmeasure
-        for pred, ref in zip(predictions, references)
+        scorer.score(reference, prediction)["rougeL"].fmeasure
+        for prediction, reference in zip(predictions, references)
     ]
 
 
@@ -95,8 +92,8 @@ def compute_chrf(predictions: list[str], references: list[str]) -> list[float]:
     import sacrebleu
 
     return [
-        sacrebleu.corpus_chrf([pred], [[ref]]).score / 100.0
-        for pred, ref in zip(predictions, references)
+        sacrebleu.corpus_chrf([prediction], [[reference]]).score / 100.0
+        for prediction, reference in zip(predictions, references)
     ]
 
 
@@ -111,14 +108,13 @@ def compute_bertscore(predictions: list[str], references: list[str]) -> list[flo
 
 
 def compute_cosine_e5(predictions: list[str], references: list[str]) -> list[float]:
-    """Cosine entre embeddings E5 de predicción y referencia (semántica)."""
     from sentence_transformers import SentenceTransformer
 
     print(f"  Calculando cosine similarity ({E5_MODEL_ID})...")
     model = SentenceTransformer(E5_MODEL_ID)
-    emb_pred = model.encode([f"query: {p}" for p in predictions], normalize_embeddings=True)
-    emb_ref = model.encode([f"query: {r}" for r in references], normalize_embeddings=True)
-    return [float(np.dot(a, b)) for a, b in zip(emb_pred, emb_ref)]
+    emb_pred = model.encode([f"query: {prediction}" for prediction in predictions], normalize_embeddings=True)
+    emb_ref = model.encode([f"query: {reference}" for reference in references], normalize_embeddings=True)
+    return [float(np.dot(pred_vec, ref_vec)) for pred_vec, ref_vec in zip(emb_pred, emb_ref)]
 
 
 def corpus_scores(predictions: list[str], references: list[str]) -> dict[str, float]:
@@ -129,33 +125,37 @@ def corpus_scores(predictions: list[str], references: list[str]) -> dict[str, fl
     return {"sacrebleu_corpus": bleu, "chrf_corpus": chrf}
 
 
-# ── evaluación de un CSV ─────────────────────────────────────────────────────────
-
-def evaluate_csv(
-    csv_path: Path, use_bertscore: bool, use_cosine: bool
-) -> tuple[pd.DataFrame, dict[str, Any]]:
+def evaluate_csv(csv_path: Path, use_bertscore: bool, use_cosine: bool) -> tuple[pd.DataFrame, dict[str, Any]]:
     df = pd.read_csv(csv_path).fillna({"predicted_answer_es": "", "reference_answer_es": ""})
+    required = {"predicted_answer_es", "reference_answer_es"}
+    missing = sorted(required - set(df.columns))
+    if missing:
+        raise ValueError(f"Faltan columnas requeridas en {csv_path}: {missing}")
 
     method = str(df["method"].iloc[0]) if "method" in df else csv_path.stem
     model_name = str(df["model_name"].iloc[0]) if "model_name" in df else "unknown"
     split = str(df["split"].iloc[0]) if "split" in df else "unknown"
+    raw_variant = str(df["dataset_variant"].iloc[0]) if "dataset_variant" in df else ""
+    dataset_variant = normalize_dataset_variant(raw_variant, csv_path)
 
-    preds = df["predicted_answer_es"].astype(str).tolist()
-    refs = df["reference_answer_es"].astype(str).tolist()
-    n_empty = sum(1 for p in preds if not p.strip())
+    predictions = df["predicted_answer_es"].astype(str).tolist()
+    references = df["reference_answer_es"].astype(str).tolist()
+    empty_predictions = sum(1 for prediction in predictions if not prediction.strip())
 
-    print(f"\n[{method}] {len(preds)} casos ({n_empty} predicciones vacías)")
+    print(f"\n[{dataset_variant} | {method}] {len(predictions)} casos ({empty_predictions} predicciones vacias)")
 
-    chrf = compute_chrf(preds, refs)
-    rouge_l = compute_rouge_l(preds, refs)
-    tok_f1 = [token_f1(p, r) for p, r in zip(preds, refs)]
+    chrf = compute_chrf(predictions, references)
+    rouge_l = compute_rouge_l(predictions, references)
+    tok_f1 = [token_f1(prediction, reference) for prediction, reference in zip(predictions, references)]
 
     per_case = pd.DataFrame(
         {
+            "dataset_variant": dataset_variant,
             "method": method,
             "model_name": model_name,
             "split": split,
             "encounter_id": df.get("encounter_id", pd.Series(range(len(df)))),
+            "image_id": df.get("image_id", pd.Series([""] * len(df))),
             "chrf": chrf,
             "rouge_l": rouge_l,
             "token_f1": tok_f1,
@@ -163,79 +163,84 @@ def evaluate_csv(
     )
 
     summary: dict[str, Any] = {
+        "dataset_variant": dataset_variant,
         "method": method,
         "model_name": model_name,
         "split": split,
-        "n": len(preds),
-        "empty_predictions": n_empty,
+        "n": len(predictions),
+        "empty_predictions": empty_predictions,
         "chrf_mean": float(np.mean(chrf)),
         "rouge_l_mean": float(np.mean(rouge_l)),
         "token_f1_mean": float(np.mean(tok_f1)),
     }
-    summary.update(corpus_scores(preds, refs))
+    summary.update(corpus_scores(predictions, references))
 
     if use_bertscore:
-        bscore = compute_bertscore(preds, refs)
-        per_case["bertscore_f1"] = bscore
-        summary["bertscore_f1_mean"] = float(np.mean(bscore))
+        bertscore = compute_bertscore(predictions, references)
+        per_case["bertscore_f1"] = bertscore
+        summary["bertscore_f1_mean"] = float(np.mean(bertscore))
 
     if use_cosine:
-        cos = compute_cosine_e5(preds, refs)
-        per_case["cosine_e5"] = cos
-        summary["cosine_e5_mean"] = float(np.mean(cos))
+        cosine = compute_cosine_e5(predictions, references)
+        per_case["cosine_e5"] = cosine
+        summary["cosine_e5_mean"] = float(np.mean(cosine))
 
     return per_case, summary
 
 
-# ── main ─────────────────────────────────────────────────────────────────────────
+def write_summary(metrics_root: Path, summaries: list[dict[str, Any]]) -> None:
+    metrics_root.mkdir(parents=True, exist_ok=True)
+    summary_df = pd.DataFrame(summaries)
+    split_seen = set(summary_df["split"].astype(str).tolist())
 
-def run(args: argparse.Namespace) -> None:
-    METRICS_ROOT.mkdir(parents=True, exist_ok=True)
-
-    summaries: list[dict[str, Any]] = []
-    split_seen: set[str] = set()
-
-    for csv_path in args.predictions:
-        per_case, summary = evaluate_csv(
-            Path(csv_path), use_bertscore=not args.no_bertscore, use_cosine=args.cosine
-        )
-        summaries.append(summary)
-        split_seen.add(summary["split"])
-
-        pc_path = METRICS_ROOT / f"per_case_{summary['method']}_{summary['split']}.csv"
-        per_case.to_csv(pc_path, index=False, encoding="utf-8")
-        print(f"  Por caso -> {pc_path}")
-
-    df_summary = pd.DataFrame(summaries)
-
-    # Si todos comparten split, escribir metrics_<split>.csv (naming del plan de equipo).
-    # Mezcla con métricas previas del mismo split sin duplicar método.
     if len(split_seen) == 1:
         split = next(iter(split_seen))
-        out_path = METRICS_ROOT / f"metrics_{split}.csv"
+        out_path = metrics_root / f"metrics_{split}.csv"
         if out_path.exists():
-            prev = pd.read_csv(out_path)
-            prev = prev[~prev["method"].isin(df_summary["method"])]
-            df_summary = pd.concat([prev, df_summary], ignore_index=True)
-        df_summary.to_csv(out_path, index=False, encoding="utf-8")
+            previous = pd.read_csv(out_path)
+            previous = previous[~previous["method"].isin(summary_df["method"])]
+            summary_df = pd.concat([previous, summary_df], ignore_index=True)
+        summary_df.to_csv(out_path, index=False, encoding="utf-8")
         print(f"\nResumen -> {out_path}")
     else:
-        out_path = METRICS_ROOT / "metrics_mixed.csv"
-        df_summary.to_csv(out_path, index=False, encoding="utf-8")
+        out_path = metrics_root / "metrics_mixed.csv"
+        summary_df.to_csv(out_path, index=False, encoding="utf-8")
         print(f"\nResumen (splits mixtos) -> {out_path}")
 
     print("\n" + "=" * 70)
-    print("RESUMEN")
+    print(metrics_root)
     print("=" * 70)
-    print(df_summary.to_string(index=False, float_format="{:.4f}".format))
+    print(summary_df.to_string(index=False, float_format="{:.4f}".format))
+
+
+def run(args: argparse.Namespace) -> None:
+    summaries_by_variant: dict[str, list[dict[str, Any]]] = defaultdict(list)
+
+    for prediction_path in args.predictions:
+        csv_path = Path(prediction_path)
+        per_case, summary = evaluate_csv(
+            csv_path, use_bertscore=not args.no_bertscore, use_cosine=args.cosine
+        )
+        dataset_variant = summary["dataset_variant"]
+        metrics_root = METRICS_BASE / dataset_variant
+        metrics_root.mkdir(parents=True, exist_ok=True)
+
+        per_case_path = metrics_root / f"per_case_{summary['method']}_{summary['split']}.csv"
+        per_case.to_csv(per_case_path, index=False, encoding="utf-8")
+        print(f"  Por caso -> {per_case_path}")
+
+        summaries_by_variant[dataset_variant].append(summary)
+
+    for dataset_variant, summaries in summaries_by_variant.items():
+        write_summary(METRICS_BASE / dataset_variant, summaries)
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Evalúa predicciones VLM sobre longest_answer")
-    p.add_argument("predictions", nargs="+", help="Uno o más CSV de predicciones")
-    p.add_argument("--no-bertscore", action="store_true", help="Saltear BERTScore (sin torch)")
-    p.add_argument("--cosine", action="store_true", help="Calcular cosine semántica con E5")
-    return p.parse_args()
+    parser = argparse.ArgumentParser(description="Evalua predicciones generativas VLM")
+    parser.add_argument("predictions", nargs="+", help="Uno o mas CSV de predicciones")
+    parser.add_argument("--no-bertscore", action="store_true", help="Saltear BERTScore")
+    parser.add_argument("--cosine", action="store_true", help="Calcular cosine semantica con E5")
+    return parser.parse_args()
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 Baseline de Retrieval Textual con Multilingual E5 sobre dataset_longest_answer.
 
 Modelo: intfloat/multilingual-e5-base
-Salida: outputs/results/dataset_longest_answer/retrieval_textual_e5/e5_results.json
+Salida: results/dataset_longest_answer/retrieval_textual/e5_results.json
 """
 
 from pathlib import Path
@@ -14,6 +14,7 @@ from transformers import AutoModel, AutoTokenizer
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     load_dataset,
@@ -24,11 +25,9 @@ from src.retrieval_utils import (
 MODEL_ID = "intfloat/multilingual-e5-base"
 BATCH_SIZE = 64
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_longest_answer"
-    / "retrieval_textual_e5"
+    / "retrieval_textual"
     / "e5_results.json"
 )
 

@@ -2,7 +2,7 @@
 Baseline de Retrieval Textual con Sentence-BERT sobre dataset_longest_answer.
 
 Modelo: paraphrase-multilingual-MiniLM-L12-v2
-Salida: outputs/results/dataset_longest_answer/retrieval_textual_sbert/sbert_results.json
+Salida: results/dataset_longest_answer/retrieval_textual/sbert_results.json
 """
 
 from pathlib import Path
@@ -13,6 +13,7 @@ from tqdm import tqdm
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     load_dataset,
@@ -23,11 +24,9 @@ from src.retrieval_utils import (
 MODEL_ID = "paraphrase-multilingual-MiniLM-L12-v2"
 BATCH_SIZE = 64
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_longest_answer"
-    / "retrieval_textual_sbert"
+    / "retrieval_textual"
     / "sbert_results.json"
 )
 

@@ -9,12 +9,12 @@ Por defecto usa E5 como fuente textual y alpha=0.6.
 Los scores de cada modalidad se normalizan a [0, 1] antes de fusionarlos.
 
 Requiere que los resultados previos existan:
-  outputs/results/dataset_longest_answer/retrieval_textual_e5/e5_results.json
-  outputs/results/dataset_longest_answer/retrieval_visual/visual_results.json
+  results/dataset_longest_answer/retrieval_textual/e5_results.json
+  results/dataset_longest_answer/retrieval_visual/visual_results.json
 
 Alternativamente puede recalcular los embeddings en memoria si se pasa --recompute.
 
-Salida: outputs/results/dataset_longest_answer/retrieval_multimodal/multimodal_results.json
+Salida: results/dataset_longest_answer/retrieval_multimodal/multimodal_results.json
 """
 
 from __future__ import annotations
@@ -31,6 +31,7 @@ from transformers import AutoModel, AutoTokenizer
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     find_image,
@@ -52,16 +53,13 @@ BIOMEDCLIP_FALLBACK_MODEL = "ViT-B-32"
 BIOMEDCLIP_FALLBACK_PRETRAINED = "openai"
 
 TEXT_SIM_CACHE = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
-    / "retrieval_textual_e5" / "e5_sim_matrix.npy"
+    RESULTS_DIR / "dataset_longest_answer" / "retrieval_textual" / "e5_sim_matrix.npy"
 )
 VISUAL_SIM_CACHE = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
-    / "retrieval_visual" / "visual_sim_matrix.npy"
+    RESULTS_DIR / "dataset_longest_answer" / "retrieval_visual" / "visual_sim_matrix.npy"
 )
 OUTPUT_PATH = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_longest_answer"
-    / "retrieval_multimodal" / "multimodal_results.json"
+    RESULTS_DIR / "dataset_longest_answer" / "retrieval_multimodal" / "multimodal_results.json"
 )
 BATCH_SIZE = 64
 

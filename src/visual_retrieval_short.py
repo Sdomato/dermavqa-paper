@@ -7,7 +7,7 @@ output: usa answer_es de dataset_short_answer en lugar del longest_answer.
 
 Requiere haber corrido visual_retrieval.py primero.
 
-Salida: outputs/results/dataset_short_answer/retrieval_visual/visual_results.json
+Salida: results/dataset_short_answer/retrieval_visual/visual_results.json
 """
 
 from __future__ import annotations
@@ -18,6 +18,7 @@ import numpy as np
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     clean_text,
     load_dataset,
     save_results,
@@ -26,9 +27,7 @@ from src.retrieval_utils import (
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.json"
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_short_answer"
     / "retrieval_visual"
     / "visual_results.json"

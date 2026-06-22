@@ -20,11 +20,15 @@ dominio medico multimodal y subrepresentado en espanol.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
+
 - `STRUCTURE.md`: convencion canonica de carpetas y artefactos del repo
   (raiz de resultados, que se versiona, resolucion de imagenes).
 - `matias_execution_plan.md`: plan y progreso de la pata VLM (zero-shot + LoRA
   sobre `dataset_longest_answer`): `src/vlm_infer.py`, `src/train_longest.py`,
   `src/evaluate_predictions.py`.
+- `google_cloud_vlm_lora_runbook.md`: pasos para entrenar Qwen2.5-VL-3B con
+  LoRA/QLoRA sobre `dataset_enriched` usando una VM L4 en Google Cloud;
+  incluye comandos `src/train_enriched.py` y `src/vlm_infer_enriched.py`.
 - `related_work_matrix.csv`: matriz inicial para organizar papers relacionados.
 - `risks.md`: riesgos metodologicos, medicos y operativos.
 

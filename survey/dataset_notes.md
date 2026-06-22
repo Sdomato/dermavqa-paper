@@ -148,3 +148,88 @@ debe auditarse y configurarse con temperatura baja.
 - tasa de casos con sintesis LLM valida;
 - porcentaje de imagenes faltantes;
 - distribucion de localizaciones anatomicas cuando el metadato este disponible.
+
+## Cierre de `dataset_enriched`
+
+Validado el 2026-06-16 como dataset enriquecido de Santino para baselines y
+LoRA/QLoRA.
+
+### Artefactos
+
+- Dataset final: `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.jsonl`.
+- CSV equivalente: `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.csv`.
+- Paquete portable: `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip`.
+- Contrato de columnas/conteos: `outputs/datasets/manifest.json`.
+- Documentacion operativa: `outputs/datasets/README.md`.
+
+### Generacion documentada
+
+- Script revisado: `src/build_llm_synthesized_dataset.py`.
+- Splits usados por el script: `train.json`, `valid_ht.json` y
+  `test_ht_spanishtestsetcorrected.json`.
+- Se genera una sintesis por caso (`encounter_id`) y luego se expande a una
+  fila por imagen.
+- El prompt usa solo `question_es` y las respuestas originales en espanol; no
+  usa imagenes durante la sintesis.
+- Las respuestas fuente se toman de `responses[*].content_es`, se filtran
+  vacias y se deduplican antes de construir el prompt.
+- Prompt version: `llm_synthesis_es_v5`.
+- Deployment/modelo por defecto: `gpt-oss-120b`.
+- Proveedor configurado por script: Azure OpenAI o Azure AI Foundry v1 segun
+  endpoint/`LLM_PROVIDER`.
+- Temperatura por defecto: `0.2`; max tokens por defecto: `900`.
+- El script pide JSON estricto con `synthesized_answer_es`, `has_conflict`,
+  `conflict_note` y `source_support_level`; el artefacto compacto final conserva
+  solo las columnas necesarias para entrenamiento.
+
+### Reglas principales del prompt
+
+- Redactar una unica respuesta clinica concisa en espanol.
+- Usar solo informacion presente en las respuestas originales.
+- No agregar diagnosticos, tratamientos, advertencias, recomendaciones,
+  morfologia, signos negativos ni hallazgos nuevos.
+- Evitar respuestas de una sola palabra o solo etiqueta; convertir etiquetas en
+  una frase natural cuando la fuente sea breve.
+- Integrar incertidumbre si hay contradicciones y marcar conflicto solo ante
+  contradiccion directa.
+- Evitar frases meta sobre fuentes/autores y no mencionar que la respuesta fue
+  sintetizada por un modelo.
+
+### Conteos validados
+
+| Split | Casos | Filas por imagen |
+| --- | ---: | ---: |
+| `train` | 842 | 2473 |
+| `valid` | 56 | 157 |
+| `test` | 100 | 314 |
+| **Total** | **998** | **2944** |
+
+Campos finales: `split`, `encounter_id`, `image_id`, `image_path`,
+`question_es`, `answer_es`.
+
+Validaciones realizadas:
+
+- JSONL y CSV tienen 2944 filas y las mismas 6 columnas.
+- Las parejas `(split, encounter_id, image_id)` coinciden exactamente con los
+  JSON fuente.
+- Preguntas vacias: 0.
+- Respuestas vacias: 0.
+- Rutas de imagen vacias: 0.
+- Archivos de imagen faltantes en la maquina local: 0.
+- Filas duplicadas completas: 0.
+- Duplicados por `(split, encounter_id, image_id)`: 0.
+- ZIP revisado con JSONL, CSV, README y manifest.
+
+### Limitaciones y pendientes
+
+- Las respuestas son sinteticas y requieren auditoria clinica manual antes de
+  usarse como evidencia final.
+- La sintesis es text-only; no valida ni corrige contra la imagen.
+- La misma `answer_es` se repite para todas las imagenes del caso.
+- `image_path` usa rutas absolutas locales, por lo que debe remapearse fuera de
+  esta maquina.
+- El artefacto compacto no conserva respuestas fuente ni flags de conflicto por
+  fila; si se necesita auditoria fina, generar/exportar una version con
+  metadatos completos.
+- Costo aproximado pendiente: no se encontraron logs versionables de usage,
+  tokens o costo de Azure.

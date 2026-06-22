@@ -1,5 +1,5 @@
 """
-Shared utilities for retrieval baselines on dataset_longest_answer.
+Shared utilities for retrieval baselines.
 """
 
 import json
@@ -19,7 +19,10 @@ def find_project_root(start: Path | None = None) -> Path:
 
 
 PROJECT_ROOT = find_project_root()
-DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
+DATASETS_DIR = PROJECT_ROOT / "outputs" / "datasets"
+RESULTS_DIR = PROJECT_ROOT / "outputs" / "results"
+METRICS_DIR = PROJECT_ROOT / "outputs" / "metrics"
+DATASET_PATH = DATASETS_DIR / "dataset_longest_answer.json"
 # Canonical image location: images live under data/iiyi/images_final/ in the
 # split subdirs images_{train,valid,test}/. We fall back to the legacy flat
 # data/images/ layout (and its subdirs) so older local setups keep working.
@@ -30,30 +33,25 @@ _IMAGE_INDEX: dict[str, Path] | None = None
 
 
 def _build_image_index() -> dict[str, Path]:
-    """Index every image file by filename, searching the canonical dir and the
-    legacy dir recursively (images live in images_{train,valid,test}/ subdirs).
-    First match wins."""
+    """Index image files by filename across canonical and legacy folders."""
     index: dict[str, Path] = {}
     for base in (IMAGES_DIR, _LEGACY_IMAGES_DIR):
         if not base.exists():
             continue
-        for path in base.rglob("*"):
-            if path.is_file() and path.suffix.lower() in _IMAGE_EXTS:
-                index.setdefault(path.name, path)
+        for image_path in base.rglob("*"):
+            if image_path.is_file() and image_path.suffix.lower() in _IMAGE_EXTS:
+                index.setdefault(image_path.name, image_path)
     return index
 
 
 def find_image(image_id: str) -> Path | None:
-    """Resolve an image filename (e.g. ``IMG_ENC00908_00001.jpg``) to a real
-    path on disk, regardless of which split subdir it lives in. Searches
-    data/iiyi/images_final recursively with a fallback to the legacy
-    data/images layout. Returns None if not found; the index is cached."""
+    """Resolve an image filename to a local path, searching split subdirs."""
     global _IMAGE_INDEX
     if _IMAGE_INDEX is None:
         _IMAGE_INDEX = _build_image_index()
     if image_id in _IMAGE_INDEX:
         return _IMAGE_INDEX[image_id]
-    if "." not in image_id:  # caller passed an id without extension
+    if "." not in image_id:
         for ext in (".jpg", ".jpeg", ".png", ".webp"):
             hit = _IMAGE_INDEX.get(image_id + ext)
             if hit is not None:
@@ -63,7 +61,6 @@ def find_image(image_id: str) -> Path | None:
 
 # Backward-compatible alias: some modules import resolve_image_path.
 resolve_image_path = find_image
-
 
 def clean_text(text: Any) -> str:
     return re.sub(r"\s+", " ", str(text or "")).strip()

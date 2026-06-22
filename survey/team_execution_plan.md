@@ -24,6 +24,15 @@ El trabajo se organiza alrededor de tres variantes de dataset:
 - El baseline de retrieval textual sobre `dataset_enriched` ya esta corrido.
 - Los resultados resumidos estan en
   `outputs/metrics/dataset_enriched/retrieval_textual/`.
+- Las visualizaciones del baseline textual enriquecido ya estan agregadas:
+  `chrF`, `sacreBLEU`, BERTScore F1 y ganador en valid por `chrF`.
+- El notebook de LoRA/QLoRA sobre `dataset_enriched` ya esta preparado en
+  `notebooks/03_dataset_enriched_vlm_lora.ipynb`; queda pendiente ejecutarlo
+  en un entorno con GPU e imagenes montadas para producir predicciones finales.
+- La documentacion y validacion basica de `dataset_enriched` ya esta cerrada en
+  `outputs/datasets/README.md` y `survey/dataset_notes.md`.
+- Pendiente especifico: costo aproximado de la sintesis LLM, porque no hay logs
+  versionables de usage/tokens/costo.
 - Las imagenes no se suben a GitHub porque el equipo ya las tiene localmente.
 
 > **Nota de convencion (actualizada 2026-06-20):** la raiz canonica de resultados
@@ -57,7 +66,7 @@ Tareas:
   - ganador en valid segun `chrF`.
 - Fine-tunear un VLM con LoRA/QLoRA sobre `dataset_enriched`.
 - Guardar resultados de fine-tuning en
-  `results/dataset_enriched/vlm_lora/`.
+  `outputs/results/dataset_enriched/vlm_lora/`.
 
 Entregables:
 
@@ -81,8 +90,8 @@ Tareas:
   - retrieval visual con CLIP/OpenCLIP;
   - retrieval multimodal texto + imagen.
 - Implementar retrieval visual para `dataset_short_answer`.
-- Agregar graficos al retrieval textual que Santino ya hizo sobre
-  `dataset_enriched`.
+- Revisar o extender, si hace falta, los graficos del retrieval textual que
+  Santino ya dejo sobre `dataset_enriched`.
 
 Resultados esperados:
 
@@ -90,7 +99,7 @@ Resultados esperados:
 - `results/dataset_longest_answer/retrieval_visual/`
 - `results/dataset_longest_answer/retrieval_multimodal/`
 - `results/dataset_short_answer/retrieval_visual/`
-- plots agregados en `results/dataset_enriched/retrieval_textual/`
+- revision opcional de plots en `results/dataset_enriched/retrieval_textual/`
 
 ### Matias
 
@@ -231,4 +240,3 @@ outputs/
 - Si un resultado pesa mucho, subir solo metricas agregadas y documentar donde
   conseguir el artefacto completo.
 - Mantener nombres de carpetas consistentes por dataset y metodo.
-

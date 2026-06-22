@@ -5,7 +5,7 @@ Para cada caso, recupera el Top-1 más similar (coseno) excluyendo el caso
 propio y guarda: encounter_id original, encounter_id recuperado, score de
 similitud y respuesta recuperada.
 
-Salida: outputs/results/dataset_longest_answer/retrieval_textual/tfidf_results.json
+Salida: results/dataset_longest_answer/retrieval_textual/tfidf_results.json
 """
 
 import json
@@ -30,7 +30,6 @@ PROJECT_ROOT = find_project_root()
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json"
 OUTPUT_PATH = (
     PROJECT_ROOT
-    / "outputs"
     / "results"
     / "dataset_longest_answer"
     / "retrieval_textual"

@@ -1,7 +1,7 @@
 """
 Baseline de Retrieval Textual TF-IDF sobre dataset_short_answer.
 
-Salida: outputs/results/dataset_short_answer/retrieval_textual_tfidf/tfidf_results.json
+Salida: results/dataset_short_answer/retrieval_textual/tfidf_results.json
 """
 
 from pathlib import Path
@@ -13,6 +13,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     clean_text,
@@ -23,11 +24,9 @@ from src.retrieval_utils import (
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.json"
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_short_answer"
-    / "retrieval_textual_tfidf"
+    / "retrieval_textual"
     / "tfidf_results.json"
 )
 

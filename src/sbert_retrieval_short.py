@@ -2,7 +2,7 @@
 Baseline de Retrieval Textual con Sentence-BERT sobre dataset_short_answer.
 
 Modelo: paraphrase-multilingual-MiniLM-L12-v2
-Salida: outputs/results/dataset_short_answer/retrieval_textual_sbert/sbert_results.json
+Salida: results/dataset_short_answer/retrieval_textual/sbert_results.json
 """
 
 import numpy as np
@@ -10,6 +10,7 @@ from sentence_transformers import SentenceTransformer
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     clean_text,
@@ -22,11 +23,9 @@ MODEL_ID = "paraphrase-multilingual-MiniLM-L12-v2"
 BATCH_SIZE = 64
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.json"
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_short_answer"
-    / "retrieval_textual_sbert"
+    / "retrieval_textual"
     / "sbert_results.json"
 )
 

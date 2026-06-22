@@ -8,7 +8,7 @@ Los scores de cada modalidad se normalizan a [0, 1] antes de fusionarlos.
 Reutiliza los sim-matrix cacheados de los scripts individuales si existen.
 
 Salida:
-  outputs/results/dataset_short_answer/retrieval_multimodal/
+  results/dataset_short_answer/retrieval_multimodal/
     multimodal_alpha<alpha>_results.json
 
 Uso:
@@ -30,6 +30,7 @@ from transformers import AutoModel, AutoTokenizer
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_query_text,
     build_results,
     clean_text,
@@ -49,15 +50,13 @@ except ImportError:
 
 DATASET_PATH = PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.json"
 OUTPUT_DIR = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_short_answer" / "retrieval_multimodal"
+    RESULTS_DIR / "dataset_short_answer" / "retrieval_multimodal"
 )
 TEXT_SIM_CACHE = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_short_answer"
-    / "retrieval_textual_e5" / "e5_sim_matrix.npy"
+    RESULTS_DIR / "dataset_short_answer" / "retrieval_textual" / "e5_sim_matrix.npy"
 )
 VISUAL_SIM_CACHE = (
-    PROJECT_ROOT / "outputs" / "results" / "dataset_short_answer"
-    / "retrieval_visual" / "visual_sim_matrix.npy"
+    RESULTS_DIR / "dataset_short_answer" / "retrieval_visual" / "visual_sim_matrix.npy"
 )
 
 E5_MODEL_ID = "intfloat/multilingual-e5-base"

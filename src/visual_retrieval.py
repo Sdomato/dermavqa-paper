@@ -8,7 +8,7 @@ Cuando un caso tiene varias imágenes se promedia su embedding.
 Casos sin imagen válida obtienen un embedding cero y no son candidatos de retrieval
 (sus scores quedan en -inf al buscar el top-1).
 
-Salida: outputs/results/dataset_longest_answer/retrieval_visual/visual_results.json
+Salida: results/dataset_longest_answer/retrieval_visual/visual_results.json
 """
 
 from __future__ import annotations
@@ -23,6 +23,7 @@ from tqdm import tqdm
 
 from src.retrieval_utils import (
     PROJECT_ROOT,
+    RESULTS_DIR,
     build_results,
     clean_text,
     find_image,
@@ -43,9 +44,7 @@ FALLBACK_MODEL = "ViT-B-32"
 FALLBACK_PRETRAINED = "openai"
 BATCH_SIZE = 32
 OUTPUT_PATH = (
-    PROJECT_ROOT
-    / "outputs"
-    / "results"
+    RESULTS_DIR
     / "dataset_longest_answer"
     / "retrieval_visual"
     / "visual_results.json"

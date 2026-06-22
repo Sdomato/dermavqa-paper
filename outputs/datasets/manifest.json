@@ -1,0 +1,56 @@
+{
+  "name": "llm_synthesized_answer",
+  "description": "Dataset enriquecido DermaVQA-IIYI para fine-tuning: pregunta en espa?ol -> respuesta dermatol?gica sintetizada en espa?ol.",
+  "created_at": "2026-06-06T02:44:35.241843+00:00",
+  "jsonl": "outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.jsonl",
+  "csv": "outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.csv",
+  "zip": "outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip",
+  "row_count_by_image": 2944,
+  "case_count": 998,
+  "split_counts_by_image": {
+    "test": 314,
+    "train": 2473,
+    "valid": 157
+  },
+  "split_counts_by_case": {
+    "test": 100,
+    "train": 842,
+    "valid": 56
+  },
+  "columns": [
+    "split",
+    "encounter_id",
+    "image_id",
+    "image_path",
+    "question_es",
+    "answer_es"
+  ],
+  "training_interface_text_baseline": {
+    "input": [
+      "question_es"
+    ],
+    "output": "answer_es",
+    "ignored_columns": [
+      "image_path",
+      "image_id"
+    ]
+  },
+  "training_interface_future_vqa": {
+    "input": [
+      "image_path",
+      "question_es"
+    ],
+    "output": "answer_es"
+  },
+  "validation": {
+    "jsonl_rows": 2944,
+    "csv_rows": 2944,
+    "empty_answers": 0,
+    "empty_questions": 0,
+    "missing_image_paths": 0
+  },
+  "notes": [
+    "El baseline de texto ignora las im?genes para validar el pipeline de fine-tuning.",
+    "Las rutas de imagen se conservan para el futuro fine-tuning multimodal VQA."
+  ]
+}
