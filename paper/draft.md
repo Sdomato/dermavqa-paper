@@ -62,6 +62,10 @@ Tabla de splits:
 | Enriquecido | valid | 56 | 157 |
 | Enriquecido | test | 100 | 314 |
 
+**Figura 1. Tamaño de los datasets por split.** La figura muestra la cantidad de filas por imagen en train, valid y test para las variantes de respuesta larga, respuesta corta y respuesta enriquecida.
+
+![Figura 1. Tamaño de los datasets por split](../outputs/paper/figures/dataset_split_counts.svg)
+
 Además de las variantes de respuesta corta y respuesta larga, construimos un
 target enriquecido. Para ello agrupamos las respuestas originales por caso y
 realizamos aproximadamente 900 llamados a un LLM en Azure, uno por caso. Cada
@@ -120,6 +124,10 @@ L4. El entrenamiento procesó 2.473 ejemplos, completó 155 steps, tardó 4.636,
 segundos y tuvo un pico de VRAM de 6,73 GB. El adapter LoRA final pesa
 aproximadamente 160 MB.
 
+**Figura 2. Curva de entrenamiento QLoRA sobre el dataset enriquecido.** Se reportan loss de entrenamiento y validación durante la corrida en Google Cloud.
+
+![Figura 2. Curva de entrenamiento QLoRA](../outputs/paper/figures/enriched_vlm_training_curve.svg)
+
 ## 4. Evaluación
 
 Reportamos métricas automáticas de generación:
@@ -142,7 +150,7 @@ También construimos una revisión cualitativa preliminar de 20 casos del VLM
 LoRA enriquecido. Esta revisión está marcada como `ai_preliminary` y requiere
 confirmación clínica antes de sostener claims médicos.
 
-## 6. Resultados cuantitativos
+## 5. Resultados cuantitativos
 
 La Tabla 1 muestra la comparación principal sobre test.
 
@@ -171,12 +179,29 @@ token-F1 y BERTScore F1, pero no en chrF. Esto indica que el fine-tuning puede
 mejorar el ajuste semántico/estilístico al target sin necesariamente aumentar
 el solapamiento superficial.
 
-Figuras principales:
+**Figura 3. Comparación principal por chrF.** El VLM LoRA enriquecido presenta el mayor chrF medio entre las filas principales, mientras que los retrieval enriquecidos conservan mayor sacreBLEU corpus.
 
-- `../outputs/paper/figures/main_test_chrf.svg`
-- `../outputs/paper/figures/main_test_bertscore.svg`
-- `../outputs/paper/figures/main_test_rouge_tokenf1.svg`
-- `../outputs/paper/figures/vlm_latency_vs_bertscore.svg`
+![Figura 3. Comparación principal por chrF](../outputs/paper/figures/main_test_chrf.svg)
+
+**Figura 4. Comparación principal por BERTScore F1.** El VLM LoRA enriquecido obtiene el mayor BERTScore F1 entre los métodos con BERTScore disponible.
+
+![Figura 4. Comparación principal por BERTScore F1](../outputs/paper/figures/main_test_bertscore.svg)
+
+**Figura 5. ROUGE-L y token-F1.** El VLM LoRA enriquecido mejora el solapamiento léxico medio frente a los retrieval textuales enriquecidos.
+
+![Figura 5. ROUGE-L y token-F1](../outputs/paper/figures/main_test_rouge_tokenf1.svg)
+
+**Figura 6. Latencia versus calidad semántica.** La figura resume el intercambio entre costo operativo de inferencia y BERTScore F1 para los modelos VLM evaluados.
+
+![Figura 6. Latencia versus calidad semántica](../outputs/paper/figures/vlm_latency_vs_bertscore.svg)
+
+**Figura 7. Distribución de métricas del VLM LoRA enriquecido en test.** Las distribuciones por imagen muestran variabilidad importante entre casos, lo que motiva la revisión cualitativa.
+
+![Figura 7. Distribución de métricas del VLM LoRA enriquecido](../outputs/paper/figures/enriched_vlm_metric_distributions.svg)
+
+**Figura 8. Alineación de longitud entre referencia y predicción.** El gráfico compara cantidad de palabras de la referencia enriquecida y la predicción generada por el VLM.
+
+![Figura 8. Alineación de longitud entre referencia y predicción](../outputs/paper/figures/enriched_vlm_answer_length_alignment.svg)
 
 ## 6. Análisis cualitativo preliminar
 
@@ -229,7 +254,7 @@ El aporte del trabajo, entonces, no es demostrar una herramienta clínica lista
 para pacientes, sino mostrar un pipeline reproducible para adaptar y evaluar un
 VLM pequeño en un dominio médico multimodal subrepresentado en español.
 
-## 9. Limitaciones
+## 8. Limitaciones
 
 Este estudio tiene varias limitaciones:
 
@@ -246,7 +271,7 @@ Este estudio tiene varias limitaciones:
 - El sistema no debe interpretarse como diagnóstico médico ni recomendación
   terapéutica.
 
-## 10. Reproducibilidad
+## 9. Reproducibilidad
 
 Los artefactos principales son:
 
