@@ -1,0 +1,11 @@
+{
+  "method": "vlm_lora",
+  "model_name": "final_adapter",
+  "dataset_variant": "dataset_enriched",
+  "split": "valid",
+  "n": 157,
+  "mean_latency_s": 15.960400238216712,
+  "total_time_s": 2505.7828374000237,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}
