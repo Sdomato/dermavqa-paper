@@ -1,0 +1,3 @@
+dataset_variant,method,model_name,split,n,empty_predictions,chrf_mean,rouge_l_mean,token_f1_mean,sacrebleu_corpus,chrf_corpus,bertscore_f1_mean
+dataset_enriched,vlm_lora,final_adapter,valid,157,0,0.361183379719472,0.24285337923643652,0.30519565532761306,10.904473733608299,35.704687406300245,0.7370426051176278
+dataset_enriched,vlm_lora,final_adapter,test,314,0,0.36466000913257424,0.2540857462574697,0.3166683294555556,11.598495128913289,35.6905038213436,0.73825858409997
