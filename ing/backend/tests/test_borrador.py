@@ -66,6 +66,24 @@ def test_borrador_flujo_completo(client):
     assert "revisión" in final["borrador"].lower()
 
 
+def test_borrador_con_imagen(client):
+    # Ejercita el guardado de upload + limpieza de temporales en el task async.
+    png = (
+        b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01"
+        b"\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc\x00"
+        b"\x01\x00\x00\x05\x00\x01\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
+    )
+    r = client.post(
+        "/borrador",
+        data={"titulo": "lesión pigmentada", "k": "2"},
+        files={"imagenes": ("lesion.png", png, "image/png")},
+    )
+    assert r.status_code == 200
+    final = _poll(client, r.json()["job_id"])
+    assert final["status"] == "done"
+    assert final["borrador"]
+
+
 def test_borrador_vacio_422(client):
     assert client.post("/borrador", data={"titulo": "", "contenido": ""}).status_code == 422
 

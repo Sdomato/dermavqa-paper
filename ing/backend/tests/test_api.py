@@ -84,6 +84,20 @@ def test_imagen_inexistente_404(client):
     assert client.get("/imagen/no_existe.jpg").status_code == 404
 
 
+def test_imagen_real_se_sirve(client):
+    # Tomar un caso con imagen disponible y verificar que /imagen la sirve.
+    res = client.post("/consulta", json={"titulo": "psoriasis", "k": 10}).json()["resultados"]
+    con_img = next((c for c in res if c["imagenes_disponibles"] > 0), None)
+    if con_img is None:
+        import pytest
+        pytest.skip("ningún hit tiene imagen disponible en local")
+    img_id = con_img["image_ids"][0]
+    r = client.get(f"/imagen/{img_id}")
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("image/")
+    assert len(r.content) > 0
+
+
 def test_consulta_imagen_multipart(client):
     # Con el backend tfidf por defecto, la imagen se ignora: el test valida el
     # plumbing del endpoint multipart (form + archivo) sin deps pesadas.
@@ -103,3 +117,22 @@ def test_consulta_imagen_multipart(client):
 
 def test_consulta_imagen_vacia_422(client):
     assert client.post("/consulta/imagen", data={"titulo": "", "contenido": ""}).status_code == 422
+
+
+def test_imagen_no_permite_path_traversal(client):
+    # Intentos de salir del índice de imágenes deben dar 404 (no 200 ni 500).
+    for evil in ["..%2f..%2f..%2fetc%2fpasswd", "....//config.py", "/etc/hosts"]:
+        assert client.get(f"/imagen/{evil}").status_code == 404
+
+
+def test_consulta_k_default_cuando_no_se_pide(client):
+    data = client.post("/consulta", json={"titulo": "dermatitis"}).json()
+    assert data["k"] == 5  # DERMA_TOP_K default
+
+
+def test_casos_y_consulta_son_consistentes(client):
+    # El detalle de un caso recuperado coincide con lo que devolvió /consulta.
+    hit = client.post("/consulta", json={"titulo": "eccema", "k": 1}).json()["resultados"][0]
+    detalle = client.get(f"/casos/{hit['encounter_id']}").json()
+    assert detalle["answer"] == hit["answer"]
+    assert detalle["image_ids"] == hit["image_ids"]
