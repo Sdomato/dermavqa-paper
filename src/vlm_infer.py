@@ -9,7 +9,8 @@ con un adapter LoRA fine-tuneado (ver --adapter).
 Diseño:
   - La carga del dataset, el armado del prompt y la resolución de imágenes
     NO dependen de torch/transformers y se pueden validar en CPU con --dry-run.
-  - Solo la generación real necesita GPU (Qwen2.5-VL-7B en 4-bit entra en T4/L4).
+  - Solo la generación real necesita GPU. Se usa Qwen2.5-VL-3B-Instruct en 4-bit
+    (el 7B no entra en T4 de 16 GB con entradas multimodales bajo QLoRA).
 
 Salida (esquema canónico del plan de equipo):
   outputs/results/dataset_longest_answer/<method>/predictions_<split>.csv
