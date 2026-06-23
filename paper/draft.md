@@ -109,7 +109,7 @@ fine-tuning usamos QLoRA 4-bit + LoRA:
 | --- | --- |
 | Modelo base | Qwen/Qwen2.5-VL-3B-Instruct |
 | Método | QLoRA 4-bit + LoRA |
-| Epochs | 1 en dataset enriquecido |
+| Epochs | 1 (enriquecido) / 3 (respuesta larga) |
 | Batch size | 1 |
 | Gradient accumulation | 16 |
 | Learning rate | 2e-4 |
@@ -123,6 +123,17 @@ La corrida del dataset enriquecido se ejecutó en Google Cloud con una GPU NVIDI
 L4. El entrenamiento procesó 2.473 ejemplos, completó 155 steps, tardó 4.636,4
 segundos y tuvo un pico de VRAM de 6,73 GB. El adapter LoRA final pesa
 aproximadamente 160 MB.
+
+La corrida sobre `dataset_longest_answer` se ejecutó por separado en otra
+instancia de Google Cloud, esta vez con una GPU NVIDIA Tesla T4 de 16 GB de
+VRAM. El presupuesto de memoria más ajustado obligó a tres restricciones
+operativas: se limitó el `max_pixels` del processor a 256 × 28 × 28, se usó una
+sola imagen por ejemplo de entrenamiento (los encuentros con varias imágenes
+contribuyeron únicamente la primera) y se habilitó la opción
+`PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` para reducir fragmentación
+de VRAM. Esta corrida se entrenó por 3 épocas. La restricción a una imagen por
+ejemplo aplica únicamente al entrenamiento: durante la inferencia, el script
+`vlm_infer.py` consume todas las imágenes disponibles por encuentro.
 
 **Figura 2. Curva de entrenamiento QLoRA sobre el dataset enriquecido.** Se reportan loss de entrenamiento y validación durante la corrida en Google Cloud.
 
@@ -298,6 +309,12 @@ Este estudio tiene varias limitaciones:
   y respuesta enriquecida.
 - Los baselines held-out limpios para respuesta larga/corta incluyen TF-IDF; E5,
   SBERT, visual y multimodal held-out pueden agregarse como trabajo futuro.
+- El modelo base utilizado fue Qwen2.5-VL-**3B**-Instruct y no la variante 7B.
+  La elección no se debe a calidad esperada sino a presupuesto de VRAM: la
+  variante 7B requiere al menos 24 GB de VRAM para QLoRA con entradas
+  multimodales, fuera del alcance de las GPUs Tesla T4 (16 GB) y NVIDIA L4
+  disponibles para este trabajo. Esto puede subestimar la capacidad de un VLM
+  mayor en el mismo dominio.
 - El sistema no debe interpretarse como diagnóstico médico ni recomendación
   terapéutica.
 
