@@ -6,31 +6,36 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 0 — Setup y scaffolding
+## Fase 0 — Setup y scaffolding ✅
 
 > Objetivo: dejar el esqueleto del proyecto listo para que cualquiera lo levante.
 
-- [ ] Estructura de carpetas (`backend/`, `frontend/`, `docs/`).
-- [ ] Backend mínimo en FastAPI que levante y responda un *health check*.
-- [ ] Definir el contrato de la API (qué entra: consulta + imágenes; qué sale: borrador + evidencia + flags).
-- [ ] `docker-compose` para levantar todo con un comando (API + Postgres + Redis).
-- [ ] Cargar el dataset IIYI como base inicial de casos.
+- [x] Estructura de carpetas (`backend/`, `frontend/`).
+- [x] Backend en FastAPI con *health check* (`GET /health`).
+- [x] Contrato de la API definido (`app/schemas.py` + OpenAPI en `/docs`).
+- [x] `docker-compose` para levantar la API con un comando. *(Postgres + Redis se suman en Fase 2/3, cuando hagan falta para la cola y el audit log.)*
+- [x] Cargar el dataset IIYI (998 casos) como base inicial.
+- [x] **Extra:** CI/CD en GitHub Actions (tests + lint + build/push de imagen a GHCR).
 
-**Definición de hecho:** `docker-compose up` levanta el backend y se puede pegarle al endpoint de salud.
+**Definición de hecho:** ✅ `docker compose up` levanta el backend y `/health` responde.
 
 ---
 
-## Fase 1 — Asistente de solo retrieval
+## Fase 1 — Asistente de solo retrieval ✅ (texto)
 
 > Objetivo: dada una consulta, devolver los casos más parecidos. **Cero riesgo de alucinación.**
 
-- [ ] Servicio de retrieval que reusa `multimodal_retrieval.py` (texto + imagen, α=0.6).
-- [ ] Indexar los 998 casos en FAISS o `pgvector`.
-- [ ] Endpoint `POST /consulta` → devuelve los K casos similares con su respuesta.
-- [ ] Frontend mínimo: el médico carga una consulta y ve la lista de casos similares.
+- [x] Servicio de retrieval con interfaz intercambiable: **TF-IDF** (default) y **E5** (calidad paper), reusando `src/retrieval_utils.py`.
+- [ ] Backend **multimodal** (texto + imagen, α=0.6, reusando `multimodal_retrieval.py`) — *pendiente; enchufa en la misma interfaz `Retriever`.*
+- [x] Indexar los 998 casos (índice **en memoria** por ahora; FAISS/`pgvector` cuando crezca la base).
+- [x] Endpoint `POST /consulta` → K casos similares con su respuesta, timing y exclusión de self.
+- [x] Frontend: el médico carga una consulta y ve los casos similares **con sus fotos reales**.
+- [x] **Extra:** endpoints `GET /casos/{id}` y `GET /imagen/{id}`, validación de input, suite de 10 tests.
 
-**Definición de hecho:** se carga una consulta real y aparecen K casos relevantes con su texto e imagen.
+**Definición de hecho:** ✅ se carga una consulta real y aparecen K casos relevantes con texto e imagen.
 **Por qué primero:** es útil desde el día uno y no puede dar una recomendación peligrosa (solo muestra casos existentes).
+
+**Falta para cerrar la fase del todo:** el backend de retrieval **multimodal** (usar también la imagen de la consulta, no solo el texto).
 
 ---
 

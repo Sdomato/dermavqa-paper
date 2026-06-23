@@ -59,18 +59,20 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
 
 ## Estado actual
 
-🟡 **Fase 0 — Setup.** Definiendo scaffolding y alcance concreto. Ver
-[`ROADMAP.md`](ROADMAP.md) para el plan por fases.
+🟢 **Fase 0 (setup) y Fase 1 (retrieval por texto) — hechas.** Backend FastAPI con
+servicio de retrieval, frontend con fotos, CI/CD verde e imagen publicada en GHCR.
+🟡 **Pendiente para cerrar Fase 1:** backend de retrieval **multimodal** (usar la imagen).
+Ver [`ROADMAP.md`](ROADMAP.md) para el detalle y las próximas fases.
 
-## Estructura prevista del código
+## Estructura del código
 
 ```
 ing/
 ├── README.md          ← este archivo
-├── ROADMAP.md         ← plan por fases
-├── backend/           ← API, servicios (retrieval, generación, seguridad)
-├── frontend/          ← consola del dermatólogo
-└── docs/              ← diagramas y notas de diseño
+├── ROADMAP.md         ← plan por fases (con estado)
+├── docker-compose.yml ← levanta la API
+├── backend/           ← API FastAPI + servicio de retrieval (ver backend/README.md)
+└── frontend/          ← consola del dermatólogo (index.html)
 ```
 
 ---
