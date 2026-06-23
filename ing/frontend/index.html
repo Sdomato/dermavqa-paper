@@ -328,11 +328,42 @@
             <div class="evidence-label" style="color:var(--violet);margin:0">Para revisión médica</div>
             ${safetyBadge(est.seguridad)}
           </div>
-          <div class="answer">${escapeHtml(est.borrador || "")}</div>
+          <div id="draftText" class="answer">${escapeHtml(est.borrador || "")}</div>
           ${safetyDetail(est.seguridad)}
           <div class="disclaimer">${warnIcon()} Borrador preliminar generado a partir de casos similares. Debe ser revisado y aprobado por un profesional antes de cualquier uso.</div>
+          <div class="actions" style="margin-top:.9rem">
+            <button class="btn-primary" onclick="revisar('${est.job_id}','aprobar')">✓ Aprobar</button>
+            <button id="btnEditar" class="btn-ghost" onclick="editarBorrador('${est.job_id}')">✎ Editar</button>
+            <button class="btn-ghost" onclick="revisar('${est.job_id}','rechazar')" style="border-color:rgba(244,114,182,.4)">✕ Rechazar</button>
+            <span id="revStatus" class="status"></span>
+          </div>
         </div>`;
       if (est.evidencia) render({ resultados: est.evidencia });
+    }
+
+    async function revisar(jobId, accion, textoFinal) {
+      try {
+        const body = { accion, revisor: "medico" };
+        if (textoFinal != null) body.texto_final = textoFinal;
+        const r = await fetch(`${API}/borrador/${jobId}/revision`, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
+        });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const c = { aprobar: "var(--teal)", editar: "var(--cyan)", rechazar: "var(--pink)" }[accion];
+        document.getElementById("revStatus").innerHTML =
+          `<span style="color:${c}">✓ ${accion} · registrado en auditoría</span>`;
+      } catch (e) {
+        document.getElementById("revStatus").innerHTML = '<span class="err">No se pudo registrar la revisión</span>';
+      }
+    }
+
+    function editarBorrador(jobId) {
+      const div = document.getElementById("draftText");
+      const actual = div.textContent;
+      div.innerHTML = `<textarea id="editArea" style="width:100%;min-height:130px">${escapeHtml(actual)}</textarea>`;
+      const btn = document.getElementById("btnEditar");
+      btn.textContent = "💾 Guardar edición";
+      btn.onclick = () => revisar(jobId, "editar", document.getElementById("editArea").value);
     }
 
     function safetyBadge(s) {

@@ -58,7 +58,7 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 3 — Capa de seguridad 🟡 (en progreso)
+## Fase 3 — Capa de seguridad ✅
 
 > Objetivo: revisar el borrador antes de mostrarlo y marcar lo riesgoso.
 
@@ -66,11 +66,10 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 - [x] Verificador (grounding): marca **diagnósticos del borrador ausentes en la evidencia** (el modo de falla del paper).
 - [x] **Términos de riesgo**: detecta recomendaciones sensibles (biopsia, antibióticos, corticoides…).
 - [x] **Nivel de riesgo** (bajo/medio/alto) en la respuesta de `/borrador`, mostrado en el frontend con badge + detalle.
-- [x] Análisis 100% testeado (lógica pura, sin modelos) — `app/safety/`.
-- [ ] Flujo de aprobación: botones **editar / aprobar / rechazar** + registro de auditoría (audit log).
+- [x] **Flujo de aprobación**: botones editar / aprobar / rechazar (`POST /borrador/{id}/revision`) + **audit log** persistente (`GET /auditoria`).
+- [x] Análisis 100% testeado (lógica pura) + **validación contra los 20 casos reales del paper (recall 100%)**.
 
-**Definición de hecho:** un borrador que inventa un diagnóstico ausente en los casos aparece marcado, y toda acción del médico queda registrada.
-**Falta para cerrar:** el flujo de aprobación + audit log.
+**Definición de hecho:** ✅ un borrador que inventa un diagnóstico ausente en los casos aparece marcado, y toda decisión del médico queda registrada en el audit log (que es, además, el dataset de validación clínica humana que al paper le falta).
 
 ---
 

@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-APP_VERSION = "0.5.0"
+APP_VERSION = "0.6.0"
 VALID_RETRIEVERS = {"tfidf", "e5", "multimodal"}
 VALID_GENERATORS = {"stub", "vlm"}
 
@@ -44,6 +44,10 @@ class Settings:
     max_new_tokens: int = int(os.getenv("DERMA_MAX_NEW_TOKENS", "256"))
     # Casos de evidencia que se pasan al generador como contexto RAG.
     rag_k: int = int(os.getenv("DERMA_RAG_K", "3"))
+    # Audit log de revisiones médicas (Fase 3).
+    audit_path: str = os.getenv(
+        "DERMA_AUDIT_PATH", str(_REPO_ROOT / "ing" / "backend" / ".data" / "revisiones.jsonl")
+    )
 
     def __post_init__(self) -> None:
         if self.retriever not in VALID_RETRIEVERS:

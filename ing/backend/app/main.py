@@ -17,6 +17,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 
+from .audit import AuditLog
 from .config import APP_VERSION, settings
 from .generation.factory import build_generator
 from .jobs import JobStore
@@ -24,6 +25,7 @@ from .retrieval.corpus import Case, load_corpus, resolve_image
 from .retrieval.factory import build_retriever
 from .safety.analyzer import analizar
 from .schemas import (
+    AuditoriaResponse,
     BorradorEstado,
     BorradorJob,
     CaseDetail,
@@ -31,6 +33,8 @@ from .schemas import (
     ConsultaRequest,
     ConsultaResponse,
     HealthResponse,
+    RevisionEntry,
+    RevisionRequest,
 )
 
 logger = logging.getLogger("dermaassist")
@@ -38,6 +42,7 @@ logger = logging.getLogger("dermaassist")
 # Estado del servicio cargado al arrancar (base de casos + índice).
 _state: dict = {}
 _jobs = JobStore()
+_audit = AuditLog(settings.audit_path)
 
 
 @asynccontextmanager
@@ -224,7 +229,7 @@ def _borrador_task(query: str, k: int, exclude: str | None, tmp_paths: list[Path
         ]
         borrador = generator.generate(query, evidence_dicts, tmp_paths or None)
         seguridad = analizar(borrador, [e.answer for e in evidencia])
-        return {"evidencia": evidencia, "borrador": borrador, "seguridad": seguridad}
+        return {"consulta": query, "evidencia": evidencia, "borrador": borrador, "seguridad": seguridad}
     finally:
         for p in tmp_paths:
             try:
@@ -272,3 +277,46 @@ def borrador_estado(job_id: str) -> BorradorEstado:
         seguridad=result.get("seguridad"),
         error=job.error,
     )
+
+
+# ── Fase 3: revisión médica + audit log ─────────────────────────────────────────
+
+@app.post("/borrador/{job_id}/revision", response_model=RevisionEntry)
+def revisar(job_id: str, req: RevisionRequest) -> RevisionEntry:
+    """Registra la decisión del médico (aprobar/editar/rechazar) en el audit log."""
+    job = _jobs.get(job_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail=f"Job no encontrado: {job_id}")
+    if job.status != "done":
+        raise HTTPException(status_code=409, detail=f"El borrador no está listo (status={job.status})")
+
+    result = job.result or {}
+    borrador = result.get("borrador")
+    seguridad = result.get("seguridad") or {}
+
+    if req.accion == "rechazar":
+        texto_final = None
+    elif req.accion == "editar":
+        texto_final = req.texto_final
+    else:  # aprobar (con o sin edición menor)
+        texto_final = req.texto_final or borrador
+
+    entry = _audit.append({
+        "job_id": job_id,
+        "accion": req.accion,
+        "revisor": req.revisor,
+        "nota": req.nota,
+        "consulta": result.get("consulta"),
+        "borrador_original": borrador,
+        "texto_final": texto_final,
+        "seguridad_nivel": seguridad.get("nivel"),
+    })
+    logger.info("revisión %s job=%s revisor=%s", req.accion, job_id, req.revisor)
+    return RevisionEntry(**entry)
+
+
+@app.get("/auditoria", response_model=AuditoriaResponse)
+def auditoria() -> AuditoriaResponse:
+    """Lista las revisiones registradas (el dataset de validación clínica humana)."""
+    revs = _audit.list()
+    return AuditoriaResponse(total=len(revs), revisiones=[RevisionEntry(**e) for e in revs])

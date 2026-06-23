@@ -37,7 +37,9 @@ backend/
 | `POST` | `/consulta` | Solo-texto (JSON). Devuelve los K casos más similares (con respuesta y timing) |
 | `POST` | `/consulta/imagen` | Multipart: texto + imágenes. El backend multimodal fusiona la señal visual |
 | `POST` | `/borrador` | Encola un borrador RAG (recupera evidencia + genera). Devuelve `job_id` |
-| `GET` | `/borrador/{job_id}` | Poll del borrador: `status`, `evidencia` y `borrador` cuando termina |
+| `GET` | `/borrador/{job_id}` | Poll del borrador: `status`, `evidencia`, `borrador` y `seguridad` |
+| `POST` | `/borrador/{job_id}/revision` | Registra la decisión médica (aprobar/editar/rechazar) en el audit log |
+| `GET` | `/auditoria` | Lista las revisiones registradas (dataset de validación clínica humana) |
 | `GET` | `/casos/{encounter_id}` | Detalle de un caso de la base (404 si no existe) |
 | `GET` | `/imagen/{image_id}` | Sirve la foto clínica de un caso (404 si no está en local) |
 
@@ -45,6 +47,11 @@ backend/
 en ellos (instrucción anti-alucinación) y genera un borrador para que un médico lo revise.
 Es asíncrono porque el VLM tarda 12–26 s: encola y se hace poll. Por defecto usa el generador
 `stub` (sin modelo, demoable); con `DERMA_GENERATOR=vlm` usa Qwen2.5-VL + LoRA.
+
+**Seguridad y revisión (Fase 3):** cada borrador trae un análisis `seguridad` (nivel
+bajo/medio/alto, diagnósticos no sustentados por la evidencia, términos de riesgo). El médico
+decide con `/borrador/{id}/revision` (aprobar/editar/rechazar) y queda en un **audit log**
+persistente (`/auditoria`), que acumula el dataset de validación clínica humana.
 
 Contrato completo e interactivo: **http://localhost:8000/docs** (OpenAPI autogenerado).
 
@@ -113,6 +120,7 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 | `DERMA_VLM_MODEL` | `Qwen/Qwen2.5-VL-3B-Instruct` | Modelo base del generador `vlm` |
 | `DERMA_MAX_NEW_TOKENS` | `256` | Tokens máximos del borrador |
 | `DERMA_RAG_K` | `3` | Casos de evidencia que se pasan al generador como contexto |
+| `DERMA_AUDIT_PATH` | `ing/backend/.data/revisiones.jsonl` | Archivo JSONL del audit log de revisiones |
 
 > Para `e5` o `multimodal` hay que instalar `torch`/`transformers` (y `open_clip_torch` para
 > multimodal). El backend `multimodal` además necesita el cache `.npz` (generarlo con

@@ -59,15 +59,18 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
 
 ## Estado actual
 
-🟢 **Fases 0, 1 y 2 — hechas.**
+🟢 **Fases 0, 1, 2 y 3 — hechas.**
 - **Fase 0** — scaffolding, FastAPI, Docker, CI/CD (tests + lint + imagen en GHCR).
 - **Fase 1** — retrieval de casos similares: backends `tfidf` / `e5` / `multimodal`
   (E5+BiomedCLIP con cache de embeddings), endpoints de consulta (texto e imagen),
   frontend con fotos reales.
 - **Fase 2** — borrador con RAG: cola asíncrona (`/borrador` → poll), generador
-  `stub` (default) / `vlm` (Qwen2.5-VL+LoRA, opt-in), botón en el frontend.
+  `stub` (default) / `vlm` (Qwen2.5-VL+LoRA, opt-in).
+- **Fase 3** — capa de seguridad: heurísticos + grounding + términos de riesgo + nivel,
+  flujo de revisión médica (aprobar/editar/rechazar) y audit log. Validada contra los
+  20 casos reales del paper (recall 100%).
 
-🟡 **Próximo:** Fase 3 (capa de seguridad) y Fase 4 (loop de mejora).
+🟡 **Próximo:** Fase 4 (loop de mejora: feedback de aprobaciones → re-entrenamiento).
 Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.
 
 ## Estructura del código

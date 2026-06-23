@@ -99,3 +99,43 @@ class BorradorEstado(BaseModel):
     borrador: str | None = Field(None, description="Texto del borrador generado")
     seguridad: Seguridad | None = Field(None, description="Análisis de seguridad del borrador")
     error: str | None = None
+
+
+ACCIONES_REVISION = {"aprobar", "editar", "rechazar"}
+
+
+class RevisionRequest(BaseModel):
+    """Decisión del médico sobre un borrador."""
+
+    accion: str = Field(..., description="aprobar | editar | rechazar")
+    texto_final: str | None = Field(None, description="Texto aprobado/editado (requerido si accion=editar)")
+    revisor: str | None = None
+    nota: str | None = None
+
+    @model_validator(mode="after")
+    def _valida(self) -> "RevisionRequest":
+        if self.accion not in ACCIONES_REVISION:
+            raise ValueError(f"accion inválida: {self.accion!r}. Opciones: {sorted(ACCIONES_REVISION)}")
+        if self.accion == "editar" and not (self.texto_final and self.texto_final.strip()):
+            raise ValueError("accion 'editar' requiere 'texto_final'")
+        return self
+
+
+class RevisionEntry(BaseModel):
+    """Entrada del audit log."""
+
+    id: str
+    timestamp: str
+    job_id: str
+    accion: str
+    revisor: str | None = None
+    nota: str | None = None
+    consulta: str | None = None
+    borrador_original: str | None = None
+    texto_final: str | None = None
+    seguridad_nivel: str | None = None
+
+
+class AuditoriaResponse(BaseModel):
+    total: int
+    revisiones: list[RevisionEntry]
