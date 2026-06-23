@@ -1,5 +1,7 @@
 # Parte de Ingeniería — DermaAssist
 
+![CI/CD](https://github.com/Sdomato/dermavqa-paper/actions/workflows/ci-ing.yml/badge.svg?branch=dev-ing)
+
 Rama principal de la **parte de ingeniería** del proyecto. Acá vive el diseño y la
 implementación del sistema; la **parte de investigación** (paper, experimentos, métricas)
 sigue en la rama `develop`.
@@ -72,6 +74,21 @@ ing/
 ```
 
 ---
+
+## CI/CD
+
+Pipeline en GitHub Actions (`.github/workflows/ci-ing.yml`):
+
+- **CI** — en cada push y PR a `dev-ing` que toque `ing/` o `src/`, corre los tests del
+  backend con `pytest`.
+- **CD** — en push a `dev-ing` (si los tests pasan), construye la imagen Docker y la
+  publica en **GHCR** como `ghcr.io/sdomato/dermavqa-assist-api:latest`.
+
+Levantar la última imagen publicada:
+
+```bash
+docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
+```
 
 ## Convenciones
 
