@@ -148,8 +148,12 @@ def test_corpus_filtro_de_split():
 
 
 def test_resolve_image():
-    cases = load_corpus(splits="all")
-    # Buscar un caso con al menos una imagen.
-    con_img = next(c for c in cases if c.image_ids)
-    assert resolve_image(con_img.image_ids[0]) is not None
+    # El caso negativo siempre vale (no depende de tener imágenes en disco).
     assert resolve_image("definitivamente_no_existe.jpg") is None
+    # El positivo solo si las imágenes están en local (no es el caso en CI).
+    cases = load_corpus(splits="all")
+    con_img = next(c for c in cases if c.image_ids)
+    path = resolve_image(con_img.image_ids[0])
+    if path is None:
+        pytest.skip("imágenes no presentes en local (ej. CI)")
+    assert path.exists()
