@@ -21,6 +21,8 @@ CONDICIONES = [
     "alopecia", "paroniquia", "celulitis", "molusco", "queratosis",
     "pitiriasis", "intertrigo", "candidiasis", "eritema multiforme",
     "sindrome de sweet", "penfigoide", "lupus", "escarlatina",
+    "erupcion por medicamentos", "erupcion medicamentosa", "farmacodermia",
+    "erupcion fija", "exantema", "picadura de insecto",
 ]
 
 # Recomendaciones de riesgo, por categoría.
