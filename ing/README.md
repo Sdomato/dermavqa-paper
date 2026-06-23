@@ -59,10 +59,16 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
 
 ## Estado actual
 
-🟢 **Fase 0 (setup) y Fase 1 (retrieval por texto) — hechas.** Backend FastAPI con
-servicio de retrieval, frontend con fotos, CI/CD verde e imagen publicada en GHCR.
-🟡 **Pendiente para cerrar Fase 1:** backend de retrieval **multimodal** (usar la imagen).
-Ver [`ROADMAP.md`](ROADMAP.md) para el detalle y las próximas fases.
+🟢 **Fases 0, 1 y 2 — hechas.**
+- **Fase 0** — scaffolding, FastAPI, Docker, CI/CD (tests + lint + imagen en GHCR).
+- **Fase 1** — retrieval de casos similares: backends `tfidf` / `e5` / `multimodal`
+  (E5+BiomedCLIP con cache de embeddings), endpoints de consulta (texto e imagen),
+  frontend con fotos reales.
+- **Fase 2** — borrador con RAG: cola asíncrona (`/borrador` → poll), generador
+  `stub` (default) / `vlm` (Qwen2.5-VL+LoRA, opt-in), botón en el frontend.
+
+🟡 **Próximo:** Fase 3 (capa de seguridad) y Fase 4 (loop de mejora).
+Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.
 
 ## Estructura del código
 
@@ -71,9 +77,15 @@ ing/
 ├── README.md          ← este archivo
 ├── ROADMAP.md         ← plan por fases (con estado)
 ├── docker-compose.yml ← levanta la API
-├── backend/           ← API FastAPI + servicio de retrieval (ver backend/README.md)
+├── docs/              ← handoffs y notas (ej. generación del cache de embeddings)
+├── backend/           ← API FastAPI: retrieval + generación (ver backend/README.md)
+│   ├── app/{retrieval,generation}/  · jobs.py (cola async)
+│   └── scripts/       ← tooling offline (build_case_embeddings.py)
 └── frontend/          ← consola del dermatólogo (index.html)
 ```
+
+> Artefacto consumido por el servicio: `outputs/embeddings/case_embeddings.npz`
+> (cache E5+BiomedCLIP de los 998 casos, generado offline).
 
 ---
 
