@@ -43,6 +43,11 @@ class Case:
         return sum(1 for img in self.image_ids if find_image(img) is not None)
 
 
+def resolve_image(image_id: str) -> Path | None:
+    """Resolver un image_id a su archivo local (o None si no está). Reusa src/."""
+    return find_image(image_id)
+
+
 def load_corpus(splits: str = "all") -> list[Case]:
     """
     Cargar los casos del dataset como base buscable.

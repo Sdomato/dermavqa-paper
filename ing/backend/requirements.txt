@@ -10,6 +10,7 @@ numpy>=1.24
 # torch>=2.2
 # transformers>=4.45
 
-# Tests
+# Tests y lint
 pytest>=8.0
 httpx>=0.27
+ruff>=0.6

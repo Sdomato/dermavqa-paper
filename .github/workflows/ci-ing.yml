@@ -33,6 +33,10 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r ing/backend/requirements.txt
 
+      - name: Lint (ruff)
+        working-directory: ing/backend
+        run: python -m ruff check app tests
+
       - name: Pytest
         working-directory: ing/backend
         run: python -m pytest -q

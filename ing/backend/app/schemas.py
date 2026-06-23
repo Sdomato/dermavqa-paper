@@ -5,7 +5,7 @@ Define el "qué entra y qué sale" del endpoint principal. Es el contrato que
 el frontend y cualquier cliente pueden asumir estable.
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class ConsultaRequest(BaseModel):
@@ -13,10 +13,16 @@ class ConsultaRequest(BaseModel):
 
     titulo: str = Field("", description="Título / motivo de consulta")
     contenido: str = Field("", description="Descripción del caso en español")
-    k: int | None = Field(None, description="Cuántos casos similares devolver (default del server)")
+    k: int | None = Field(None, ge=1, description="Cuántos casos similares devolver (default del server)")
     excluir_encounter_id: str | None = Field(
         None, description="Excluir este caso de los resultados (evita recuperarse a sí mismo)"
     )
+
+    @model_validator(mode="after")
+    def _query_no_vacia(self) -> "ConsultaRequest":
+        if not (self.titulo.strip() or self.contenido.strip()):
+            raise ValueError("La consulta no puede estar vacía: completá 'titulo' o 'contenido'.")
+        return self
 
 
 class CaseHit(BaseModel):
@@ -36,4 +42,25 @@ class ConsultaResponse(BaseModel):
     consulta: str
     retriever: str
     k: int
+    total_casos: int = Field(..., description="Tamaño de la base buscada")
+    tomo_ms: float = Field(..., description="Tiempo de la búsqueda en milisegundos")
     resultados: list[CaseHit]
+
+
+class CaseDetail(BaseModel):
+    """Detalle completo de un caso de la base (endpoint /casos/{id})."""
+
+    encounter_id: str
+    split: str
+    query_title: str
+    query_content: str
+    answer: str
+    image_ids: list[str]
+    imagenes_disponibles: int
+
+
+class HealthResponse(BaseModel):
+    status: str
+    version: str
+    retriever: str
+    casos_indexados: int
