@@ -213,12 +213,41 @@
   </div>
 
   <script>
-    const API = "http://localhost:8000";
+    // El backend puede correr en distintos puertos. Se autodetecta probando
+    // /health en varios; se puede forzar con ?api=http://host:puerto (queda guardado).
+    let API = "http://localhost:8000";
+    const PUERTOS = [8000, 8002, 8011, 8080, 8001, 8888];
     const $ = (id) => document.getElementById(id);
 
     function setStatus(html, loading) {
       $("status").innerHTML = (loading ? '<span class="spin"></span>' : "") + html;
     }
+
+    async function _fetchT(url, ms) {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), ms);
+      try { return await fetch(url, { signal: ctrl.signal }); }
+      finally { clearTimeout(t); }
+    }
+
+    const _ready = (async function detectApi() {
+      const forzado = new URLSearchParams(location.search).get("api") || localStorage.getItem("derma_api");
+      const candidatos = forzado ? [forzado] : PUERTOS.map((p) => `http://localhost:${p}`);
+      setStatus("Conectando con el backend…", true);
+      for (const base of candidatos) {
+        try {
+          const r = await _fetchT(`${base}/health`, 700);
+          if (r.ok) {
+            API = base;
+            if (forzado) localStorage.setItem("derma_api", base);
+            const h = await r.json();
+            setStatus(`Conectado · ${base.replace("http://", "")} · ${h.casos_indexados} casos`);
+            return;
+          }
+        } catch (e) { /* probar el siguiente */ }
+      }
+      setStatus(`<span class="err">No se encontró el backend en ${PUERTOS.join(", ")}. Levantalo y recargá.</span>`);
+    })();
 
     $("imagen").addEventListener("change", (e) => {
       const f = e.target.files[0];
@@ -229,6 +258,7 @@
       const titulo = $("titulo").value.trim();
       const contenido = $("contenido").value.trim();
       if (!titulo && !contenido) { setStatus('<span class="err">Completá el motivo o la descripción.</span>'); return; }
+      await _ready;
       $("buscar").disabled = true;
       setStatus("Buscando…", true);
       $("resultados").innerHTML = "";
@@ -290,6 +320,7 @@
       const titulo = $("titulo").value.trim();
       const contenido = $("contenido").value.trim();
       if (!titulo && !contenido) { setStatus('<span class="err">Completá el motivo o la descripción.</span>'); return; }
+      await _ready;
       $("borrador").disabled = true;
       $("draft").innerHTML = "";
       setStatus("Encolando borrador…", true);
