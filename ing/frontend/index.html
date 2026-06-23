@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DermaAssist — Casos similares</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; }
+    body { max-width: 820px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+    h1 { font-size: 1.4rem; }
+    .sub { color: #666; margin-top: -0.5rem; }
+    textarea, input { width: 100%; box-sizing: border-box; padding: 0.5rem; margin: 0.3rem 0; font: inherit; }
+    button { padding: 0.6rem 1.2rem; font: inherit; cursor: pointer; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin: 0.8rem 0; }
+    .meta { font-size: 0.85rem; color: #666; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .sim { font-weight: 600; color: #1a7f37; }
+    .answer { background: #f6f8fa; padding: 0.7rem; border-radius: 6px; margin-top: 0.5rem; white-space: pre-wrap; }
+    .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: #888; }
+    .disclaimer { font-size: 0.8rem; color: #9a6700; background: #fff8c5; padding: 0.6rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>DermaAssist</h1>
+  <p class="sub">Casos clínicos similares como evidencia. No es diagnóstico.</p>
+
+  <input id="titulo" placeholder="Título / motivo de consulta" />
+  <textarea id="contenido" rows="4" placeholder="Descripción del caso en español…"></textarea>
+  <button id="buscar">Buscar casos similares</button>
+
+  <div id="resultados"></div>
+
+  <script>
+    const API = "http://localhost:8000";
+    const $ = (id) => document.getElementById(id);
+
+    async function buscar() {
+      const titulo = $("titulo").value.trim();
+      const contenido = $("contenido").value.trim();
+      const cont = $("resultados");
+      cont.innerHTML = "<p>Buscando…</p>";
+
+      try {
+        const r = await fetch(`${API}/consulta`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ titulo, contenido, k: 5 }),
+        });
+        const data = await r.json();
+        render(data);
+      } catch (e) {
+        cont.innerHTML = `<p style="color:#cf222e">Error al conectar con la API (${API}). ¿Está levantado el backend?</p>`;
+      }
+    }
+
+    function render(data) {
+      const cont = $("resultados");
+      if (!data.resultados || data.resultados.length === 0) {
+        cont.innerHTML = "<p>Sin resultados.</p>";
+        return;
+      }
+      const cards = data.resultados.map((c) => `
+        <div class="card">
+          <div class="meta">
+            <span class="sim">similitud ${(c.similitud * 100).toFixed(1)}%</span>
+            <span>${c.encounter_id} · ${c.split}</span>
+            <span>${c.imagenes_disponibles}/${c.image_ids.length} imágenes</span>
+          </div>
+          <div style="margin-top:.4rem"><strong>${escapeHtml(c.query_title || "(sin título)")}</strong></div>
+          <div style="color:#444">${escapeHtml(c.query_content)}</div>
+          <div class="label" style="margin-top:.6rem">Respuesta del caso (evidencia)</div>
+          <div class="answer">${escapeHtml(c.answer)}</div>
+        </div>
+      `).join("");
+      cont.innerHTML = `
+        <p class="disclaimer">⚠️ Estos son casos pasados parecidos, no una recomendación clínica.
+        Un profesional debe revisarlos antes de cualquier decisión.</p>
+        ${cards}`;
+    }
+
+    function escapeHtml(s) {
+      return String(s || "").replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+      }[m]));
+    }
+
+    $("buscar").addEventListener("click", buscar);
+  </script>
+</body>
+</html>
