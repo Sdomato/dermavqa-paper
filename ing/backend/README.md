@@ -36,8 +36,15 @@ backend/
 | `GET` | `/health` | Estado, versión, backend y nº de casos indexados |
 | `POST` | `/consulta` | Solo-texto (JSON). Devuelve los K casos más similares (con respuesta y timing) |
 | `POST` | `/consulta/imagen` | Multipart: texto + imágenes. El backend multimodal fusiona la señal visual |
+| `POST` | `/borrador` | Encola un borrador RAG (recupera evidencia + genera). Devuelve `job_id` |
+| `GET` | `/borrador/{job_id}` | Poll del borrador: `status`, `evidencia` y `borrador` cuando termina |
 | `GET` | `/casos/{encounter_id}` | Detalle de un caso de la base (404 si no existe) |
 | `GET` | `/imagen/{image_id}` | Sirve la foto clínica de un caso (404 si no está en local) |
+
+**Borrador (Fase 2):** `/borrador` recupera los casos similares, arma un prompt RAG anclado
+en ellos (instrucción anti-alucinación) y genera un borrador para que un médico lo revise.
+Es asíncrono porque el VLM tarda 12–26 s: encola y se hace poll. Por defecto usa el generador
+`stub` (sin modelo, demoable); con `DERMA_GENERATOR=vlm` usa Qwen2.5-VL + LoRA.
 
 Contrato completo e interactivo: **http://localhost:8000/docs** (OpenAPI autogenerado).
 
@@ -101,6 +108,11 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 | `DERMA_CORS_ORIGINS` | `*` | Orígenes permitidos por CORS (coma-separados) |
 | `DERMA_EMBEDDINGS_PATH` | `outputs/embeddings/case_embeddings.npz` | Cache de embeddings (backend multimodal) |
 | `DERMA_ALPHA_TEXT` | `0.6` | Peso del texto en la fusión multimodal (`α·texto + (1-α)·visual`) |
+| `DERMA_GENERATOR` | `stub` | Generador de borradores: `stub` (sin modelo) o `vlm` (Qwen2.5-VL + LoRA) |
+| `DERMA_ADAPTER_PATH` | `` | Ruta del adapter LoRA (vacío = zero-shot). Solo `vlm` |
+| `DERMA_VLM_MODEL` | `Qwen/Qwen2.5-VL-3B-Instruct` | Modelo base del generador `vlm` |
+| `DERMA_MAX_NEW_TOKENS` | `256` | Tokens máximos del borrador |
+| `DERMA_RAG_K` | `3` | Casos de evidencia que se pasan al generador como contexto |
 
 > Para `e5` o `multimodal` hay que instalar `torch`/`transformers` (y `open_clip_torch` para
 > multimodal). El backend `multimodal` además necesita el cache `.npz` (generarlo con

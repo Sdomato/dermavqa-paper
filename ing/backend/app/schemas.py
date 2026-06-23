@@ -63,4 +63,22 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     retriever: str
+    generator: str
     casos_indexados: int
+
+
+class BorradorJob(BaseModel):
+    """Respuesta al encolar un borrador."""
+
+    job_id: str
+    status: str = Field(..., description="pending | running | done | error")
+
+
+class BorradorEstado(BaseModel):
+    """Estado de un borrador (poll)."""
+
+    job_id: str
+    status: str = Field(..., description="pending | running | done | error")
+    evidencia: list[CaseHit] | None = Field(None, description="Casos similares usados como contexto")
+    borrador: str | None = Field(None, description="Texto del borrador generado")
+    error: str | None = None

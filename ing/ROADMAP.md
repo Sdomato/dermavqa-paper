@@ -40,16 +40,21 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 2 — Borrador generado con RAG
+## Fase 2 — Borrador generado con RAG ✅
 
 > Objetivo: agregar el borrador del VLM, **anclado** en los casos recuperados.
 
-- [ ] Servicio de generación que reusa `vlm_infer.py` con el adapter LoRA.
-- [ ] Armar el prompt RAG: consulta + imágenes + los K casos recuperados como contexto.
-- [ ] Manejo de la latencia (12–26 s): cola asíncrona + estado "generando…" + *streaming* del texto.
-- [ ] El borrador aparece en la consola junto a la evidencia.
+- [x] Generador intercambiable: `stub` (sin modelo, default/demo) y `vlm` (reusa `vlm_infer.py` con adapter LoRA, opt-in).
+- [x] Prompt RAG: consulta + imágenes + los K casos recuperados como contexto, con instrucción anti-alucinación.
+- [x] Manejo de la latencia (12–26 s): **cola asíncrona** (encolar → `job_id` → poll), con estado pending/running/done/error.
+- [x] El borrador aparece en la consola junto a la evidencia (botón "Generar borrador" + poll en el frontend).
+- [x] Tests del prompt, del stub y del flujo async completo (sin GPU).
 
-**Definición de hecho:** el médico ve un borrador coherente que cita/usa los casos recuperados, sin congelar la UI.
+**Definición de hecho:** ✅ el médico encola una consulta y recibe un borrador anclado en los casos, sin congelar la UI.
+
+> Nota: el generador `vlm` necesita deps pesadas (`torch`/`transformers`/`peft`) + el adapter LoRA.
+> El default es `stub`, así que el flujo completo es demoable y testeable sin GPU. *Streaming* del
+> texto token-a-token queda como mejora futura (hoy el borrador llega completo al terminar el job).
 
 ---
 

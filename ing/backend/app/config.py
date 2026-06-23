@@ -10,8 +10,9 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 VALID_RETRIEVERS = {"tfidf", "e5", "multimodal"}
+VALID_GENERATORS = {"stub", "vlm"}
 
 _REPO_ROOT = Path(__file__).resolve().parents[3]
 _DEFAULT_EMB = _REPO_ROOT / "outputs" / "embeddings" / "case_embeddings.npz"
@@ -36,12 +37,24 @@ class Settings:
     # Multimodal: ruta del cache de embeddings y peso del texto en la fusión.
     embeddings_path: str = os.getenv("DERMA_EMBEDDINGS_PATH", str(_DEFAULT_EMB))
     alpha_text: float = float(os.getenv("DERMA_ALPHA_TEXT", "0.6"))
+    # Generación de borradores (Fase 2).
+    generator: str = os.getenv("DERMA_GENERATOR", "stub").lower()
+    vlm_model_id: str = os.getenv("DERMA_VLM_MODEL", "Qwen/Qwen2.5-VL-3B-Instruct")
+    adapter_path: str = os.getenv("DERMA_ADAPTER_PATH", "")
+    max_new_tokens: int = int(os.getenv("DERMA_MAX_NEW_TOKENS", "256"))
+    # Casos de evidencia que se pasan al generador como contexto RAG.
+    rag_k: int = int(os.getenv("DERMA_RAG_K", "3"))
 
     def __post_init__(self) -> None:
         if self.retriever not in VALID_RETRIEVERS:
             raise ValueError(
                 f"DERMA_RETRIEVER inválido: {self.retriever!r}. "
                 f"Opciones: {sorted(VALID_RETRIEVERS)}"
+            )
+        if self.generator not in VALID_GENERATORS:
+            raise ValueError(
+                f"DERMA_GENERATOR inválido: {self.generator!r}. "
+                f"Opciones: {sorted(VALID_GENERATORS)}"
             )
         if self.top_k < 1:
             raise ValueError(f"DERMA_TOP_K debe ser >= 1 (es {self.top_k})")
