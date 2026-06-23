@@ -179,6 +179,18 @@ token-F1 y BERTScore F1, pero no en chrF. Esto indica que el fine-tuning puede
 mejorar el ajuste semántico/estilístico al target sin necesariamente aumentar
 el solapamiento superficial.
 
+Comparando ambas filas de LoRA entre sí, el modelo entrenado sobre el target
+enriquecido obtiene resultados claramente mejores que el mismo modelo entrenado
+sobre respuesta larga: chrF medio, BERTScore F1 y ROUGE-L más que duplican los
+valores de la versión de respuesta larga. Una explicación plausible es que el
+target enriquecido reduce la heterogeneidad del corpus de entrenamiento. La
+síntesis con LLM asocia cada caso a una única respuesta clínica concisa, en
+lugar de la respuesta más larga del foro original, que arrastra variaciones de
+estilo, longitud y narrativa personal. Eso le da al modelo una señal de
+aprendizaje más consistente y un objetivo más estable durante la evaluación. La
+brecha sugiere que, en este dominio, la calidad y uniformidad del target
+supervisado pesan tanto como la capacidad del VLM.
+
 **Figura 3. Comparación principal por chrF.** El VLM LoRA enriquecido presenta el mayor chrF medio entre las filas principales, mientras que los retrieval enriquecidos conservan mayor sacreBLEU corpus.
 
 ![Figura 3. Comparación principal por chrF](../outputs/paper/figures/main_test_chrf.svg)
@@ -194,6 +206,17 @@ el solapamiento superficial.
 **Figura 6. Latencia versus calidad semántica.** La figura resume el intercambio entre costo operativo de inferencia y BERTScore F1 para los modelos VLM evaluados.
 
 ![Figura 6. Latencia versus calidad semántica](../outputs/paper/figures/vlm_latency_vs_bertscore.svg)
+
+En nuestras corridas sobre respuesta larga, la latencia media por ejemplo del
+zero-shot fue de aproximadamente 26,7 segundos contra 12,5 segundos del LoRA,
+medidas sobre el mismo split de test con el mismo presupuesto de tokens. Es
+decir, el VLM fine-tuneado mejoró simultáneamente las dos dimensiones que
+cruza la Figura 6: obtuvo mayor BERTScore F1 y, al mismo tiempo, redujo el
+tiempo medio de inferencia. Una causa probable es que el modelo aprendió a
+generar respuestas más cortas y alineadas con la longitud típica del target,
+mientras que el zero-shot tiende a aprovechar el presupuesto completo de
+tokens. El resultado debilita la heurística usual de que zero-shot es la opción
+más liviana cuando ya se cuenta con un adapter entrenado para el dominio.
 
 **Figura 7. Distribución de métricas del VLM LoRA enriquecido en test.** Las distribuciones por imagen muestran variabilidad importante entre casos, lo que motiva la revisión cualitativa.
 
@@ -228,10 +251,17 @@ corrección clínica no está garantizada.
 | Severidad preliminar | alta | 8 | 0.400 |
 
 Los errores más relevantes son cambios de entidad diagnóstica central y
-recomendaciones no sustentadas. Por ejemplo, en algunos casos la referencia
-menciona linfangioma, nevus o angioma, mientras que el modelo predice psoriasis,
-verrugas planas o infecciones fúngicas. En otros casos, el modelo sugiere
-biopsias, pruebas de sangre o tratamientos que no aparecen en la referencia.
+recomendaciones no sustentadas. En el caso ENC00908, por ejemplo, la referencia
+describe un cuadro compatible con foliculitis combinado con un diferencial entre
+sífilis y dishidrosis palmar, mientras que el modelo propone urticaria papular
+con diferenciales de acné y psoriasis, y omite por completo la confirmación
+serológica que la referencia sí indica. En ENC00935, la referencia plantea
+liquen plano, pero el modelo predice una erupción cutánea por medicamentos e
+introduce manejo con antihistamínicos y antibióticos que no aparecen en la
+referencia. Patrones similares aparecen en casos donde la referencia menciona
+linfangioma, nevus o angioma y el modelo responde con psoriasis, verrugas planas
+o infecciones fúngicas. En otros casos, el modelo sugiere biopsias, pruebas de
+sangre o tratamientos que no aparecen en la referencia.
 
 Estos resultados refuerzan que las métricas automáticas no sustituyen la
 evaluación clínica. El modelo aprende un estilo de respuesta dermatológica, pero
@@ -298,3 +328,16 @@ fine-tuneado supera a retrieval textual en varias métricas automáticas. Aun as
 la revisión cualitativa preliminar revela errores clínicos importantes. Por lo
 tanto, el modelo debe verse como un experimento de adaptación y evaluación
 multimodal, no como una herramienta clínica lista para uso real.
+
+## 11. Referencias
+
+- Bai, S., et al. (2025). *Qwen2.5-VL Technical Report*. arXiv:2502.13923.
+- Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs*. Advances in Neural Information Processing Systems (NeurIPS). arXiv:2305.14314.
+- Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2022). *LoRA: Low-Rank Adaptation of Large Language Models*. International Conference on Learning Representations (ICLR).
+- Lin, C.-Y. (2004). *ROUGE: A Package for Automatic Evaluation of Summaries*. Text Summarization Branches Out, ACL Workshop.
+- Popović, M. (2015). *chrF: character n-gram F-score for automatic MT evaluation*. Proceedings of the Tenth Workshop on Statistical Machine Translation (WMT).
+- Post, M. (2018). *A Call for Clarity in Reporting BLEU Scores*. Proceedings of the Third Conference on Machine Translation (WMT).
+- Reimers, N., & Gurevych, I. (2019). *Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks*. Conference on Empirical Methods in Natural Language Processing (EMNLP).
+- Wang, L., Yang, N., Huang, X., Yang, L., Majumder, R., & Wei, F. (2024). *Multilingual E5 Text Embeddings: A Technical Report*. arXiv:2402.05672.
+- Yim, W., Ben Abacha, A., et al. (2024). *DermaVQA: Visual Question Answering en dermatología*. ImageCLEF / MEDIQA-Magic shared task (verificar cita exacta del dataset DermaVQA-IIYI).
+- Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2020). *BERTScore: Evaluating Text Generation with BERT*. International Conference on Learning Representations (ICLR).
