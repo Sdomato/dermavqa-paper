@@ -4,3 +4,5 @@ target-version = "py311"
 [lint]
 # E/F: errores y pyflakes · I: orden de imports · UP: modernización · B: bugbear
 select = ["E", "F", "I", "UP", "B"]
+# B008: llamar File()/Form()/Depends() en defaults es EL patrón de FastAPI, no un bug.
+ignore = ["B008"]

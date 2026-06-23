@@ -21,21 +21,22 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 1 — Asistente de solo retrieval ✅ (texto)
+## Fase 1 — Asistente de solo retrieval ✅
 
 > Objetivo: dada una consulta, devolver los casos más parecidos. **Cero riesgo de alucinación.**
 
-- [x] Servicio de retrieval con interfaz intercambiable: **TF-IDF** (default) y **E5** (calidad paper), reusando `src/retrieval_utils.py`.
-- [ ] Backend **multimodal** (texto + imagen, α=0.6, reusando `multimodal_retrieval.py`) — *pendiente; enchufa en la misma interfaz `Retriever`.*
+- [x] Servicio de retrieval con interfaz intercambiable: **TF-IDF** (default), **E5** (texto, paper) y **multimodal** (E5+BiomedCLIP), reusando `src/`.
+- [x] Backend **multimodal** (texto + imagen, α=0.6): consume un cache de embeddings precalculado (`outputs/embeddings/case_embeddings.npz`) y fusiona `α·texto + (1-α)·visual`. La matemática de fusión está testeada contra el cache real.
 - [x] Indexar los 998 casos (índice **en memoria** por ahora; FAISS/`pgvector` cuando crezca la base).
-- [x] Endpoint `POST /consulta` → K casos similares con su respuesta, timing y exclusión de self.
-- [x] Frontend: el médico carga una consulta y ve los casos similares **con sus fotos reales**.
-- [x] **Extra:** endpoints `GET /casos/{id}` y `GET /imagen/{id}`, validación de input, suite de 10 tests.
+- [x] Endpoints `POST /consulta` (texto) y `POST /consulta/imagen` (multipart, con foto) → K casos con respuesta, timing y exclusión de self.
+- [x] Frontend: el médico carga una consulta (con foto opcional) y ve los casos similares **con sus fotos reales**.
+- [x] **Extra:** endpoints `GET /casos/{id}` y `GET /imagen/{id}`, validación de input, **19 tests**, CI/CD.
 
 **Definición de hecho:** ✅ se carga una consulta real y aparecen K casos relevantes con texto e imagen.
 **Por qué primero:** es útil desde el día uno y no puede dar una recomendación peligrosa (solo muestra casos existentes).
 
-**Falta para cerrar la fase del todo:** el backend de retrieval **multimodal** (usar también la imagen de la consulta, no solo el texto).
+> Nota: el backend `multimodal` necesita deps pesadas (`torch`/`open_clip`) + el cache `.npz` en
+> el server. El default sigue siendo `tfidf` (liviano), así que el servicio arranca sin esas deps.
 
 ---
 

@@ -13,11 +13,14 @@ backend/
 │   ├── config.py        ← settings por env var (con validación fail-fast)
 │   ├── schemas.py       ← contratos de la API (request/response)
 │   └── retrieval/
-│       ├── base.py      ← interfaz Retriever
-│       ├── corpus.py    ← carga la base de casos (reusa src/retrieval_utils.py)
-│       ├── tfidf.py     ← backend TF-IDF (default, liviano)
-│       ├── e5.py        ← backend E5 (calidad paper, opcional)
-│       └── factory.py   ← elige backend según config
+│       ├── base.py        ← interfaz Retriever
+│       ├── corpus.py      ← carga la base de casos (reusa src/retrieval_utils.py)
+│       ├── tfidf.py       ← backend TF-IDF (default, liviano)
+│       ├── e5.py          ← backend E5 (texto, calidad paper)
+│       ├── multimodal.py  ← backend multimodal E5+BiomedCLIP (consume el cache .npz)
+│       └── factory.py     ← elige backend según config
+├── scripts/
+│   └── build_case_embeddings.py  ← genera el cache de embeddings (corre offline, GPU)
 ├── tests/               ← suite pytest (conftest + test_api)
 ├── Dockerfile
 ├── Makefile             ← atajos: install/run/test/lint/fmt
@@ -31,7 +34,8 @@ backend/
 | --- | --- | --- |
 | `GET` | `/` | Redirige a `/docs` |
 | `GET` | `/health` | Estado, versión, backend y nº de casos indexados |
-| `POST` | `/consulta` | Devuelve los K casos más similares (con su respuesta y timing) |
+| `POST` | `/consulta` | Solo-texto (JSON). Devuelve los K casos más similares (con respuesta y timing) |
+| `POST` | `/consulta/imagen` | Multipart: texto + imágenes. El backend multimodal fusiona la señal visual |
 | `GET` | `/casos/{encounter_id}` | Detalle de un caso de la base (404 si no existe) |
 | `GET` | `/imagen/{image_id}` | Sirve la foto clínica de un caso (404 si no está en local) |
 
@@ -90,13 +94,17 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 
 | Variable | Default | Descripción |
 | --- | --- | --- |
-| `DERMA_RETRIEVER` | `tfidf` | Backend: `tfidf` (liviano) o `e5` (calidad paper) |
+| `DERMA_RETRIEVER` | `tfidf` | Backend: `tfidf` (liviano), `e5` (texto, paper) o `multimodal` (texto+imagen) |
 | `DERMA_TOP_K` | `5` | Casos similares por consulta (default) |
 | `DERMA_MAX_K` | `50` | Tope duro de `k` que un cliente puede pedir |
 | `DERMA_INDEX_SPLITS` | `all` | Splits que entran a la base (`all` o ej. `train`) |
 | `DERMA_CORS_ORIGINS` | `*` | Orígenes permitidos por CORS (coma-separados) |
+| `DERMA_EMBEDDINGS_PATH` | `outputs/embeddings/case_embeddings.npz` | Cache de embeddings (backend multimodal) |
+| `DERMA_ALPHA_TEXT` | `0.6` | Peso del texto en la fusión multimodal (`α·texto + (1-α)·visual`) |
 
-> Para usar `e5` hay que instalar `torch` y `transformers` (ver `requirements.txt`).
+> Para `e5` o `multimodal` hay que instalar `torch`/`transformers` (y `open_clip_torch` para
+> multimodal). El backend `multimodal` además necesita el cache `.npz` (generarlo con
+> `scripts/build_case_embeddings.py`, ver `ing/docs/handoff_embeddings_santino.md`).
 > Config inválida (ej. retriever desconocido) hace que el servicio **no arranque** (fail-fast).
 
 ## Tests y lint

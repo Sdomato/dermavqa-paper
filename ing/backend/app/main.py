@@ -7,10 +7,13 @@ casos existentes, así que no puede alucinar ni inventar recomendaciones.
 """
 
 import logging
+import os
+import tempfile
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 
@@ -73,17 +76,14 @@ def health() -> HealthResponse:
     )
 
 
-@app.post("/consulta", response_model=ConsultaResponse)
-def consulta(req: ConsultaRequest) -> ConsultaResponse:
+def _responder(query: str, k: int, exclude: str | None, image_paths: list[Path] | None) -> ConsultaResponse:
+    """Corre la búsqueda y arma la respuesta. Compartido por /consulta y /consulta/imagen."""
     cases: list[Case] = _state["cases"]
     retriever = _state["retriever"]
-
-    query = f"{req.titulo} {req.contenido}".strip()
-    # Acotar k al rango [1, max_k] para no dejar que un cliente pida cualquier cosa.
-    k = min(req.k or settings.top_k, settings.max_k)
+    k = min(k, settings.max_k)
 
     t0 = time.perf_counter()
-    hits = retriever.search(query, k=k, exclude_encounter_id=req.excluir_encounter_id)
+    hits = retriever.search(query, k=k, exclude_encounter_id=exclude, query_image_paths=image_paths)
     tomo_ms = (time.perf_counter() - t0) * 1000
 
     resultados = [
@@ -99,7 +99,8 @@ def consulta(req: ConsultaRequest) -> ConsultaResponse:
         )
         for idx, score in hits
     ]
-    logger.info("consulta k=%d -> %d hits en %.1f ms", k, len(resultados), tomo_ms)
+    logger.info("consulta k=%d img=%s -> %d hits en %.1f ms",
+                k, bool(image_paths), len(resultados), tomo_ms)
 
     return ConsultaResponse(
         consulta=query,
@@ -109,6 +110,51 @@ def consulta(req: ConsultaRequest) -> ConsultaResponse:
         tomo_ms=round(tomo_ms, 2),
         resultados=resultados,
     )
+
+
+@app.post("/consulta", response_model=ConsultaResponse)
+def consulta(req: ConsultaRequest) -> ConsultaResponse:
+    """Consulta solo-texto (JSON). Funciona con cualquier backend."""
+    query = f"{req.titulo} {req.contenido}".strip()
+    return _responder(query, req.k or settings.top_k, req.excluir_encounter_id, None)
+
+
+@app.post("/consulta/imagen", response_model=ConsultaResponse)
+def consulta_imagen(
+    titulo: str = Form(""),
+    contenido: str = Form(""),
+    k: int | None = Form(None),
+    excluir_encounter_id: str | None = Form(None),
+    imagenes: list[UploadFile] = File(default=[]),
+) -> ConsultaResponse:
+    """
+    Consulta con imágenes (multipart). El backend multimodal las usa para fusionar
+    señal visual; los backends solo-texto las ignoran.
+    """
+    query = f"{titulo} {contenido}".strip()
+    if not query:
+        raise HTTPException(
+            status_code=422,
+            detail="La consulta no puede estar vacía: completá 'titulo' o 'contenido'.",
+        )
+
+    tmp_paths: list[Path] = []
+    try:
+        for up in imagenes:
+            if not up.filename:
+                continue
+            suffix = Path(up.filename).suffix or ".img"
+            fd, tmp = tempfile.mkstemp(suffix=suffix)
+            with os.fdopen(fd, "wb") as f:
+                f.write(up.file.read())
+            tmp_paths.append(Path(tmp))
+        return _responder(query, k or settings.top_k, excluir_encounter_id, tmp_paths or None)
+    finally:
+        for p in tmp_paths:
+            try:
+                p.unlink()
+            except OSError:
+                pass
 
 
 @app.get("/casos/{encounter_id}", response_model=CaseDetail)

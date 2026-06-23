@@ -8,9 +8,13 @@ valores por defecto razonables, override por env var y validación fail-fast
 
 import os
 from dataclasses import dataclass, field
+from pathlib import Path
 
-APP_VERSION = "0.2.0"
-VALID_RETRIEVERS = {"tfidf", "e5"}
+APP_VERSION = "0.3.0"
+VALID_RETRIEVERS = {"tfidf", "e5", "multimodal"}
+
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_DEFAULT_EMB = _REPO_ROOT / "outputs" / "embeddings" / "case_embeddings.npz"
 
 
 @dataclass(frozen=True)
@@ -29,6 +33,9 @@ class Settings:
             o.strip() for o in os.getenv("DERMA_CORS_ORIGINS", "*").split(",") if o.strip()
         ]
     )
+    # Multimodal: ruta del cache de embeddings y peso del texto en la fusión.
+    embeddings_path: str = os.getenv("DERMA_EMBEDDINGS_PATH", str(_DEFAULT_EMB))
+    alpha_text: float = float(os.getenv("DERMA_ALPHA_TEXT", "0.6"))
 
     def __post_init__(self) -> None:
         if self.retriever not in VALID_RETRIEVERS:

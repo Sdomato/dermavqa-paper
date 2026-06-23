@@ -18,10 +18,17 @@ class Retriever(ABC):
 
     @abstractmethod
     def search(
-        self, query: str, k: int, exclude_encounter_id: str | None = None
+        self,
+        query: str,
+        k: int,
+        exclude_encounter_id: str | None = None,
+        query_image_paths: list | None = None,
     ) -> list[tuple[int, float]]:
         """
         Devolver los k casos más similares a `query`.
+
+        `query_image_paths` son rutas a imágenes de la consulta (opcional). Solo
+        los backends multimodales las usan; los de texto las ignoran.
 
         Retorna una lista de (índice_del_caso, score) ordenada de mayor a menor
         similitud. El score se normaliza a [0, 1].

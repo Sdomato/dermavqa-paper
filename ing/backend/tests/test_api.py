@@ -82,3 +82,24 @@ def test_caso_inexistente_404(client):
 
 def test_imagen_inexistente_404(client):
     assert client.get("/imagen/no_existe.jpg").status_code == 404
+
+
+def test_consulta_imagen_multipart(client):
+    # Con el backend tfidf por defecto, la imagen se ignora: el test valida el
+    # plumbing del endpoint multipart (form + archivo) sin deps pesadas.
+    png = (
+        b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01"
+        b"\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc\x00"
+        b"\x01\x00\x00\x05\x00\x01\r\n-\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
+    )
+    r = client.post(
+        "/consulta/imagen",
+        data={"titulo": "lesión en la piel", "k": "3"},
+        files={"imagenes": ("lesion.png", png, "image/png")},
+    )
+    assert r.status_code == 200
+    assert r.json()["k"] == 3
+
+
+def test_consulta_imagen_vacia_422(client):
+    assert client.post("/consulta/imagen", data={"titulo": "", "contenido": ""}).status_code == 422

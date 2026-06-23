@@ -25,7 +25,11 @@ class TfidfRetriever(Retriever):
         self._encounter_ids = [c.encounter_id for c in cases]
 
     def search(
-        self, query: str, k: int, exclude_encounter_id: str | None = None
+        self,
+        query: str,
+        k: int,
+        exclude_encounter_id: str | None = None,
+        query_image_paths: list | None = None,  # ignorado: backend solo-texto
     ) -> list[tuple[int, float]]:
         if self._matrix is None:
             raise RuntimeError("El índice no fue construido (llamar index() primero)")
