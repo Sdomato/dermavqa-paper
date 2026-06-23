@@ -324,11 +324,35 @@
       $("draft").innerHTML = `
         <div class="section-title">Borrador asistido</div>
         <div class="draft">
-          <div class="evidence-label" style="color:var(--violet)">Para revisión médica</div>
+          <div style="display:flex;align-items:center;gap:.6rem;flex-wrap:wrap">
+            <div class="evidence-label" style="color:var(--violet);margin:0">Para revisión médica</div>
+            ${safetyBadge(est.seguridad)}
+          </div>
           <div class="answer">${escapeHtml(est.borrador || "")}</div>
+          ${safetyDetail(est.seguridad)}
           <div class="disclaimer">${warnIcon()} Borrador preliminar generado a partir de casos similares. Debe ser revisado y aprobado por un profesional antes de cualquier uso.</div>
         </div>`;
       if (est.evidencia) render({ resultados: est.evidencia });
+    }
+
+    function safetyBadge(s) {
+      if (!s) return "";
+      const c = { alto: "var(--pink)", medio: "#fbbf24", bajo: "var(--teal)" }[s.nivel] || "var(--muted)";
+      return `<span class="pill" style="background:${c};box-shadow:0 0 14px ${c}66;color:#04121a">Riesgo ${s.nivel}</span>`;
+    }
+
+    function safetyDetail(s) {
+      if (!s) return "";
+      const items = [];
+      if (s.diagnosticos_no_sustentados && s.diagnosticos_no_sustentados.length)
+        items.push(`<b>Diagnósticos no respaldados por la evidencia:</b> ${s.diagnosticos_no_sustentados.map(escapeHtml).join(", ")}`);
+      if (s.terminos_riesgo && s.terminos_riesgo.length)
+        items.push(`<b>Recomendaciones a revisar:</b> ${[...new Set(s.terminos_riesgo.map(t => t.termino))].map(escapeHtml).join(", ")}`);
+      if (s.flags && s.flags.length)
+        items.push(`<b>Señales:</b> ${s.flags.map(escapeHtml).join(", ")}`);
+      if (!items.length) return "";
+      return `<div class="disclaimer" style="color:#fca5a5;background:rgba(244,114,182,.07);border-color:rgba(244,114,182,.3)">
+        ${warnIcon()}<div>${items.join("<br>")}</div></div>`;
     }
 
     function warnIcon() {

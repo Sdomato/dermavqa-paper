@@ -22,6 +22,7 @@ from .generation.factory import build_generator
 from .jobs import JobStore
 from .retrieval.corpus import Case, load_corpus, resolve_image
 from .retrieval.factory import build_retriever
+from .safety.analyzer import analizar
 from .schemas import (
     BorradorEstado,
     BorradorJob,
@@ -222,7 +223,8 @@ def _borrador_task(query: str, k: int, exclude: str | None, tmp_paths: list[Path
             for e in evidencia
         ]
         borrador = generator.generate(query, evidence_dicts, tmp_paths or None)
-        return {"evidencia": evidencia, "borrador": borrador}
+        seguridad = analizar(borrador, [e.answer for e in evidencia])
+        return {"evidencia": evidencia, "borrador": borrador, "seguridad": seguridad}
     finally:
         for p in tmp_paths:
             try:
@@ -267,5 +269,6 @@ def borrador_estado(job_id: str) -> BorradorEstado:
         status=job.status,
         evidencia=result.get("evidencia"),
         borrador=result.get("borrador"),
+        seguridad=result.get("seguridad"),
         error=job.error,
     )

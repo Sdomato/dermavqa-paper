@@ -74,6 +74,22 @@ class BorradorJob(BaseModel):
     status: str = Field(..., description="pending | running | done | error")
 
 
+class TerminoRiesgo(BaseModel):
+    termino: str
+    categoria: str
+
+
+class Seguridad(BaseModel):
+    """Análisis de seguridad del borrador (Fase 3)."""
+
+    nivel: str = Field(..., description="bajo | medio | alto")
+    flags: list[str] = Field(default_factory=list, description="vacio | muy_corto | repetitivo")
+    diagnosticos_no_sustentados: list[str] = Field(
+        default_factory=list, description="Diagnósticos del borrador ausentes en la evidencia"
+    )
+    terminos_riesgo: list[TerminoRiesgo] = Field(default_factory=list)
+
+
 class BorradorEstado(BaseModel):
     """Estado de un borrador (poll)."""
 
@@ -81,4 +97,5 @@ class BorradorEstado(BaseModel):
     status: str = Field(..., description="pending | running | done | error")
     evidencia: list[CaseHit] | None = Field(None, description="Casos similares usados como contexto")
     borrador: str | None = Field(None, description="Texto del borrador generado")
+    seguridad: Seguridad | None = Field(None, description="Análisis de seguridad del borrador")
     error: str | None = None

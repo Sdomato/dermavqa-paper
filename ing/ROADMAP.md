@@ -58,16 +58,19 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 3 — Capa de seguridad
+## Fase 3 — Capa de seguridad 🟡 (en progreso)
 
 > Objetivo: revisar el borrador antes de mostrarlo y marcar lo riesgoso.
 
-- [ ] Heurísticos automáticos: vacío / demasiado corto / demasiado genérico (reusar flags `auto_*`).
-- [ ] Verificador: comparar el borrador contra los casos recuperados y marcar **afirmaciones no sustentadas**.
-- [ ] Resaltar en la UI los diagnósticos/tratamientos riesgosos (biopsia, antibióticos, etc.).
-- [ ] Flujo de aprobación: botones **editar / aprobar / rechazar** + registro de auditoría.
+- [x] Heurísticos automáticos: vacío / muy corto / **repetitivo** (degeneración del modelo).
+- [x] Verificador (grounding): marca **diagnósticos del borrador ausentes en la evidencia** (el modo de falla del paper).
+- [x] **Términos de riesgo**: detecta recomendaciones sensibles (biopsia, antibióticos, corticoides…).
+- [x] **Nivel de riesgo** (bajo/medio/alto) en la respuesta de `/borrador`, mostrado en el frontend con badge + detalle.
+- [x] Análisis 100% testeado (lógica pura, sin modelos) — `app/safety/`.
+- [ ] Flujo de aprobación: botones **editar / aprobar / rechazar** + registro de auditoría (audit log).
 
-**Definición de hecho:** un borrador que inventa un diagnóstico ausente en los casos aparece marcado en rojo, y toda acción del médico queda registrada.
+**Definición de hecho:** un borrador que inventa un diagnóstico ausente en los casos aparece marcado, y toda acción del médico queda registrada.
+**Falta para cerrar:** el flujo de aprobación + audit log.
 
 ---
 

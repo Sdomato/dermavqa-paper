@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.5.0"
 VALID_RETRIEVERS = {"tfidf", "e5", "multimodal"}
 VALID_GENERATORS = {"stub", "vlm"}
 
