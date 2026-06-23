@@ -237,13 +237,14 @@
       for (const base of candidatos) {
         try {
           const r = await _fetchT(`${base}/health`, 700);
-          if (r.ok) {
-            API = base;
-            if (forzado) localStorage.setItem("derma_api", base);
-            const h = await r.json();
-            setStatus(`Conectado · ${base.replace("http://", "")} · ${h.casos_indexados} casos`);
-            return;
-          }
+          if (!r.ok) continue;
+          const h = await r.json().catch(() => ({}));
+          // Validar que sea NUESTRO backend (otros servicios pueden responder /health).
+          if (typeof h.casos_indexados !== "number" || !h.retriever) continue;
+          API = base;
+          if (forzado) localStorage.setItem("derma_api", base);
+          setStatus(`Conectado · ${base.replace("http://", "")} · ${h.casos_indexados} casos`);
+          return;
         } catch (e) { /* probar el siguiente */ }
       }
       setStatus(`<span class="err">No se encontró el backend en ${PUERTOS.join(", ")}. Levantalo y recargá.</span>`);
