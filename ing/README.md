@@ -92,9 +92,36 @@ Levantar la última imagen publicada:
 docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 ```
 
-## Convenciones
+## Modelo de ramas
 
-- Rama principal de ingeniería: **`dev-ing`** (esta).
-- Ramas de trabajo: `ing/<feature>` salidas de `dev-ing`.
-- La investigación no se toca desde acá; si necesitamos un cambio en `src/`, se coordina
-  con `develop`.
+La investigación y la ingeniería viven en ramas separadas, a propósito:
+
+- **`develop`** — fuente de verdad de la **investigación**: paper, experimentos, métricas, y
+  los **artefactos compartidos** que la ingeniería reutiliza (`src/`, el dataset en
+  `outputs/datasets/`, los adapters LoRA).
+- **`dev-ing`** — rama principal de **ingeniería** (DermaAssist). Salió de `develop` y
+  construye `ing/` encima.
+
+### Regla de oro: el flujo es en una sola dirección
+
+```
+develop  ───(merge)──▶  dev-ing
+```
+
+- Cuando `develop` actualiza algo que usamos (dataset, `src/`, adapters), se **mergea
+  `develop` dentro de `dev-ing`** para traer lo nuevo:
+  ```bash
+  git checkout dev-ing && git merge origin/develop
+  ```
+- Lo de ingeniería (`ing/`, CI, Docker) **nunca** vuelve a `develop`.
+- Si la ingeniería necesita un cambio en `src/`, se hace con un **PR chico a `develop`** y
+  después se sincroniza — no se parchea suelto en `dev-ing`.
+
+> Por qué: `dev-ing` depende de 3 artefactos de `develop` (`src/retrieval_utils.py`, el
+> dataset, los adapters). Tratamos esos como una "interfaz publicada": solo cambian a
+> propósito, y la sync deliberada evita que `dev-ing` se rompa en silencio.
+
+### Convenciones
+
+- Ramas de trabajo: `ing/<feature>` salidas de `dev-ing`, se mergean de vuelta a `dev-ing`.
+- Todo lo que entra a `dev-ing` pasa por CI (tests + lint).
