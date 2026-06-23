@@ -232,7 +232,10 @@
 
     const _ready = (async function detectApi() {
       const forzado = new URLSearchParams(location.search).get("api") || localStorage.getItem("derma_api");
-      const candidatos = forzado ? [forzado] : PUERTOS.map((p) => `http://localhost:${p}`);
+      const candidatos = forzado ? [forzado] : [];
+      // Si la página la sirve el propio backend (http://host/app/), usar ese mismo origen.
+      if (!forzado && location.origin.startsWith("http")) candidatos.push(location.origin);
+      if (!forzado) candidatos.push(...PUERTOS.map((p) => `http://localhost:${p}`));
       setStatus("Conectando con el backend…", true);
       for (const base of candidatos) {
         try {

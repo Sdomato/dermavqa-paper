@@ -16,6 +16,7 @@ from pathlib import Path
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from .audit import AuditLog
 from .config import APP_VERSION, settings
@@ -77,6 +78,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Sirve el frontend desde el mismo backend (mismo origen → sin CORS ni sandbox).
+# Abrir en el navegador: http://localhost:<puerto>/app/
+_FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
+if _FRONTEND_DIR.exists():
+    app.mount("/app", StaticFiles(directory=str(_FRONTEND_DIR), html=True), name="frontend")
 
 
 @app.get("/", include_in_schema=False)
