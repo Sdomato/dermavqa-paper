@@ -75,7 +75,9 @@ def build_training_messages(item: dict[str, Any]) -> list[dict[str, Any]]:
     agrega el turno assistant con la respuesta larga de referencia, que es
     sobre lo único que se calcula la loss.
     """
-    messages = build_chat_messages(item)
+    # Limitar a 1 imagen para reducir memoria en T4 16GB
+    item_1img = {**item, "image_paths": item["image_paths"][:1]}
+    messages = build_chat_messages(item_1img)
     messages.append(
         {
             "role": "assistant",
@@ -229,7 +231,6 @@ def run(args: argparse.Namespace) -> None:
         return
 
     import torch
-    from transformers import EarlyStoppingCallback
     from trl import SFTConfig, SFTTrainer
 
     model, processor = load_model_processor_and_lora(
@@ -270,7 +271,6 @@ def run(args: argparse.Namespace) -> None:
         eval_dataset=eval_examples,
         data_collator=collate_fn,
         processing_class=processor.tokenizer,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
     )
 
     if torch.cuda.is_available():
@@ -318,7 +318,7 @@ def parse_args() -> argparse.Namespace:
         description="Fine-tuning LoRA/QLoRA de Qwen2.5-VL sobre dataset_longest_answer"
     )
     p.add_argument("--model", default=MODEL_ID, help=f"Modelo HF (default: {MODEL_ID})")
-    p.add_argument("--epochs", type=int, default=5)
+    p.add_argument("--epochs", type=int, default=3)
     p.add_argument("--lr", type=float, default=2e-4)
     p.add_argument("--batch-size", type=int, default=1)
     p.add_argument("--grad-accum", type=int, default=16)
