@@ -1,3 +1,5 @@
-method,model_name,split,n,empty_predictions,chrf_mean,rouge_l_mean,token_f1_mean,sacrebleu_corpus,chrf_corpus,bertscore_f1_mean
-vlm_zero_shot,Qwen/Qwen2.5-VL-3B-Instruct,valid_ht,56,0,0.19325694266040502,0.08113567451550693,0.10964628060451452,0.5557483889271154,20.73431561258062,0.6305370985397271
-vlm_zero_shot,Qwen/Qwen2.5-VL-3B-Instruct,test_ht_spanishtestsetcorrected,100,0,0.18246282054258064,0.07155958339085591,0.09153917092289182,0.4085552964569149,20.547964296876184,0.6281523877382278
+dataset_variant,method,model_name,split,n,empty_predictions,chrf_mean,rouge_l_mean,token_f1_mean,sacrebleu_corpus,chrf_corpus
+dataset_longest_answer,vlm_zero_shot,Qwen/Qwen2.5-VL-3B-Instruct,valid_ht,56,0,0.19325694266040502,0.08113567451550693,0.10964628060451452,0.5557483889271154,20.73431561258062
+dataset_longest_answer,vlm_zero_shot,Qwen/Qwen2.5-VL-3B-Instruct,test_ht_spanishtestsetcorrected,100,0,0.18246282054258064,0.07155958339085591,0.09153917092289182,0.4085552964569149,20.547964296876184
+dataset_longest_answer,vlm_lora,final_adapter,valid_ht,56,0,0.1448732096489342,0.10103480671282274,0.1133230297229287,0.23699200398044706,10.722980468161385
+dataset_longest_answer,vlm_lora,final_adapter,test_ht_spanishtestsetcorrected,100,0,0.15651651489777257,0.11216673136907745,0.1307272613258693,0.3279704432305287,11.081715492629856
