@@ -161,10 +161,14 @@ Mismo pipeline que la Corrida 1 pero sin la limitación de 1 imagen por caso y c
 | VLM LoRA Corrida 1 (1 img, T4) | 0.157 | **0.112** | **0.131** | 0.667 |
 | VLM LoRA Corrida 2 (todas imgs, L4) | 0.155 | 0.104 | 0.117 | **0.669** |
 
-Usar todas las imágenes no mejoró significativamente — la diferencia con Corrida 1 es marginal.
-El BERTScore subió levemente (+0.002) pero ROUGE-L y Token F1 bajaron un poco, probablemente
-porque el modelo ve más variedad visual y genera respuestas más diversas pero menos alineadas
-con el estilo de las referencias.
+Usar todas las imágenes no mejoró significativamente — las diferencias son menores al 1% en todas
+las métricas. El BERTScore subió levemente (+0.002) pero ROUGE-L y Token F1 bajaron un poco.
+El cuello de botella no era la cantidad de imágenes sino el tamaño del dataset (842 ejemplos)
+y la capacidad del modelo (3B parámetros).
+
+> **Nota sobre reproducibilidad**: las predicciones versionadas en el repo corresponden a
+> Corrida 1. Las métricas de Corrida 2 se obtuvieron en la VM (`dermavqa-l4b`) y no se
+> bajaron al local por diferencia marginal con Corrida 1.
 
 ---
 
