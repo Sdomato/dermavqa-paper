@@ -20,6 +20,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .audit import AuditLog
 from .config import APP_VERSION, settings
+from .feedback import CasosAprobadosStore
 from .generation.factory import build_generator
 from .jobs import JobStore
 from .retrieval.corpus import Case, load_corpus, resolve_image
@@ -31,8 +32,10 @@ from .schemas import (
     BorradorJob,
     CaseDetail,
     CaseHit,
+    CasoAprobado,
     ConsultaRequest,
     ConsultaResponse,
+    DatasetAprobadosResponse,
     HealthResponse,
     RevisionEntry,
     RevisionRequest,
@@ -44,22 +47,35 @@ logger = logging.getLogger("dermaassist")
 _state: dict = {}
 _jobs = JobStore()
 _audit = AuditLog(settings.audit_path)
+_aprobados = CasosAprobadosStore(settings.aprobados_path)
+
+
+def _rebuild_index() -> None:
+    """
+    (Re)construir el índice = casos base del dataset + casos aprobados (Fase 4).
+
+    Se llama al arrancar y cada vez que un médico aprueba un borrador, así un
+    caso aprobado queda recuperable de inmediato. Mantiene en sincronía la lista
+    `cases`, el retriever y el lookup `by_id`.
+    """
+    base = _state["base_cases"]
+    cases = base + _aprobados.to_cases()
+    _state["retriever"].index(cases)
+    _state["cases"] = cases
+    _state["by_id"] = {c.encounter_id: c for c in cases}
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     t0 = time.perf_counter()
-    cases = load_corpus(splits=settings.index_splits)
-    retriever = build_retriever(settings.retriever)
-    retriever.index(cases)
-    _state["cases"] = cases
-    _state["retriever"] = retriever
+    _state["base_cases"] = load_corpus(splits=settings.index_splits)
+    _state["retriever"] = build_retriever(settings.retriever)
     _state["generator"] = build_generator(settings.generator)
-    # Índice por encounter_id para lookup O(1) en /casos/{id}.
-    _state["by_id"] = {c.encounter_id: c for c in cases}
+    _rebuild_index()
     logger.info(
-        "Índice listo: %d casos · retriever=%s · generator=%s · %.1fs",
-        len(cases), settings.retriever, settings.generator, time.perf_counter() - t0,
+        "Índice listo: %d casos (%d aprobados) · retriever=%s · generator=%s · %.1fs",
+        len(_state["cases"]), len(_aprobados.list()),
+        settings.retriever, settings.generator, time.perf_counter() - t0,
     )
     yield
     _state.clear()
@@ -99,6 +115,7 @@ def health() -> HealthResponse:
         retriever=settings.retriever,
         generator=settings.generator,
         casos_indexados=len(_state.get("cases", [])),
+        casos_aprobados=len(_aprobados.list()),
     )
 
 
@@ -319,6 +336,19 @@ def revisar(job_id: str, req: RevisionRequest) -> RevisionEntry:
         "seguridad_nivel": seguridad.get("nivel"),
     })
     logger.info("revisión %s job=%s revisor=%s", req.accion, job_id, req.revisor)
+
+    # Fase 4: una respuesta aprobada (o editada) se vuelve un caso nuevo de la
+    # base y queda recuperable de inmediato. Rechazar no aporta a la base.
+    consulta = result.get("consulta")
+    if req.accion in ("aprobar", "editar") and texto_final and consulta:
+        _aprobados.agregar(
+            consulta=consulta, respuesta=texto_final, revisor=req.revisor, job_id=job_id,
+        )
+        try:
+            _rebuild_index()
+        except Exception:  # noqa: BLE001  (reindexar no debe tumbar la revisión)
+            logger.exception("No se pudo reindexar tras aprobar job=%s", job_id)
+
     return RevisionEntry(**entry)
 
 
@@ -327,3 +357,18 @@ def auditoria() -> AuditoriaResponse:
     """Lista las revisiones registradas (el dataset de validación clínica humana)."""
     revs = _audit.list()
     return AuditoriaResponse(total=len(revs), revisiones=[RevisionEntry(**e) for e in revs])
+
+
+# ── Fase 4: loop de mejora ───────────────────────────────────────────────────
+
+@app.get("/dataset/aprobados", response_model=DatasetAprobadosResponse)
+def dataset_aprobados() -> DatasetAprobadosResponse:
+    """
+    Dataset de validación clínica humana que crece con el uso: cada caso es una
+    consulta con su respuesta aprobada por un médico. Es la materia prima del
+    reentrenamiento periódico del LoRA (ver scripts/build_finetune_dataset.py).
+    """
+    casos = _aprobados.list()
+    return DatasetAprobadosResponse(
+        total=len(casos), casos=[CasoAprobado(**c) for c in casos]
+    )

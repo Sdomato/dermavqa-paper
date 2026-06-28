@@ -73,16 +73,26 @@ demostrar por sí solo, y agrega una pieza de ingeniería sobre la anterior. El 
 
 ---
 
-## Fase 4 — Loop de mejora
+## Fase 4 — Loop de mejora ✅
 
 > Objetivo: que cada aprobación mejore el sistema.
 
-- [ ] Guardar cada borrador aprobado/editado como caso nuevo en la base.
-- [ ] Reindexar el retrieval con los casos aprobados.
-- [ ] Acumular el dataset de **evaluación clínica humana real** (lo que al paper le falta).
-- [ ] Re-entrenamiento periódico del adapter LoRA con los datos aprobados.
+- [x] Guardar cada borrador aprobado/editado como caso nuevo en la base (`app/feedback.py`,
+      store JSONL append-only).
+- [x] Reindexar el retrieval con los casos aprobados (`_rebuild_index()` en caliente al aprobar:
+      el caso queda recuperable de inmediato, no "mañana").
+- [x] Acumular el dataset de **evaluación clínica humana real** (lo que al paper le falta):
+      endpoint `GET /dataset/aprobados`.
+- [x] Re-entrenamiento periódico del adapter LoRA con los datos aprobados: tooling offline
+      (`scripts/build_finetune_dataset.py`) + handoff [`docs/fase4-reentrenamiento.md`](docs/fase4-reentrenamiento.md).
+      El paso GPU corre en VM, fuera del servicio.
 
-**Definición de hecho:** un caso aprobado hoy aparece como evidencia recuperable mañana, y existe un dataset humano-validado que crece con el uso.
+**Definición de hecho:** ✅ un caso aprobado aparece como evidencia recuperable (verificado en
+`tests/test_feedback.py`), y existe un dataset humano-validado que crece con el uso.
+
+> Nota: la promoción de hoy es solo-texto (la consulta aprobada + su respuesta). Capturar las
+> imágenes de la consulta original para que el caso aprobado entre también al retrain del VLM es
+> el siguiente incremento (el modelo de datos ya soporta `image_ids`; falta el wiring en el endpoint).
 
 ---
 

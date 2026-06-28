@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-APP_VERSION = "0.6.0"
+APP_VERSION = "0.7.0"
 VALID_RETRIEVERS = {"tfidf", "e5", "multimodal"}
 VALID_GENERATORS = {"stub", "vlm"}
 
@@ -47,6 +47,10 @@ class Settings:
     # Audit log de revisiones médicas (Fase 3).
     audit_path: str = os.getenv(
         "DERMA_AUDIT_PATH", str(_REPO_ROOT / "ing" / "backend" / ".data" / "revisiones.jsonl")
+    )
+    # Casos aprobados que retroalimentan la base buscable (Fase 4, loop de mejora).
+    aprobados_path: str = os.getenv(
+        "DERMA_APROBADOS_PATH", str(_REPO_ROOT / "ing" / "backend" / ".data" / "casos_aprobados.jsonl")
     )
 
     def __post_init__(self) -> None:
