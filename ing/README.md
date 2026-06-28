@@ -59,7 +59,7 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
 
 ## Estado actual
 
-🟢 **Fases 0, 1, 2 y 3 — hechas.**
+🟢 **Fases 0, 1, 2, 3 y 4 — hechas.**
 - **Fase 0** — scaffolding, FastAPI, Docker, CI/CD (tests + lint + imagen en GHCR).
 - **Fase 1** — retrieval de casos similares: backends `tfidf` / `e5` / `multimodal`
   (E5+BiomedCLIP con cache de embeddings), endpoints de consulta (texto e imagen),
@@ -69,8 +69,14 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
 - **Fase 3** — capa de seguridad: heurísticos + grounding + términos de riesgo + nivel,
   flujo de revisión médica (aprobar/editar/rechazar) y audit log. Validada contra los
   20 casos reales del paper (recall 100%).
+- **Fase 4** — loop de mejora: cada borrador aprobado se vuelve caso recuperable en
+  caliente (`app/feedback.py` + reindexado), dataset de validación clínica humana que
+  crece con el uso (`GET /dataset/aprobados`), y tooling offline para el reentrenamiento
+  periódico del LoRA (`scripts/build_finetune_dataset.py`, ver
+  [`docs/fase4-reentrenamiento.md`](docs/fase4-reentrenamiento.md)).
 
-🟡 **Próximo:** Fase 4 (loop de mejora: feedback de aprobaciones → re-entrenamiento).
+🟢 **Roadmap completo.** Próximos incrementos posibles: capturar imágenes en la aprobación
+para cerrar el loop también del VLM, y persistencia con trazabilidad real (hoy JSONL).
 Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.
 
 ## Estructura del código

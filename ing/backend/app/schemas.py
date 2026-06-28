@@ -65,6 +65,7 @@ class HealthResponse(BaseModel):
     retriever: str
     generator: str
     casos_indexados: int
+    casos_aprobados: int = Field(0, description="Casos sumados por el loop de mejora (Fase 4)")
 
 
 class BorradorJob(BaseModel):
@@ -139,3 +140,25 @@ class RevisionEntry(BaseModel):
 class AuditoriaResponse(BaseModel):
     total: int
     revisiones: list[RevisionEntry]
+
+
+# ── Fase 4: loop de mejora ───────────────────────────────────────────────────
+
+
+class CasoAprobado(BaseModel):
+    """Un caso aprobado por un médico, ya parte de la base buscable."""
+
+    encounter_id: str
+    timestamp: str
+    consulta: str
+    respuesta: str = Field(..., description="Respuesta validada por el médico (la evidencia)")
+    revisor: str | None = None
+    job_id: str | None = None
+    image_ids: list[str] = Field(default_factory=list)
+
+
+class DatasetAprobadosResponse(BaseModel):
+    """Dataset de validación clínica humana que crece con el uso (Fase 4)."""
+
+    total: int
+    casos: list[CasoAprobado]
