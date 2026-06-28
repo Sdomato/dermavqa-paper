@@ -1,18 +1,23 @@
 # Experimentos VLM: Zero-Shot y LoRA Fine-tuning (dataset_longest_answer)
 
 Documenta el proceso completo de los experimentos con Qwen2.5-VL-3B-Instruct sobre
-`dataset_longest_answer`: zero-shot baseline y fine-tuning QLoRA.
+`dataset_longest_answer`: zero-shot baseline y fine-tuning QLoRA (dos corridas).
 
 ---
 
 ## Entorno de cómputo
 
-- **Plataforma**: Google Cloud Compute Engine
+### Corrida 1 (LoRA con 1 imagen, T4)
 - **Instancia**: `dermavqa-train-2`, zona `asia-east1-c`
 - **GPU**: NVIDIA Tesla T4 (14.56 GB VRAM)
-- **SO**: Deep Learning VM with CUDA M132 (Ubuntu 22.04, CUDA 12.9, Python 3.10)
-- **Costo**: ~$0.40/hora (región Asia — us-central1 y us-east1 no tenían T4 disponible al momento)
-- **Costo total estimado**: ~$8-9 (LoRA ~5.7hs + zero-shot ~1.2hs + inferencia LoRA ~0.5hs)
+- **SO**: Deep Learning VM with CUDA M132 (Ubuntu 22.04)
+- **Costo**: ~$0.40/hora · Total estimado: ~$8-9
+
+### Corrida 2 (LoRA con todas las imágenes, L4)
+- **Instancia**: `dermavqa-l4b`, zona `us-east1-c`
+- **GPU**: NVIDIA L4 (24 GB VRAM)
+- **SO**: Deep Learning VM with CUDA 12.9 (Ubuntu 22.04)
+- **Costo**: ~$0.70/hora · Total estimado: ~$3
 
 ---
 
@@ -68,7 +73,7 @@ y pregunta y genera la respuesta directamente.
 
 ---
 
-## Experimento 2: QLoRA Fine-tuning (LoRA)
+## Experimento 2: QLoRA Fine-tuning — Corrida 1 (1 imagen por caso, T4)
 
 ### Hiperparámetros de entrenamiento
 
@@ -113,6 +118,57 @@ y pregunta y genera la respuesta directamente.
 |-------|---|------|---------|----------|-----------|--------------|
 | valid | 56 | 0.145 | 0.101 | 0.113 | 0.237 | 0.670 |
 | test | 100 | 0.157 | 0.112 | 0.131 | 0.328 | 0.667 |
+
+---
+
+## Experimento 3: QLoRA Fine-tuning — Corrida 2 (todas las imágenes, L4)
+
+Mismo pipeline que la Corrida 1 pero sin la limitación de 1 imagen por caso y con early stopping.
+
+### Cambios respecto a Corrida 1
+- Sin límite de imágenes por caso (`image_paths[:1]` eliminado)
+- Early stopping con paciencia 3 (techo 5 épocas)
+- GPU L4 necesaria — VRAM pico 15.0 GB (T4 de 14.56 GB no hubiera entrado)
+
+### Resultados operativos
+
+| Métrica | Valor |
+|---------|-------|
+| Ejemplos de train | 842 |
+| Ejemplos de valid | 56 |
+| Épocas (early stopping) | ~3.78 |
+| Tiempo total | 2.9 horas (10,464s) |
+| VRAM pico | 15.0 GB |
+| Tamaño del adapter | 160 MB |
+
+### Métricas Corrida 2
+
+| Split | n | chrF | ROUGE-L | Token F1 | sacreBLEU | BERTScore F1 |
+|-------|---|------|---------|----------|-----------|--------------|
+| valid | 56 | 0.134 | 0.098 | 0.109 | 0.288 | 0.671 |
+| test | 100 | 0.155 | 0.104 | 0.117 | 0.501 | 0.669 |
+
+---
+
+## Comparativa completa (test, 100 casos)
+
+| Método | chrF | ROUGE-L | Token F1 | BERTScore F1 |
+|--------|------|---------|----------|--------------|
+| Retrieval SBERT | 0.174 | 0.088 | 0.088 | 0.657 |
+| Retrieval E5 | 0.179 | 0.081 | 0.077 | 0.656 |
+| Retrieval Multimodal | 0.171 | 0.080 | 0.080 | 0.658 |
+| VLM Zero-Shot | 0.183 | 0.072 | 0.092 | 0.628 |
+| VLM LoRA Corrida 1 (1 img, T4) | 0.157 | **0.112** | **0.131** | 0.667 |
+| VLM LoRA Corrida 2 (todas imgs, L4) | 0.155 | 0.104 | 0.117 | **0.669** |
+
+Usar todas las imágenes no mejoró significativamente — las diferencias son menores al 1% en todas
+las métricas. El BERTScore subió levemente (+0.002) pero ROUGE-L y Token F1 bajaron un poco.
+El cuello de botella no era la cantidad de imágenes sino el tamaño del dataset (842 ejemplos)
+y la capacidad del modelo (3B parámetros).
+
+> **Nota sobre reproducibilidad**: las predicciones versionadas en el repo corresponden a
+> Corrida 1. Las métricas de Corrida 2 se obtuvieron en la VM (`dermavqa-l4b`) y no se
+> bajaron al local por diferencia marginal con Corrida 1.
 
 ---
 
