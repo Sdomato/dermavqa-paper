@@ -61,6 +61,38 @@ split, encounter_id, image_id, image_path, question_es, answer_es
 | Max image pixels | `256 * 28 * 28` |
 | Max new tokens inferencia | 256 |
 
+## Comparabilidad con `dataset_longest_answer`
+
+El entrenamiento enriquecido debe compararse contra la **Corrida 1 versionada**
+de `dataset_longest_answer` como una corrida **compute-matched**, no como una
+corrida con igual cantidad de epochs.
+
+| Aspecto | `dataset_longest_answer` | `dataset_enriched` |
+| --- | --- | --- |
+| Modelo base | `Qwen/Qwen2.5-VL-3B-Instruct` | `Qwen/Qwen2.5-VL-3B-Instruct` |
+| Adaptacion | QLoRA 4-bit + LoRA | QLoRA 4-bit + LoRA |
+| LR / batch / grad accum | 2e-4 / 1 / 16 | 2e-4 / 1 / 16 |
+| LoRA | r=16, alpha=32, dropout=0.05 | r=16, alpha=32, dropout=0.05 |
+| Unidad de entrenamiento | un caso con 1 imagen | una fila por imagen |
+| Train examples | 842 | 2473 |
+| Epochs corridas | 3 | 1 |
+| Optimizer steps | ~158 | 155 |
+
+La razon: `dataset_enriched` expande cada caso a varias filas por imagen. Si se
+entrenara 3 epochs igual que la Corrida 1 de `dataset_longest_answer`, haria
+alrededor de 464 optimizer steps, casi 3 veces mas compute. Por eso la corrida
+principal usa 1 epoch: mantiene el mismo modelo e hiperparametros y deja el
+numero de updates practicamente igual.
+
+`survey/vlm_experiments.md` tambien documenta una Corrida 2 de
+`dataset_longest_answer` con todas las imagenes por caso, L4 y early stopping
+(~3.78 epochs). Esa corrida es util como ablation, pero la misma bitacora aclara
+que las predicciones versionadas del repo corresponden a la Corrida 1.
+
+Para el paper, la comparacion principal debe reportarse por `encounter_id`
+cuando sea posible. Las filas por imagen son utiles para entrenamiento VQA, pero
+duplican casos y pueden inflar el peso de encuentros con muchas imagenes.
+
 Script principal:
 
 ```bash

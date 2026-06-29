@@ -62,6 +62,7 @@ varias vistas del mismo corpus:
 | Variante | Target | Archivo / artefacto |
 | --- | --- | --- |
 | `longest_answer` | Respuesta original más larga | `outputs/datasets/dataset_longest_answer.{json,csv}` |
+| `longest_answer_by_image` | Igual a `longest_answer`, pero una fila por imagen para VLM comparable | `outputs/datasets/dataset_longest_answer_by_image.{json,jsonl,csv,zip}` |
 | `short_answer` | Respuesta más corta (diagnóstico breve) | `outputs/datasets/dataset_short_answer.{json,csv}` |
 | `enriched` | Respuestas consolidadas por un LLM (Azure) | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip` |
 
@@ -102,6 +103,7 @@ Todos se ejecutan como módulo desde la raíz del repo (`python -m src.<nombre>`
 | Script | Qué hace |
 | --- | --- |
 | `build_answer_datasets.py` | Genera `dataset_longest_answer` y `dataset_short_answer` desde los JSON crudos de IIYI. |
+| `build_longest_by_image_dataset.py` | Expande `dataset_longest_answer` a una fila por imagen para entrenar el VLM con la misma unidad que `dataset_enriched`. |
 | `build_llm_synthesized_dataset.py` | Genera el dataset enriquecido vía Azure OpenAI (síntesis extractiva, con trazabilidad). Ver `survey/dataset_notes.md`. |
 
 ### Baselines de retrieval (Damián)
@@ -122,8 +124,12 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 | --- | --- |
 | `vlm_infer.py` | Inferencia Qwen2.5-VL-3B 4-bit zero-shot; `--adapter <path>` para LoRA. `--dry-run` valida prompts/imágenes sin GPU. |
 | `train_longest.py` | Fine-tuning QLoRA (r=16, α=32) sobre `train`, selección con `valid`. `--dry-run` valida el formato chat sin GPU. |
-| `train_enriched.py` | Mismo fine-tuning QLoRA que `train_longest.py`, pero sobre `dataset_enriched`. |
-| `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA. |
+| `train_enriched.py` | Fine-tuning QLoRA by-image sobre `dataset_enriched`; wrapper de `vlm_lora_training.py`. |
+| `train_longest_by_image.py` | Fine-tuning QLoRA by-image sobre `dataset_longest_answer_by_image`, con el mismo motor que enriched. |
+| `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA; wrapper de `vlm_by_image_utils.py`. |
+| `vlm_infer_longest_by_image.py` | Inferencia Qwen2.5-VL sobre `dataset_longest_answer_by_image`, compatible con adapter LoRA. |
+| `vlm_by_image_utils.py` | Utilidades compartidas para datasets by-image: loader, resolución de imágenes, prompt, modelo e inferencia. |
+| `vlm_lora_training.py` | Motor compartido de QLoRA reproducible: seed, collator, LoRA config, runtime, métricas y logs. |
 | `evaluate_predictions.py` | Mismas métricas que `evaluate_retrieval.py` sobre los CSV de predicciones del VLM (comparabilidad). |
 | `build_paper_results.py` | Consolida métricas y genera tablas/figuras SVG paper-ready en `outputs/paper/`. |
 
@@ -161,6 +167,11 @@ python -m src.vlm_infer_enriched --split valid \
     --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
 python -m src.vlm_infer_enriched --split test \
     --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
+
+# 4c. Fine-tuning QLoRA comparable sobre longest by-image
+python -m src.build_longest_by_image_dataset
+python -m src.train_longest_by_image --dry-run --limit 5
+bash scripts/run_longest_by_image_vlm_lora.sh --epochs 1
 
 # 5. Evaluación unificada (sin GPU si se omite BERTScore)
 python -m src.evaluate_predictions \

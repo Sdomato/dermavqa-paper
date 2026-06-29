@@ -109,7 +109,8 @@ fine-tuning usamos QLoRA 4-bit + LoRA:
 | --- | --- |
 | Modelo base | Qwen/Qwen2.5-VL-3B-Instruct |
 | Método | QLoRA 4-bit + LoRA |
-| Epochs | 1 (enriquecido) / 3 (respuesta larga) |
+| Unidad de entrenamiento | imagen individual (enriquecido) / caso con 1 imagen (respuesta larga principal) |
+| Epochs | 1 (enriquecido) / 3 (respuesta larga principal) |
 | Batch size | 1 |
 | Gradient accumulation | 16 |
 | Learning rate | 2e-4 |
@@ -124,16 +125,18 @@ L4. El entrenamiento procesó 2.473 ejemplos, completó 155 steps, tardó 4.636,
 segundos y tuvo un pico de VRAM de 6,73 GB. El adapter LoRA final pesa
 aproximadamente 160 MB.
 
-La corrida sobre `dataset_longest_answer` se ejecutó por separado en otra
-instancia de Google Cloud, esta vez con una GPU NVIDIA Tesla T4 de 16 GB de
-VRAM. El presupuesto de memoria más ajustado obligó a tres restricciones
-operativas: se limitó el `max_pixels` del processor a 256 × 28 × 28, se usó una
-sola imagen por ejemplo de entrenamiento (los encuentros con varias imágenes
-contribuyeron únicamente la primera) y se habilitó la opción
-`PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` para reducir fragmentación
-de VRAM. Esta corrida se entrenó por 3 épocas. La restricción a una imagen por
-ejemplo aplica únicamente al entrenamiento: durante la inferencia, el script
-`vlm_infer.py` consume todas las imágenes disponibles por encuentro.
+La corrida principal sobre `dataset_longest_answer` se ejecutó por separado en
+otra instancia de Google Cloud con una GPU NVIDIA Tesla T4. Ese entrenamiento
+usó 842 casos de train, una imagen por caso, y 3 épocas, equivalentes a
+aproximadamente 158 optimizer steps con gradient accumulation 16. Para hacer
+comparable el costo de optimización, la corrida enriquecida se entrenó durante
+1 epoch: aunque usa menos epochs, procesa 2.473 filas por imagen y llega a 155
+optimizer steps. Por eso la comparación principal debe leerse como
+**compute-matched**: mismo modelo, mismos hiperparámetros LoRA y número de
+updates prácticamente igual, pero targets y unidades de entrenamiento
+distintas. La bitácora también documenta una segunda corrida de
+`dataset_longest_answer` con todas las imágenes por caso y early stopping en
+L4; la usamos como ablation, no como la fila principal versionada.
 
 **Figura 2. Curva de entrenamiento QLoRA sobre el dataset enriquecido.** Se reportan loss de entrenamiento y validación durante la corrida en Google Cloud.
 

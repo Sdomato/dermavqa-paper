@@ -204,6 +204,16 @@ def write_summary(metrics_root: Path, summaries: list[dict[str, Any]]) -> None:
         print(f"\nResumen -> {out_path}")
     else:
         out_path = metrics_root / "metrics_mixed.csv"
+        if out_path.exists():
+            previous = pd.read_csv(out_path)
+            key_columns = ["method", "model_name", "split"]
+            for column in key_columns:
+                if column not in previous.columns:
+                    previous[column] = ""
+            replace_keys = set(zip(*(summary_df[column].astype(str) for column in key_columns)))
+            previous_keys = list(zip(*(previous[column].astype(str) for column in key_columns)))
+            previous = previous[[key not in replace_keys for key in previous_keys]]
+            summary_df = pd.concat([previous, summary_df], ignore_index=True)
         summary_df.to_csv(out_path, index=False, encoding="utf-8")
         print(f"\nResumen (splits mixtos) -> {out_path}")
 

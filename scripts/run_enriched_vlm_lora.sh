@@ -4,6 +4,7 @@ set -euo pipefail
 ADAPTER="outputs/results/dataset_enriched/vlm_lora/final_adapter"
 LOG_DIR="outputs/results/dataset_enriched/vlm_lora"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
+export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 mkdir -p "$LOG_DIR"
 
 printf "\n[1/5] Training dataset_enriched QLoRA...\n"

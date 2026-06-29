@@ -1,0 +1,15 @@
+{
+  "method": "vlm_zero_shot_rag_e5_small_enriched",
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "dataset_variant": "dataset_enriched",
+  "rag_context_dataset": "dataset_enriched",
+  "rag_retriever": "e5_small",
+  "rag_retriever_model": "intfloat/multilingual-e5-small",
+  "rag_top_k": 3,
+  "split": "test",
+  "n": 314,
+  "mean_latency_s": 18.065595327726136,
+  "total_time_s": 5672.596932906006,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

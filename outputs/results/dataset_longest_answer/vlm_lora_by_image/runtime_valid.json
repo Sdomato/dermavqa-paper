@@ -1,0 +1,11 @@
+{
+  "method": "vlm_lora_by_image",
+  "model_name": "final_adapter",
+  "dataset_variant": "dataset_longest_answer",
+  "split": "valid",
+  "n": 157,
+  "mean_latency_s": 18.246882291949106,
+  "total_time_s": 2864.7605198360097,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

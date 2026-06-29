@@ -1,0 +1,11 @@
+{
+  "method": "vlm_zero_shot_by_image",
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "dataset_variant": "dataset_longest_answer",
+  "split": "valid",
+  "n": 157,
+  "mean_latency_s": 15.45254526692997,
+  "total_time_s": 2426.0496069080054,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

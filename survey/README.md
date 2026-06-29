@@ -37,9 +37,10 @@ dominio medico multimodal y subrepresentado en espanol.
 - `matias_execution_plan.md`: plan y progreso de la pata VLM (zero-shot + LoRA
   sobre `dataset_longest_answer`): `src/vlm_infer.py`, `src/train_longest.py`,
   `src/evaluate_predictions.py`.
-- `google_cloud_vlm_lora_runbook.md`: pasos para entrenar Qwen2.5-VL-3B con
-  LoRA/QLoRA sobre `dataset_enriched` usando una VM L4 en Google Cloud;
-  incluye comandos `src/train_enriched.py` y `src/vlm_infer_enriched.py`.
+- `google_cloud_vlm_lora_runbook.md`: protocolo reproducible en Google Cloud
+  para entrenar Qwen2.5-VL-3B con LoRA/QLoRA sobre `dataset_enriched` y
+  `dataset_longest_answer_by_image`, con VM L4, smoke tests, background jobs,
+  monitoreo, bajada de resultados y reglas de versionado.
 - `related_work_matrix.csv`: matriz inicial para organizar papers relacionados.
 - `risks.md`: riesgos metodologicos, medicos y operativos.
 

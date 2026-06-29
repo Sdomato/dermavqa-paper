@@ -1,0 +1,21 @@
+{
+  "dataset": "dataset_longest_answer_by_image",
+  "source": "outputs\\datasets\\dataset_longest_answer.json",
+  "description": "Expanded by-image version of dataset_longest_answer. Each image from an encounter becomes one training row with the same Spanish question and longest-answer target.",
+  "row_count": 2944,
+  "split_counts": {
+    "test": 314,
+    "train": 2473,
+    "valid": 157
+  },
+  "columns": [
+    "split",
+    "encounter_id",
+    "image_id",
+    "image_path",
+    "question_es",
+    "answer_es"
+  ],
+  "training_input": "image + question_es",
+  "training_target": "answer_es"
+}

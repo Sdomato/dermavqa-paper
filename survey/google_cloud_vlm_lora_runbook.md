@@ -1,170 +1,228 @@
-# Google Cloud runbook: VLM LoRA/QLoRA sobre `dataset_enriched`
+# Google Cloud runbook: VLM LoRA/QLoRA reproducible
 
-Este runbook deja reproducible la corrida de Santino para fine-tunear
-`Qwen/Qwen2.5-VL-3B-Instruct` sobre el dataset enriquecido.
+Este runbook deja reproducibles las corridas VLM con
+`Qwen/Qwen2.5-VL-3B-Instruct` sobre:
 
-## Objetivo
+- `dataset_enriched`: respuesta sintetizada/enriquecida por LLM.
+- `dataset_longest_answer_by_image`: respuesta original mas larga, expandida a
+  una fila por imagen.
 
-- Dataset: `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip`.
-- Notebook: `notebooks/03_dataset_enriched_vlm_lora.ipynb`.
-- Entrada: imagen + `question_es`.
-- Target: `synthesized_answer_es` si existe; en el artefacto compacto actual,
-  `answer_es` enriquecida.
-- Salida: `outputs/results/dataset_enriched/vlm_lora/`.
+La comparacion central del paper debe usar la misma receta para ambos:
+
+- unidad de entrenamiento: una fila por imagen;
+- splits: `train=2473`, `valid=157`, `test=314`;
+- GPU: NVIDIA L4 24GB;
+- QLoRA 4-bit;
+- LoRA `r=16`, `alpha=32`, `dropout=0.05`;
+- `batch_size=1`, `gradient_accumulation=16`;
+- `epochs=1`;
+- `seed=42`;
+- modelo base: `Qwen/Qwen2.5-VL-3B-Instruct`.
 
 ## 1. Control de gasto
 
 Antes de crear la VM:
 
-- Crear un budget alert de USD 50 en Google Cloud Billing.
-- Configurar alertas al 50%, 80% y 90%.
-- Apagar la VM apenas termine el entrenamiento.
+- crear un budget alert de USD 50 en Google Cloud Billing;
+- alertas al 50%, 80% y 90%;
+- apagar la VM apenas termine el entrenamiento y se bajen resultados.
 
-La VM con GPU cobra mientras esta encendida. Si se apaga, deja de cobrar CPU/GPU,
+La GPU cobra mientras la VM esta encendida. Al apagarla deja de cobrar CPU/GPU,
 pero el disco persistente sigue cobrando un monto menor.
 
-## 2. Crear VM con L4
+## 2. Crear VM L4
 
-Opcion recomendada: crearla desde la consola de Google Cloud.
+Valores usados en la corrida reproducible:
 
-- Machine type: `g2-standard-4`.
-- GPU: NVIDIA L4 24GB.
-- Boot disk: 100 a 150 GB.
-- Image: Deep Learning VM / PyTorch GPU.
-- Region/zona: cualquiera donde haya cuota y disponibilidad de L4.
-
-Comando CLI equivalente, ajustando `PROJECT_ID` y `ZONE`:
-
-```bash
-gcloud config set project PROJECT_ID
-gcloud compute instances create dermavqa-vlm-lora-l4 \
-  --zone=ZONE \
-  --machine-type=g2-standard-4 \
-  --image-family=pytorch-latest-gpu \
-  --image-project=deeplearning-platform-release \
-  --boot-disk-size=150GB \
-  --boot-disk-type=pd-balanced \
-  --maintenance-policy=TERMINATE \
-  --scopes=https://www.googleapis.com/auth/cloud-platform
+```powershell
+$PROJECT="nlp-derma-vqa"
+$ZONE="us-central1-c"
+$VM="dermavqa-vm-lora-l4"
 ```
 
-Verificar GPU dentro de la VM:
+Crear VM:
 
-```bash
-nvidia-smi
+```powershell
+gcloud.cmd compute instances create $VM `
+  --project $PROJECT `
+  --zone $ZONE `
+  --machine-type g2-standard-4 `
+  --accelerator type=nvidia-l4,count=1 `
+  --maintenance-policy TERMINATE `
+  --provisioning-model STANDARD `
+  --boot-disk-size 150GB `
+  --boot-disk-type pd-balanced `
+  --image-family pytorch-2-9-cu129-ubuntu-2204-nvidia-580 `
+  --image-project deeplearning-platform-release `
+  --metadata install-nvidia-driver=True `
+  --quiet
 ```
 
-## 3. Subir datos
+Verificar GPU:
 
-Preferencia: usar un bucket GCS para poder reanudar copias.
-
-En la maquina local:
-
-```bash
-gsutil mb gs://DERMAVQA_BUCKET
-gsutil cp outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip gs://DERMAVQA_BUCKET/
-gsutil -m cp -r data/iiyi/images_final gs://DERMAVQA_BUCKET/images_final
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "nvidia-smi"
 ```
 
-En la VM:
+## 3. Preparar repo en la VM
 
-```bash
-git clone REPO_URL dermavqa-paper
-cd dermavqa-paper
-git checkout develop
-mkdir -p outputs/datasets /mnt/disks/dermavqa/images_final
-gsutil cp gs://DERMAVQA_BUCKET/dermavqa_iiyi_llm_synthesized_answer_finetune.zip outputs/datasets/
-gsutil -m cp -r gs://DERMAVQA_BUCKET/images_final/* /mnt/disks/dermavqa/images_final/
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "mkdir -p ~/projects && if [ ! -d ~/projects/dermavqa-paper/.git ]; then git clone --branch develop https://github.com/Sdomato/dermavqa-paper.git ~/projects/dermavqa-paper; else cd ~/projects/dermavqa-paper && git fetch origin develop && git checkout develop && git pull --ff-only origin develop; fi"
 ```
 
-Alternativa sin bucket:
+Si estas probando cambios locales no pusheados, copiar solo los archivos
+modificados. Para la version final, preferir `git pull`.
 
-```bash
-gcloud compute ssh dermavqa-vlm-lora-l4 --zone=ZONE --command "mkdir -p ~/dermavqa-paper/outputs/datasets /mnt/disks/dermavqa/images_final"
-gcloud compute scp --recurse data/iiyi/images_final dermavqa-vlm-lora-l4:/mnt/disks/dermavqa/images_final --zone=ZONE
-gcloud compute scp outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip dermavqa-vlm-lora-l4:~/dermavqa-paper/outputs/datasets/ --zone=ZONE
+## 4. Subir datos
+
+Las imagenes no se versionan en Git. La forma mas estable es copiar
+`images_final.zip` como archivo unico y descomprimirlo en la VM:
+
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "mkdir -p /home/andyd/projects/dermavqa-paper/data/iiyi /home/andyd/projects/dermavqa-paper/outputs/datasets"
+
+gcloud.cmd compute scp `
+  "C:\Users\andyd\Udesa\NLP\prueba1\dermavqa-paper\data\iiyi\images_final.zip" `
+  "${VM}:/home/andyd/projects/dermavqa-paper/data/iiyi/images_final.zip" `
+  --zone $ZONE `
+  --project $PROJECT `
+  --quiet
+
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "cd ~/projects/dermavqa-paper && python3 -m zipfile -e data/iiyi/images_final.zip data/iiyi && find data/iiyi/images_final -type f | wc -l"
 ```
 
-## 4. Setup en la VM
+El conteo esperado es `2945` archivos de imagen en disco, de los cuales `2944`
+estan referenciados por los datasets.
 
-```bash
-cd dermavqa-paper
+## 5. Instalar dependencias VLM
 
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m pip install jupyterlab
+La imagen PyTorch ya trae `torch` y CUDA. Instalar el stack de entrenamiento con:
 
-export DERMAVQA_IMAGE_ROOT="/mnt/disks/dermavqa/images_final"
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "cd ~/projects/dermavqa-paper && python3 -m pip install --user -U pip setuptools wheel && python3 -m pip install --user -r requirements-vlm-gcp.txt"
 ```
 
-Nota: los scripts leen `DERMAVQA_IMAGE_ROOT` para resolver imagenes. El modelo
-se cambia con `--model`; el output queda fijo en
-`outputs/results/dataset_enriched/vlm_lora/`.
+Fix obligatorio observado en la VM: `torchaudio` de la imagen puede estar
+desalineado con `torch` y romper `transformers/peft`. No se usa en este proyecto.
 
-Si el modelo pide autenticacion de Hugging Face:
-
-```bash
-huggingface-cli login
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "sudo python3 -m pip uninstall -y torchaudio || true; sudo rm -rf /usr/local/lib/python3.10/dist-packages/torchaudio /usr/local/lib/python3.10/dist-packages/torchaudio-*.dist-info"
 ```
 
-## 5. Ejecutar entrenamiento script-based recomendado
+Chequeo de imports:
 
-Primero validar dataset e imagenes sin cargar el modelo:
-
-```bash
-source .venv/bin/activate
-python -m src.train_enriched --dry-run --limit 5
-python -m src.vlm_infer_enriched --split valid --limit 5 --dry-run
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command "cd ~/projects/dermavqa-paper && python3 - <<'PY'
+mods = ['torch','transformers','peft','trl','bitsandbytes','qwen_vl_utils','sacrebleu','bert_score','rouge_score','pandas']
+for mod in mods:
+    __import__(mod)
+    print(mod, 'OK')
+PY"
 ```
 
-Para una corrida completa que deje entrenamiento, predicciones y metricas:
+## 6. Datasets reproducibles
 
-```bash
-bash scripts/run_enriched_vlm_lora.sh --epochs 1
+### Enriched
+
+Artefacto esperado:
+
+```text
+outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip
 ```
 
-Ese comando ejecuta:
-
-1. `src.train_enriched`: entrena QLoRA y guarda adapter, checkpoints, estado y metricas train/valid.
-2. `src.vlm_infer_enriched --split valid`: genera `predictions_valid.csv`.
-3. `src.vlm_infer_enriched --split test`: genera `predictions_test.csv`.
-4. `src.evaluate_predictions`: calcula metricas automaticas valid/test.
-
-### Corrida realizada
-
-La corrida de `dataset_enriched` ya fue ejecutada con `--epochs 1` en una VM
-Google Cloud con NVIDIA L4. Resultado operativo:
-
-- `n_train`: 2473 filas por imagen.
-- `n_eval`: 157 filas por imagen.
-- tiempo de entrenamiento: 4636.4 s (77.3 min).
-- VRAM pico: 6.73 GB.
-- adapter final: 160.1 MB.
-- inferencia valid: 157 filas, 15.96 s/ejemplo.
-- inferencia test: 314 filas, 14.97 s/ejemplo.
-- metricas finales: `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
-
-Si despues queremos la corrida de 3 epochs para comparar con "dataset completo x3":
+Validar:
 
 ```bash
-bash scripts/run_enriched_vlm_lora.sh --epochs 3
+python3 -m src.train_enriched --dry-run --limit 5
+python3 -m src.vlm_infer_enriched --split valid --limit 5 --dry-run
 ```
 
-## 6. Outputs generados/esperados
+### Longest by-image
+
+Construir desde `dataset_longest_answer.json`:
+
+```bash
+python3 -m src.build_longest_by_image_dataset
+```
+
+Validar:
+
+```bash
+python3 -m src.train_longest_by_image --dry-run --limit 5
+python3 -m src.vlm_infer_longest_by_image --split valid --limit 5 --dry-run
+```
+
+Conteos esperados para ambos datasets by-image:
+
+| Split | Filas |
+| --- | ---: |
+| `train` | 2473 |
+| `valid` | 157 |
+| `test` | 314 |
+| **Total** | **2944** |
+
+## 7. Smoke test real
+
+Antes de correr todo, hacer un entrenamiento mini que cargue modelo, procese
+imagen y guarde adapter:
+
+```bash
+python3 -m src.train_enriched --limit 8 --epochs 1 --eval-steps 2 --save-total-limit 1
+python3 -m src.train_longest_by_image --limit 8 --epochs 1 --eval-steps 2 --save-total-limit 1
+```
+
+Luego borrar esos resultados mini antes de la corrida completa:
+
+```bash
+rm -rf outputs/results/dataset_enriched/vlm_lora
+rm -rf outputs/results/dataset_longest_answer/vlm_lora_by_image
+```
+
+## 8. Corridas completas en background
+
+### Enriched
+
+```bash
+cd ~/projects/dermavqa-paper
+mkdir -p outputs/results/dataset_enriched/vlm_lora
+nohup bash scripts/run_enriched_vlm_lora.sh --epochs 1 > outputs/results/dataset_enriched/vlm_lora/full_run.log 2>&1 &
+echo $! > outputs/results/dataset_enriched/vlm_lora/full_run.pid
+```
+
+### Longest by-image
+
+```bash
+cd ~/projects/dermavqa-paper
+mkdir -p outputs/results/dataset_longest_answer/vlm_lora_by_image
+nohup bash scripts/run_longest_by_image_vlm_lora.sh --epochs 1 > outputs/results/dataset_longest_answer/vlm_lora_by_image/full_run.log 2>&1 &
+echo $! > outputs/results/dataset_longest_answer/vlm_lora_by_image/full_run.pid
+```
+
+Monitorear desde PowerShell:
+
+```powershell
+gcloud.cmd compute ssh $VM --zone $ZONE --project $PROJECT --command 'cd ~/projects/dermavqa-paper && tail -f outputs/results/dataset_longest_answer/vlm_lora_by_image/full_run.log'
+```
+
+Cerrar el `tail` con `Ctrl+C` no corta el entrenamiento, solo deja de mirar el
+log.
+
+## 9. Outputs esperados
+
+Enriched:
 
 ```text
 outputs/results/dataset_enriched/vlm_lora/
-  final_adapter/                 # pesos LoRA finales/best checkpoint
-  checkpoints/                   # checkpoints LoRA intermedios
+  final_adapter/
+  checkpoints/
   training_config.json
   train_runtime.json
   train_metrics.json
-  eval_metrics_valid.json        # eval_loss de valid durante entrenamiento
+  eval_metrics_valid.json
   trainer_state.json
   training_log_history.json
-  training_log_history.csv       # loss/eval_loss por step
+  training_log_history.csv
+  full_run.log
   train_enriched.log
   infer_valid.log
   infer_test.log
@@ -173,37 +231,91 @@ outputs/results/dataset_enriched/vlm_lora/
   predictions_test.csv
 
 outputs/metrics/dataset_enriched/
-  metrics_mixed.csv              # resumen valid + test
+  metrics_mixed.csv
   per_case_vlm_lora_valid.csv
   per_case_vlm_lora_test.csv
 ```
 
-Copiar resultados al bucket:
+Longest by-image:
 
-```bash
-gsutil -m cp -r outputs/results/dataset_enriched/vlm_lora gs://DERMAVQA_BUCKET/outputs/results/dataset_enriched/
-gsutil -m cp -r outputs/metrics/dataset_enriched gs://DERMAVQA_BUCKET/outputs/metrics/
+```text
+outputs/results/dataset_longest_answer/vlm_lora_by_image/
+  final_adapter/
+  checkpoints/
+  training_config.json
+  train_runtime.json
+  train_metrics.json
+  eval_metrics_valid.json
+  trainer_state.json
+  training_log_history.json
+  training_log_history.csv
+  full_run.log
+  train_longest_by_image.log
+  infer_valid.log
+  infer_test.log
+  evaluate_predictions.log
+  predictions_valid.csv
+  predictions_test.csv
+
+outputs/metrics/dataset_longest_answer/
+  metrics_mixed.csv
+  per_case_vlm_lora_by_image_valid.csv
+  per_case_vlm_lora_by_image_test.csv
 ```
 
-## 7. Apagar recursos
+## 10. Que versionar y que no
 
-```bash
-gcloud compute instances stop dermavqa-vlm-lora-l4 --zone=ZONE
+Versionar en Git:
+
+- scripts y codigo en `src/` y `scripts/`;
+- `requirements-vlm-gcp.txt`;
+- datasets livianos en `outputs/datasets/*.json`, `*.csv`, `*.zip`;
+- metricas y predicciones CSV livianas;
+- `training_config.json`, `train_runtime.json`, `train_metrics.json`,
+  `eval_metrics_valid.json`, `training_log_history.csv`.
+
+No versionar en Git:
+
+- `data/iiyi/images_final/`;
+- `data/iiyi/images_final.zip`;
+- `final_adapter/`;
+- `checkpoints/`;
+- `.safetensors`, `.bin`, `.pt`, `.ckpt`;
+- credenciales, `.env`, tokens.
+
+## 11. Bajar resultados livianos
+
+Ejemplo longest by-image:
+
+```powershell
+$LOCAL="C:\Users\andyd\Udesa\NLP\prueba1\dermavqa-paper"
+
+gcloud.cmd compute scp --recurse `
+  "${VM}:/home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_lora_by_image" `
+  "$LOCAL\outputs\results\dataset_longest_answer\" `
+  --zone $ZONE `
+  --project $PROJECT `
+  --quiet
+
+gcloud.cmd compute scp --recurse `
+  "${VM}:/home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer" `
+  "$LOCAL\outputs\metrics\" `
+  --zone $ZONE `
+  --project $PROJECT `
+  --quiet
+```
+
+Si se desea bajar adapters/checkpoints pesados, hacerlo por `gcloud scp` o GCS,
+pero mantenerlos fuera de Git.
+
+## 12. Apagar recursos
+
+```powershell
+gcloud.cmd compute instances stop $VM --zone $ZONE --project $PROJECT
 ```
 
 Si ya se bajaron resultados y no se necesita conservar el disco:
 
-```bash
-gcloud compute instances delete dermavqa-vlm-lora-l4 --zone=ZONE
+```powershell
+gcloud.cmd compute instances delete $VM --zone $ZONE --project $PROJECT
 ```
-
-## Fallback si aparece OOM
-
-Aplicar en este orden:
-
-1. Confirmar primero `python -m src.train_enriched --dry-run --limit 5`.
-2. Mantener `--batch-size 1` y subir `--grad-accum` si se necesita compensar.
-3. Bajar `--limit` para hacer smoke tests mas chicos.
-4. Si el OOM ocurre durante vision, reducir el `max_pixels` hardcodeado en
-   `src/train_enriched.py` / `src/vlm_infer_enriched.py`.
-5. Si persiste, pasar a una GPU mayor o reducir el modelo con `--model`.

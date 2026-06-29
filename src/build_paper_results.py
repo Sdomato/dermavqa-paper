@@ -244,8 +244,14 @@ def method_label(method: str) -> str:
         "retrieval_visual": "Visual",
         "retrieval_multimodal": "Multimodal",
         "vlm_zero_shot": "VLM zero-shot",
+        "vlm_zero_shot_by_image": "VLM zero-shot by-image",
+        "vlm_zero_shot_rag_e5_small_enriched": "VLM zero-shot + RAG",
+        "vlm_zero_shot_by_image_rag_e5_small_longest": "VLM zero-shot + RAG by-image",
         "vlm_lora": "VLM LoRA",
         "vlm_lora_case_avg": "VLM LoRA case-avg",
+        "vlm_lora_rag_e5_small_enriched": "VLM LoRA + RAG",
+        "vlm_lora_by_image": "VLM LoRA by-image",
+        "vlm_lora_by_image_rag_e5_small_longest": "VLM LoRA + RAG by-image",
     }
     return labels.get(method, method)
 
@@ -310,20 +316,20 @@ def build_enriched_retrieval_rows() -> list[dict[str, str]]:
 
 def build_enriched_vlm_rows() -> list[dict[str, str]]:
     metrics_path = PROJECT_ROOT / "outputs" / "metrics" / "dataset_enriched" / "metrics_mixed.csv"
-    runtime_dir = PROJECT_ROOT / "outputs" / "results" / "dataset_enriched" / "vlm_lora"
     rows: list[dict[str, str]] = []
     for source in read_csv(metrics_path):
         split = source.get("split", "")
-        runtime = read_first(runtime_dir / f"runtime_{split}.csv")
-        if not runtime:
-            runtime_json = runtime_dir / f"runtime_{split}.json"
-            runtime = read_json_flat(runtime_json)
+        method = source.get("method", "")
+        runtime = runtime_for("dataset_enriched", method, split)
+        model = source.get("model_name", "")
+        if model == "final_adapter":
+            model = "Qwen/Qwen2.5-VL-3B-Instruct + LoRA"
         rows.append(
             metric_row(
                 dataset_variant="dataset_enriched",
                 target="enriched_answer",
-                method="vlm_lora",
-                model="Qwen/Qwen2.5-VL-3B-Instruct",
+                method=method,
+                model=model,
                 split=split,
                 unit="image",
                 n=source.get("n", ""),
@@ -335,7 +341,7 @@ def build_enriched_vlm_rows() -> list[dict[str, str]]:
                 bertscore_f1_mean=safe_float(source.get("bertscore_f1_mean")),
                 mean_latency_s=safe_float(runtime.get("mean_latency_s")),
                 source="outputs/metrics/dataset_enriched/metrics_mixed.csv",
-                notes="VLM LoRA enriched evaluated per image",
+                notes="VLM enriched evaluated per image; RAG uses E5 retrieval when method name includes rag",
             )
         )
     return rows
@@ -528,15 +534,19 @@ def build_longest_vlm_rows() -> list[dict[str, str]]:
     for source in read_csv(metrics_mixed):
         split = source.get("split", "")
         simple_split = split_label(split)
-        runtime = runtime_for("dataset_longest_answer", "vlm_zero_shot", simple_split)
+        method = source.get("method", "")
+        runtime = runtime_for("dataset_longest_answer", method, simple_split)
+        model = source.get("model_name", "")
+        if model == "final_adapter":
+            model = "Qwen/Qwen2.5-VL-3B-Instruct + LoRA"
         rows.append(
             metric_row(
                 dataset_variant="dataset_longest_answer",
                 target="longest_answer",
-                method="vlm_zero_shot",
-                model="Qwen/Qwen2.5-VL-3B-Instruct",
+                method=method,
+                model=model,
                 split=simple_split,
-                unit="case",
+                unit="image" if "by_image" in method else "case",
                 n=source.get("n", ""),
                 sacrebleu=safe_float(source.get("sacrebleu_corpus")),
                 chrf_corpus=safe_float(source.get("chrf_corpus")),
@@ -546,7 +556,7 @@ def build_longest_vlm_rows() -> list[dict[str, str]]:
                 bertscore_f1_mean=safe_float(source.get("bertscore_f1_mean")),
                 mean_latency_s=safe_float(runtime.get("mean_latency_s")),
                 source="outputs/metrics/dataset_longest_answer/metrics_mixed.csv",
-                notes="VLM zero-shot longest evaluated per case",
+                notes="VLM longest-answer evaluated per image; RAG uses E5 retrieval when method name includes rag",
             )
         )
 
@@ -682,11 +692,18 @@ def main_test_rows(all_rows: list[dict[str, str]]) -> list[dict[str, str]]:
         ("dataset_enriched", "retrieval_e5"): 11,
         ("dataset_enriched", "retrieval_sbert"): 12,
         ("dataset_enriched", "vlm_lora_case_avg"): 13,
+        ("dataset_enriched", "vlm_zero_shot"): 14,
+        ("dataset_enriched", "vlm_zero_shot_rag_e5_small_enriched"): 15,
+        ("dataset_enriched", "vlm_lora_rag_e5_small_enriched"): 16,
         ("dataset_longest_answer", "retrieval_tfidf_train_only"): 20,
         ("dataset_longest_answer", "retrieval_sbert"): 21,
         ("dataset_longest_answer", "retrieval_multimodal"): 22,
         ("dataset_longest_answer", "vlm_zero_shot"): 23,
         ("dataset_longest_answer", "vlm_lora"): 24,
+        ("dataset_longest_answer", "vlm_zero_shot_by_image"): 25,
+        ("dataset_longest_answer", "vlm_zero_shot_by_image_rag_e5_small_longest"): 26,
+        ("dataset_longest_answer", "vlm_lora_by_image"): 27,
+        ("dataset_longest_answer", "vlm_lora_by_image_rag_e5_small_longest"): 28,
         ("dataset_short_answer", "retrieval_tfidf_train_only"): 30,
         ("dataset_short_answer", "retrieval_textual_sbert"): 31,
         ("dataset_short_answer", "retrieval_multimodal"): 32,

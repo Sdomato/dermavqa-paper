@@ -17,6 +17,7 @@ abrir un PR para reconciliarlo.
 ├── outputs/                         # ← RAÍZ CANÓNICA de artefactos generados
 │   ├── datasets/                    # datasets procesados (VERSIONADO)
 │   │   ├── dataset_longest_answer.{json,csv}
+│   │   ├── dataset_longest_answer_by_image.{json,jsonl,csv,zip}
 │   │   ├── dataset_short_answer.{json,csv}
 │   │   └── dermavqa_iiyi_llm_synthesized_answer_finetune.zip   # enriched
 │   ├── results/<dataset>/<método>/  # predicciones + artefactos por método
@@ -28,13 +29,13 @@ abrir un PR para reconciliarlo.
 
 `<dataset>` ∈ `{dataset_longest_answer, dataset_short_answer, dataset_enriched}`
 `<método>` ∈ `{retrieval_textual_tfidf, retrieval_textual_e5, retrieval_textual_sbert,
-retrieval_visual, retrieval_multimodal, vlm_zero_shot, vlm_lora}`
+retrieval_visual, retrieval_multimodal, vlm_zero_shot, vlm_lora, vlm_lora_by_image}`
 
 ## Qué va en cada carpeta
 
 | Carpeta | Contenido | ¿Versionado en git? |
 | --- | --- | --- |
-| `outputs/datasets/` | Datasets procesados | Sí: `*.json`, `*.csv`, `*.zip` |
+| `outputs/datasets/` | Datasets procesados | Sí: `*.json`, `*.jsonl`, `*.csv`, `*.zip` |
 | `outputs/metrics/<dataset>/` | Resúmenes de métricas (`metrics_summary.csv`, `bertscore_summary.csv`, `metrics_{valid,test}.csv`, `manual_review_*.csv`) | Sí (CSV livianos) |
 | `outputs/results/<dataset>/<método>/` | Predicciones (`predictions_{valid,test}.csv`, `*_results.json`), `runtime_*.json`, `manual_review_20.csv` | CSV/JSON livianos sí; ver excepciones |
 | `outputs/paper/tables/` | Tablas finales comparativas, reportes Markdown y candidatos de revisión manual | Sí (`*.csv`, `*.md`) |

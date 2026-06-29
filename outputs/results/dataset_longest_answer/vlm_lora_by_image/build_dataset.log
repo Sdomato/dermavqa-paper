@@ -1,0 +1,6 @@
+Rows: 2944
+Split counts: {'test': 314, 'train': 2473, 'valid': 157}
+Rows with unresolved image_path: 0
+Wrote: outputs/datasets/dataset_longest_answer_by_image.json
+Wrote: outputs/datasets/dataset_longest_answer_by_image.csv
+Wrote: outputs/datasets/dataset_longest_answer_by_image.zip
