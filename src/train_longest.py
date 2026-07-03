@@ -228,9 +228,19 @@ def run(args: argparse.Namespace) -> None:
         print(f"Adapter se guardaría en: {ADAPTER_DIR}")
         return
 
+    import random
+
+    import numpy as np
     import torch
-    from transformers import EarlyStoppingCallback
+    from transformers import EarlyStoppingCallback, set_seed
     from trl import SFTConfig, SFTTrainer
+
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(args.seed)
+    set_seed(args.seed)
 
     model, processor = load_model_processor_and_lora(
         args.model, args.lora_r, args.lora_alpha
@@ -244,6 +254,8 @@ def run(args: argparse.Namespace) -> None:
         per_device_train_batch_size=args.batch_size,
         per_device_eval_batch_size=args.batch_size,
         gradient_accumulation_steps=args.grad_accum,
+        seed=args.seed,
+        data_seed=args.seed,
         gradient_checkpointing=True,
         learning_rate=args.lr,
         lr_scheduler_type="cosine",
@@ -325,6 +337,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--eval-steps", type=int, default=50)
     p.add_argument("--lora-r", type=int, default=16)
     p.add_argument("--lora-alpha", type=int, default=32)
+    p.add_argument("--seed", type=int, default=42,
+                   help="Semilla para reproducibilidad (default: 42)")
     p.add_argument("--limit", type=int, default=None,
                    help="Usar solo los primeros N casos por split (pruebas rápidas)")
     p.add_argument("--dry-run", action="store_true",

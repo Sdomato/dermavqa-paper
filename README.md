@@ -133,57 +133,115 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 | `evaluate_predictions.py` | Mismas métricas que `evaluate_retrieval.py` sobre los CSV de predicciones del VLM (comparabilidad). |
 | `build_paper_results.py` | Consolida métricas y genera tablas/figuras SVG paper-ready en `outputs/paper/`. |
 
-## Cómo correr el pipeline
+## How to Reproduce
+
+Todos los comandos se ejecutan desde la raíz del repositorio. Las semillas están fijadas en `42` en todos los scripts de entrenamiento.
+
+### Árbol de scripts → artefactos
+
+| Script | Artefacto generado |
+| --- | --- |
+| `src/build_answer_datasets.py` | `outputs/datasets/dataset_longest_answer.{json,csv}`, `dataset_short_answer.{json,csv}` |
+| `src/build_longest_by_image_dataset.py` | `outputs/datasets/dataset_longest_answer_by_image.*` |
+| `src/build_llm_synthesized_dataset.py` | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.*` (requiere Azure key) |
+| `src/tfidf_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/tfidf_results.json` |
+| `src/sbert_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/sbert_results.json` |
+| `src/e5_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/e5_results.json` |
+| `src/visual_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_visual/visual_results.json` |
+| `src/multimodal_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_multimodal/multimodal_alpha0.60_results.json` |
+| `src/evaluate_retrieval.py` | `outputs/metrics/dataset_longest_answer/metrics_{summary,per_case}.csv` |
+| `src/evaluate_retrieval_heldout.py` | `outputs/metrics/*/retrieval_heldout/metrics_{summary,per_case}.csv` |
+| `src/build_paper_results.py` | `outputs/paper/{tables,figures}/*` |
+| `src/train_longest.py` | `outputs/results/dataset_longest_answer/vlm_lora/final_adapter/` |
+| `scripts/run_longest_by_image_vlm_lora.sh` | `outputs/results/dataset_longest_answer/vlm_lora_by_image/` |
+| `scripts/run_enriched_vlm_lora.sh` | `outputs/results/dataset_enriched/vlm_lora/` |
+| `scripts/run_vlm_rag_comparison.sh` | `outputs/results/dataset_*/vlm_*_rag_*/predictions_*.csv` |
+
+---
+
+### Fase 1 — CPU (sin GPU)
 
 ```bash
-# 1. Construir datasets (CPU)
-python -m src.build_answer_datasets
+# Setup
+conda create -n dermavqa python=3.11 -y && conda activate dermavqa
+pip install -r requirements.txt
+cp config.yaml.example config.yaml
 
-# 2. Baselines de retrieval (GPU recomendada para E5/SBERT/visual/multimodal)
-python -m src.tfidf_retrieval
-python -m src.e5_retrieval
-python -m src.sbert_retrieval
-python -m src.visual_retrieval
-python -m src.multimodal_retrieval --alpha 0.6
-python -m src.evaluate_retrieval --dataset longest_answer
+# Copiar imágenes manualmente (~1.2 GB) a:
+#   data/iiyi/images_final/{images_train,images_valid,images_test}/
 
-# 3. VLM zero-shot (validar sin GPU primero)
+# Un comando para correr todo lo que no requiere GPU:
+make all
+```
+
+`make all` ejecuta en orden: construcción de datasets → retrieval baselines → métricas de retrieval → tablas y figuras paper-ready.
+
+Para ver todos los targets disponibles:
+
+```bash
+make help
+```
+
+Para validar el pipeline sin cargar ningún modelo (CPU puro):
+
+```bash
+make dry-run
+```
+
+---
+
+### Fase 2 — GPU: fine-tuning y VLM
+
+```bash
+# Validar formato de datos sin GPU (recomendado antes de lanzar en la nube)
 python -m src.vlm_infer --split valid --limit 5 --dry-run
+python -m src.train_longest --dry-run --limit 5
+
+# LoRA sobre dataset_longest_answer (one-shot con un caso por encounter)
+python -m src.train_longest --seed 42
+python -m src.vlm_infer --split valid --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
+python -m src.vlm_infer --split test  --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
+
+# LoRA sobre dataset_longest_answer_by_image (una fila por imagen)
+bash scripts/run_longest_by_image_vlm_lora.sh --seed 42
+
+# LoRA sobre dataset_enriched (respuestas sintetizadas por LLM)
+bash scripts/run_enriched_vlm_lora.sh --seed 42
+
+# VLM zero-shot (sin fine-tuning)
 python -m src.vlm_infer --split valid
 python -m src.vlm_infer --split test
-
-# 4. Fine-tuning QLoRA (GPU)
-python -m src.train_longest --dry-run --limit 5
-python -m src.train_longest
-python -m src.vlm_infer --split test \
-    --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
-
-# 4b. Fine-tuning QLoRA equivalente sobre dataset_enriched (Santino)
-python -m src.train_enriched --dry-run --limit 5
-python -m src.train_enriched
-# O en una sola corrida: entrenamiento + valid/test + metricas
-bash scripts/run_enriched_vlm_lora.sh --epochs 1
-python -m src.vlm_infer_enriched --split valid \
-    --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
-python -m src.vlm_infer_enriched --split test \
-    --adapter outputs/results/dataset_enriched/vlm_lora/final_adapter
-
-# 4c. Fine-tuning QLoRA comparable sobre longest by-image
-python -m src.build_longest_by_image_dataset
-python -m src.train_longest_by_image --dry-run --limit 5
-bash scripts/run_longest_by_image_vlm_lora.sh --epochs 1
-
-# 5. Evaluación unificada (sin GPU si se omite BERTScore)
-python -m src.evaluate_predictions \
-    outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_test.csv \
-    --no-bertscore
-
-# 6. Retrieval held-out train-only para longest/short
-python -m src.evaluate_retrieval_heldout --dataset all
-
-# 7. Tablas y figuras paper-ready (CPU, sin dependencias pesadas)
-python -m src.build_paper_results
 ```
+
+---
+
+### Fase 3 — GPU: experimentos RAG
+
+```bash
+# Zero-shot y LoRA con recuperación de contexto (requiere adapters ya entrenados)
+bash scripts/run_vlm_rag_comparison.sh
+```
+
+---
+
+### Fase 4 — CPU: evaluación final y paper
+
+```bash
+# Evaluar predicciones VLM generadas
+python -m src.evaluate_predictions \
+    outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_test.csv
+
+# Regenerar tablas y figuras paper-ready con todos los resultados disponibles
+make paper
+```
+
+---
+
+### Notas de reproducibilidad
+
+- **Seeds:** todos los scripts de entrenamiento usan `--seed 42` por defecto (`random`, `numpy`, `torch`, `transformers.set_seed`, `SFTConfig.seed`).
+- **Retrieval:** TF-IDF, SBERT y E5 son determinísticos dado el dataset. BiomedCLIP puede tener variación mínima en GPU multi-thread; para reproducibilidad exacta usar CPU.
+- **dataset_enriched:** la síntesis LLM vía Azure usa temperatura 0.2 y está cacheada en `outputs/datasets/llm_synthesis/cache/`. Re-sintetizar requiere las mismas credenciales Azure y puede dar resultados ligeramente distintos.
 
 ## Protocolo de evaluación (común al equipo)
 
