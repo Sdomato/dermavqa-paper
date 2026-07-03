@@ -278,6 +278,71 @@ def generate_answer(model, processor, messages: list[dict[str, Any]], max_new_to
     return decoded[0].strip()
 
 
+RAG_SYSTEM_PROMPT = (
+    "Eres un dermatologo experto. Analiza la imagen clinica del paciente "
+    "y responde la consulta en espanol de forma clara, concisa y prudente. "
+    "Usa los casos similares recuperados solo como contexto auxiliar. "
+    "No los menciones como fuente, no copies respuestas si no corresponden "
+    "y prioriza la imagen y la consulta actual."
+)
+
+
+def format_rag_prompt(question: str, contexts: list[dict[str, Any]]) -> str:
+    lines = [
+        "Consulta actual:",
+        clean_text(question),
+        "",
+        "Casos similares recuperados del conjunto de entrenamiento:",
+    ]
+    for i, ctx in enumerate(contexts, start=1):
+        lines.extend([
+            f"{i}. Pregunta similar: {ctx['question_es']}",
+            f"   Respuesta del caso similar: {ctx['answer_es']}",
+        ])
+    lines.extend([
+        "",
+        "Responde ahora la consulta actual en espanol clinico, claro y prudente.",
+    ])
+    return "\n".join(lines)
+
+
+def build_rag_inference_items(
+    records: list[dict[str, Any]],
+    answer_columns: tuple[str, ...],
+    resolver: ImageResolver | None = None,
+) -> list[dict[str, Any]]:
+    """Como build_inference_items pero propaga el campo rag_contexts del registro."""
+    items = build_inference_items(records, answer_columns, resolver)
+    for item, record in zip(items, records):
+        raw = record.get("rag_contexts")
+        if isinstance(raw, str):
+            try:
+                item["rag_contexts"] = json.loads(raw)
+            except (json.JSONDecodeError, ValueError):
+                item["rag_contexts"] = []
+        elif isinstance(raw, list):
+            item["rag_contexts"] = raw
+        else:
+            item["rag_contexts"] = []
+    return items
+
+
+def build_rag_chat_messages(
+    item: dict[str, Any],
+    system_prompt: str = RAG_SYSTEM_PROMPT,
+) -> list[dict[str, Any]]:
+    """Prompt con contexto RAG pre-computado en item['rag_contexts']."""
+    contexts = item.get("rag_contexts") or []
+    user_content: list[dict[str, Any]] = [
+        {"type": "image", "image": image_path} for image_path in item["image_paths"]
+    ]
+    user_content.append({"type": "text", "text": format_rag_prompt(item["question_es"], contexts)})
+    return [
+        {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
+        {"role": "user", "content": user_content},
+    ]
+
+
 def run_by_image_inference(args: Any, config: ByImageDatasetConfig) -> None:
     records = filter_split(
         load_by_image_dataset(args.dataset, config.default_paths, config.missing_message),
