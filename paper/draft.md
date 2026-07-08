@@ -391,12 +391,14 @@ Los artefactos principales son:
 - `../outputs/paper/tables/paper_clinical_review_summary.csv`
 - `../outputs/paper/figures/*.svg`
 
-Para regenerar tablas y figuras:
+El pipeline es reproducible mediante un `Makefile` con semilla fija. Para
+regenerar tablas y figuras:
 
 ```bash
-python -m src.evaluate_retrieval_heldout --dataset all
-bash scripts/run_vlm_rag_comparison.sh   # corridas con contexto recuperado (requiere GPU y adapters)
-python -m src.build_paper_results
+make data            # construye los datasets, incluida la variante enriquecida
+make eval-retrieval  # métricas de los baselines de recuperación held-out
+bash scripts/run_vlm_rag_comparison.sh  # corridas VLM con contexto recuperado (requiere GPU y adapters)
+make paper           # consolida métricas y genera tablas y figuras paper-ready
 ```
 
 ## 10. Conclusión
@@ -420,5 +422,5 @@ multimodal, no como una herramienta clínica lista para uso real.
 - Post, M. (2018). *A Call for Clarity in Reporting BLEU Scores*. Proceedings of the Third Conference on Machine Translation (WMT).
 - Reimers, N., & Gurevych, I. (2019). *Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks*. Conference on Empirical Methods in Natural Language Processing (EMNLP).
 - Wang, L., Yang, N., Huang, X., Yang, L., Majumder, R., & Wei, F. (2024). *Multilingual E5 Text Embeddings: A Technical Report*. arXiv:2402.05672.
-- Yim, W., Ben Abacha, A., et al. (2024). *DermaVQA: Visual Question Answering en dermatología*. ImageCLEF / MEDIQA-Magic shared task (verificar cita exacta del dataset DermaVQA-IIYI).
+- Yim, W., Fu, V., Sun, Z., Ben Abacha, A., Yetisgen, M., & Xia, F. (2024). *DermaVQA: A Multilingual Visual Question Answering Dataset for Dermatology*. Medical Image Computing and Computer Assisted Intervention (MICCAI 2024), LNCS 15005. https://doi.org/10.1007/978-3-031-72086-4_20
 - Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., & Artzi, Y. (2020). *BERTScore: Evaluating Text Generation with BERT*. International Conference on Learning Representations (ICLR).
