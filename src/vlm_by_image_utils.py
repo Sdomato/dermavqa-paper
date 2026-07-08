@@ -421,3 +421,102 @@ def run_by_image_inference(args: Any, config: ByImageDatasetConfig) -> None:
     with (out_dir / f"runtime_{args.split}.json").open("w", encoding="utf-8") as handle:
         json.dump(runtime, handle, ensure_ascii=False, indent=2)
     print(f"Metricas operativas: {runtime['mean_latency_s']:.2f}s/ejemplo")
+
+
+def run_rag_by_image_inference(args: Any, config: ByImageDatasetConfig) -> None:
+    """Inferencia VLM usando `rag_contexts` ya pre-computados en el dataset."""
+    records = filter_split(
+        load_by_image_dataset(args.dataset, config.default_paths, config.missing_message),
+        args.split,
+        config.split_aliases,
+        config.dataset_name,
+    )
+    if args.limit:
+        records = records[: args.limit]
+
+    items = build_rag_inference_items(records, config.answer_columns)
+    method = config.lora_method if args.adapter else config.zero_shot_method
+    model_name = Path(args.adapter).name if args.adapter else args.model
+
+    n_missing = sum(1 for item in items if item["missing_image_ids"])
+    total_missing = sum(len(item["missing_image_ids"]) for item in items)
+    print(f"Split '{args.split}': {len(items)} filas por imagen")
+    print(f"  Imagenes faltantes: {total_missing} (en {n_missing} filas)")
+    print(f"  Metodo: {method} | Modelo: {model_name}")
+    print(f"  Prompt: RAG-aware con contextos pre-computados")
+
+    if args.dry_run:
+        print("\n[DRY-RUN] No se carga el modelo. Ejemplo de prompt RAG-aware:")
+        if items:
+            example = build_rag_chat_messages(items[0])
+            print(json.dumps(example, ensure_ascii=False, indent=2)[:1800])
+            print(f"\n  image_path resuelta: {items[0]['image_path']}")
+            print(f"  reference_answer_es: {items[0]['reference_answer_es'][:300]}")
+            print(
+                "  retrieved_encounter_ids:",
+                [ctx.get("encounter_id", "") for ctx in items[0].get("rag_contexts", [])],
+            )
+        return
+
+    model, processor = load_model_and_processor(args.model, args.quantize, args.adapter)
+
+    rows: list[dict[str, Any]] = []
+    latencies: list[float] = []
+    for index, item in enumerate(items, 1):
+        contexts = item.get("rag_contexts") or []
+        messages = build_rag_chat_messages(item)
+        start = time.perf_counter()
+        prediction = generate_answer(model, processor, messages, args.max_new_tokens)
+        latencies.append(time.perf_counter() - start)
+        rows.append(
+            {
+                "split": item["split"],
+                "encounter_id": item["encounter_id"],
+                "image_id": item["image_id"],
+                "image_path": item["image_path"],
+                "question_es": item["question_es"],
+                "reference_answer_es": item["reference_answer_es"],
+                "predicted_answer_es": prediction,
+                "model_name": model_name,
+                "dataset_variant": config.dataset_variant,
+                "method": method,
+                "rag_retriever": "e5_small",
+                "rag_top_k": len(contexts),
+                "retrieved_encounter_ids": json.dumps(
+                    [ctx.get("encounter_id", "") for ctx in contexts],
+                    ensure_ascii=False,
+                ),
+                "retrieved_scores": json.dumps(
+                    [ctx.get("score", "") for ctx in contexts],
+                    ensure_ascii=False,
+                ),
+                "rag_context_es": json.dumps(contexts, ensure_ascii=False),
+            }
+        )
+        if index % 10 == 0 or index == len(items):
+            print(f"  {index}/{len(items)} generados")
+
+    out_dir = config.results_root / method
+    out_dir.mkdir(parents=True, exist_ok=True)
+    pred_path = out_dir / f"predictions_{args.split}.csv"
+
+    import pandas as pd
+
+    pd.DataFrame(rows).to_csv(pred_path, index=False, encoding="utf-8")
+    print(f"\nPredicciones guardadas en {pred_path}")
+
+    runtime = {
+        "method": method,
+        "model_name": model_name,
+        "dataset_variant": config.dataset_variant,
+        "split": args.split,
+        "n": len(rows),
+        "mean_latency_s": statistics.mean(latencies) if latencies else 0.0,
+        "total_time_s": sum(latencies),
+        "max_new_tokens": args.max_new_tokens,
+        "quantize": args.quantize,
+        "rag_retriever": "e5_small",
+    }
+    with (out_dir / f"runtime_{args.split}.json").open("w", encoding="utf-8") as handle:
+        json.dump(runtime, handle, ensure_ascii=False, indent=2)
+    print(f"Metricas operativas: {runtime['mean_latency_s']:.2f}s/ejemplo")
