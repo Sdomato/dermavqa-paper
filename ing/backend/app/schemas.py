@@ -88,6 +88,12 @@ class Seguridad(BaseModel):
     diagnosticos_no_sustentados: list[str] = Field(
         default_factory=list, description="Diagnósticos del borrador ausentes en la evidencia"
     )
+    recomendaciones_no_sustentadas: list[str] = Field(
+        default_factory=list, description="Estudios/tratamientos del borrador ausentes en la evidencia"
+    )
+    cambio_de_entidad: bool = Field(
+        False, description="El diagnóstico del borrador no coincide con el del caso más parecido"
+    )
     terminos_riesgo: list[TerminoRiesgo] = Field(default_factory=list)
 
 
@@ -162,3 +168,20 @@ class DatasetAprobadosResponse(BaseModel):
 
     total: int
     casos: list[CasoAprobado]
+
+
+class MetricasResponse(BaseModel):
+    """Indicadores de calidad de los borradores, derivados del audit log."""
+
+    total_revisiones: int
+    por_accion: dict[str, int] = Field(default_factory=dict)
+    tasa_aprobacion: float | None = Field(
+        None, description="Fracción de revisiones aprobadas o editadas (vs. rechazadas)"
+    )
+    similitud_borrador_final: float | None = Field(
+        None, description="token-F1 medio borrador↔texto final (1.0 = aprobado sin cambios)"
+    )
+    edicion_media: float | None = Field(
+        None, description="Cuánto reescribió el médico en promedio (1 - similitud)"
+    )
+    por_nivel_seguridad: dict[str, int] = Field(default_factory=dict)
