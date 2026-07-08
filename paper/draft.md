@@ -12,7 +12,10 @@ clínica concisa en español. Luego comparamos baselines de recuperación textua
 con un modelo Qwen2.5-VL-3B-Instruct adaptado mediante QLoRA/LoRA. En el target
 enriquecido, el VLM fine-tuneado supera a TF-IDF, E5 y SBERT retrieval en chrF
 medio, ROUGE-L, token-F1, BERTScore F1 y chrF corpus, aunque no en sacreBLEU
-corpus. Una revisión preliminar de 20 casos muestra que las mejoras automáticas
+corpus. Evaluamos además un esquema de generación aumentada por recuperación,
+que incorpora casos similares como contexto: mejora los resultados sobre el
+target enriquecido pero los degrada sobre respuesta larga, de modo que su
+utilidad depende del tipo de objetivo. Una revisión preliminar de 20 casos muestra que las mejoras automáticas
 no garantizan seguridad clínica: aparecen diagnósticos no respaldados,
 recomendaciones no sustentadas y errores de severidad alta. Por lo tanto, el
 resultado principal es metodológico: el enriquecimiento textual y LoRA son
@@ -142,6 +145,18 @@ L4; la usamos como ablation, no como la fila principal versionada.
 
 ![Figura 2. Curva de entrenamiento QLoRA](../outputs/paper/figures/enriched_vlm_training_curve.svg)
 
+### 3.3 Generación aumentada por recuperación
+
+Como esquema intermedio entre recuperar y generar, evaluamos generación
+aumentada por recuperación (RAG). Para cada consulta, un recuperador basado en
+`intfloat/multilingual-e5-small` selecciona los casos más similares del corpus
+de entrenamiento, y sus respuestas se incorporan al prompt como contexto; el VLM
+genera entonces la respuesta condicionada a esa evidencia. Aplicamos el esquema
+tanto sobre el modelo zero-shot como sobre el adapter LoRA, y lo evaluamos sobre
+el dataset enriquecido y sobre respuesta larga. Estas corridas parten de los
+mismos adapters de la comparación principal y solo agregan el contexto
+recuperado en inferencia, de modo que aíslan el efecto de la recuperación.
+
 ## 4. Evaluación
 
 Reportamos métricas automáticas de generación:
@@ -240,13 +255,49 @@ más liviana cuando ya se cuenta con un adapter entrenado para el dominio.
 
 ![Figura 8. Alineación de longitud entre referencia y predicción](../outputs/paper/figures/enriched_vlm_answer_length_alignment.svg)
 
+La Tabla 2 resume el efecto de la generación aumentada por recuperación. Todas
+las filas están a nivel caso (n=100); para los métodos evaluados por imagen las
+métricas se promedian dentro de cada `encounter_id`. No se reportan sacreBLEU ni
+chrF corpus para estas filas, porque requerirían recomputar el puntaje corpus
+sobre las predicciones ya agregadas por caso.
+
+**Tabla 2. Efecto de la recuperación de contexto (RAG) sobre el VLM.**
+
+| Dataset | Método | chrF mean | ROUGE-L | Token F1 | BERTScore F1 | Latencia (s) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Enriquecido | Qwen2.5-VL zero-shot | 0.294 | 0.120 | 0.185 | 0.679 | 14.7 |
+| Enriquecido | Qwen2.5-VL zero-shot + RAG | 0.308 | 0.135 | 0.194 | 0.681 | 18.1 |
+| Enriquecido | Qwen2.5-VL LoRA + RAG | 0.304 | 0.232 | 0.276 | 0.725 | 11.7 |
+| Respuesta larga | Qwen2.5-VL zero-shot | 0.204 | 0.080 | 0.103 | 0.643 | 15.0 |
+| Respuesta larga | Qwen2.5-VL zero-shot + RAG | 0.196 | 0.080 | 0.102 | 0.640 | 18.0 |
+| Respuesta larga | Qwen2.5-VL LoRA | 0.161 | 0.080 | 0.088 | 0.618 | 20.4 |
+| Respuesta larga | Qwen2.5-VL LoRA + RAG | 0.122 | 0.044 | 0.038 | 0.569 | 29.4 |
+
+En el dataset enriquecido, agregar contexto recuperado al modelo zero-shot mejora
+de forma consistente las métricas de solapamiento (chrF medio, ROUGE-L y
+token-F1) y deja el BERTScore F1 prácticamente igual. La variante que combina
+LoRA con recuperación alcanza un BERTScore F1 de 0.725, cercano al del VLM LoRA
+enriquecido sin recuperación de la Tabla 1 (0.737), con una latencia media
+sensiblemente menor.
+
+En el dataset de respuesta larga el efecto se invierte. La recuperación no mejora
+al zero-shot y degrada de forma marcada al modelo LoRA, cuyo BERTScore F1 cae de
+0.618 a 0.569 y cuyo token-F1 baja de 0.088 a 0.038, además de registrar la mayor
+latencia. Una interpretación plausible es que en un target acotado y homogéneo
+como el enriquecido la evidencia recuperada aporta vocabulario y estructura
+útiles, mientras que en respuestas largas y heterogéneas el caso recuperado
+corresponde a otro paciente e introduce contenido que desvía la generación. El
+beneficio de la recuperación depende entonces de la naturaleza del target y de la
+similitud real entre el caso consultado y los casos recuperados, y no puede
+asumirse como una mejora general.
+
 ## 6. Análisis cualitativo preliminar
 
 La revisión preliminar de 20 casos del VLM LoRA enriquecido muestra una señal
 mixta. La fluidez y el tono clínico en español son generalmente buenos, pero la
 corrección clínica no está garantizada.
 
-**Tabla 2. Resumen de revisión cualitativa preliminar.**
+**Tabla 3. Resumen de revisión cualitativa preliminar.**
 
 | Categoría | Resultado | Casos | Tasa |
 | --- | --- | ---: | ---: |
@@ -287,6 +338,14 @@ Los resultados apoyan una conclusión prudente: enriquecer el target textual y
 adaptar un VLM con LoRA puede mejorar la calidad automática de respuestas
 dermatológicas en español frente a retrieval textual simple. El beneficio es más
 claro cuando se evalúa contra el mismo target enriquecido.
+
+La generación aumentada por recuperación agrega un matiz a esa lectura. Sumar
+contexto recuperado ayuda cuando el objetivo es una respuesta breve y
+estructurada, pero lo perjudica cuando el objetivo es una respuesta larga y
+variable. Esto matiza la intuición habitual de que incorporar recuperación
+siempre mejora la generación: en este dominio, su utilidad está condicionada por
+la homogeneidad del target y por la similitud efectiva entre el caso consultado y
+los casos recuperados.
 
 Sin embargo, el análisis cualitativo muestra que el modelo no es clínicamente
 confiable. La mejora en BERTScore, ROUGE-L o chrF no implica validez diagnóstica
@@ -336,6 +395,7 @@ Para regenerar tablas y figuras:
 
 ```bash
 python -m src.evaluate_retrieval_heldout --dataset all
+bash scripts/run_vlm_rag_comparison.sh   # corridas con contexto recuperado (requiere GPU y adapters)
 python -m src.build_paper_results
 ```
 
@@ -354,6 +414,7 @@ multimodal, no como una herramienta clínica lista para uso real.
 - Bai, S., et al. (2025). *Qwen2.5-VL Technical Report*. arXiv:2502.13923.
 - Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). *QLoRA: Efficient Finetuning of Quantized LLMs*. Advances in Neural Information Processing Systems (NeurIPS). arXiv:2305.14314.
 - Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2022). *LoRA: Low-Rank Adaptation of Large Language Models*. International Conference on Learning Representations (ICLR).
+- Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W., Rocktäschel, T., Riedel, S., & Kiela, D. (2020). *Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*. Advances in Neural Information Processing Systems (NeurIPS). arXiv:2005.11401.
 - Lin, C.-Y. (2004). *ROUGE: A Package for Automatic Evaluation of Summaries*. Text Summarization Branches Out, ACL Workshop.
 - Popović, M. (2015). *chrF: character n-gram F-score for automatic MT evaluation*. Proceedings of the Tenth Workshop on Statistical Machine Translation (WMT).
 - Post, M. (2018). *A Call for Clarity in Reporting BLEU Scores*. Proceedings of the Third Conference on Machine Translation (WMT).
