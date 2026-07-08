@@ -20,6 +20,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .audit import AuditLog
 from .config import APP_VERSION, settings
+from .evaluacion import resumen_auditoria
 from .feedback import CasosAprobadosStore
 from .generation.factory import build_generator
 from .jobs import JobStore
@@ -37,6 +38,7 @@ from .schemas import (
     ConsultaResponse,
     DatasetAprobadosResponse,
     HealthResponse,
+    MetricasResponse,
     RevisionEntry,
     RevisionRequest,
 )
@@ -357,6 +359,16 @@ def auditoria() -> AuditoriaResponse:
     """Lista las revisiones registradas (el dataset de validación clínica humana)."""
     revs = _audit.list()
     return AuditoriaResponse(total=len(revs), revisiones=[RevisionEntry(**e) for e in revs])
+
+
+@app.get("/metricas", response_model=MetricasResponse)
+def metricas() -> MetricasResponse:
+    """
+    Indicadores de calidad de los borradores, derivados del audit log: cuánto se
+    aprueba, cuánto edita el médico (proxy de calidad del borrador) y la
+    distribución de niveles de seguridad. Sirve para ver si el sistema mejora.
+    """
+    return MetricasResponse(**resumen_auditoria(_audit.list()))
 
 
 # ── Fase 4: loop de mejora ───────────────────────────────────────────────────

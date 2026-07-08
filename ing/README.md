@@ -75,6 +75,20 @@ Paciente → API (async) → ┬─ Retrieval (casos similares)
   periódico del LoRA (`scripts/build_finetune_dataset.py`, ver
   [`docs/fase4-reentrenamiento.md`](docs/fase4-reentrenamiento.md)).
 
+### Calidad y efectividad de la respuesta
+
+El objetivo del sistema es que el borrador que llega al médico sea **útil y seguro**
+(no el texto más fluido: el paper mostró que fluido ≠ correcto). Sobre esa base:
+
+- **Seguridad reforzada** (`app/safety/`) — además del grounding y los términos de
+  riesgo, la capa señala los **dos modos de falla que documentó la revisión clínica**:
+  *cambio de entidad diagnóstica* (el borrador desplaza el diagnóstico del caso más
+  parecido) y *recomendaciones no sustentadas* (estudios/tratamientos ausentes en la
+  evidencia). Ambos elevan el nivel de alerta para el revisor.
+- **Harness de evaluación** (`GET /metricas`) — mide, desde el audit log, cuánto edita
+  el médico el borrador (proxy de calidad), la tasa de aprobación y la distribución de
+  niveles de seguridad. Da una señal, sin GPU, de si el sistema mejora con el uso.
+
 🟢 **Roadmap completo.** Próximos incrementos posibles: capturar imágenes en la aprobación
 para cerrar el loop también del VLM, y persistencia con trazabilidad real (hoy JSONL).
 Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.

@@ -20,6 +20,7 @@ CONDICIONES = [
     "vitiligo", "rosacea", "impetigo", "herpes", "escabiosis", "sarna",
     "alopecia", "paroniquia", "celulitis", "molusco", "queratosis",
     "pitiriasis", "intertrigo", "candidiasis", "eritema multiforme",
+    "granuloma", "granuloma anular", "onicomicosis", "necrobiosis lipoidea",
     "sindrome de sweet", "penfigoide", "lupus", "escarlatina",
     "erupcion por medicamentos", "erupcion medicamentosa", "farmacodermia",
     "erupcion fija", "exantema", "picadura de insecto",
@@ -34,3 +35,18 @@ TERMINOS_RIESGO = {
     ],
     "tratamiento_hormonal": ["hormona", "hormonal", "estrogeno", "testosterona"],
 }
+
+# Estudios / acciones que el borrador puede recomendar. Se usan para el chequeo de
+# recomendaciones no sustentadas: si el borrador sugiere un estudio o tratamiento
+# que NO aparece en la evidencia, es el segundo modo de falla del paper (el modelo
+# propone biopsias, análisis o tratamientos ausentes en la referencia).
+RECOMENDACIONES = [
+    "biopsia", "cultivo", "serologia", "dermatoscopia",
+    "prueba de hongos", "prueba de patologia", "prueba de alergenos",
+    "prueba de sangre", "pruebas de sangre", "analisis de sangre", "examen de sangre",
+    "prueba de funcion hepatica",
+    "antihistaminico", "antihistaminicos", "antifungico", "antifungicos",
+    "antimicotico", "antibiotico", "antibioticos",
+    "crioterapia", "laser", "fototerapia",
+    "derivar", "derivacion", "interconsulta",
+]
