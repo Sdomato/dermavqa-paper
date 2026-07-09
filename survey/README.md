@@ -18,6 +18,8 @@ dominio medico multimodal y subrepresentado en espanol.
 - `experiment_grid.md`: condiciones experimentales, parametros y entregables.
 - `models_to_compare.md`: candidatos para retrieval textual, visual y VLM.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
+- `contrastive_error_analysis.md`: muestreo contrastivo y explicaciones
+  estructuradas para diagnosticar diferencias entre VLMs.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
 - `enriched_vlm_experiments.md`: corrida LoRA/QLoRA de Santino sobre

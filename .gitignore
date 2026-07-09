@@ -38,6 +38,30 @@ outputs/paper/figures/*
 !outputs/paper/figures/*.svg
 !outputs/paper/figures/*.md
 
+# Lightweight, paper-facing error analysis artifacts.
+!outputs/error_analysis/
+outputs/error_analysis/*
+!outputs/error_analysis/dataset_enriched/
+!outputs/error_analysis/dataset_longest_answer/
+outputs/error_analysis/dataset_enriched/*
+outputs/error_analysis/dataset_longest_answer/*
+!outputs/error_analysis/dataset_enriched/*.csv
+!outputs/error_analysis/dataset_enriched/*.jsonl
+!outputs/error_analysis/dataset_enriched/*.json
+!outputs/error_analysis/dataset_enriched/*.md
+!outputs/error_analysis/dataset_longest_answer/*.csv
+!outputs/error_analysis/dataset_longest_answer/*.jsonl
+!outputs/error_analysis/dataset_longest_answer/*.json
+!outputs/error_analysis/dataset_longest_answer/*.md
+!outputs/error_analysis/dataset_enriched/external_rationales/
+!outputs/error_analysis/dataset_enriched/external_rationales/*.csv
+!outputs/error_analysis/dataset_enriched/explanations/
+!outputs/error_analysis/dataset_enriched/explanations/*.csv
+!outputs/error_analysis/dataset_longest_answer/external_rationales/
+!outputs/error_analysis/dataset_longest_answer/external_rationales/*.csv
+!outputs/error_analysis/dataset_longest_answer/explanations/
+!outputs/error_analysis/dataset_longest_answer/explanations/*.csv
+
 # Predictions/results: descend, but ignore heavy artifacts (keep light CSV/JSON)
 outputs/results/**/*.npy
 outputs/results/**/*.npz
