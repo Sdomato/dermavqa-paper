@@ -85,6 +85,12 @@ El objetivo del sistema es que el borrador que llega al médico sea **útil y se
   *cambio de entidad diagnóstica* (el borrador desplaza el diagnóstico del caso más
   parecido) y *recomendaciones no sustentadas* (estudios/tratamientos ausentes en la
   evidencia). Ambos elevan el nivel de alerta para el revisor.
+- **Banderas rojas + confianza** — a partir del feedback de dermatólogos de prueba, la
+  seguridad ahora **parte del paciente, no del modelo**: detecta señales de malignidad/
+  urgencia en la **consulta** (lesión pigmentada que cambia, úlcera que no cierra, lesión
+  acral, sangrado, urgencia sistémica) y **fuerza nivel alto** aunque el borrador sea
+  inocuo; marca **falsa tranquilización** (descartar malignidad ante banderas rojas) y
+  **evidencia débil** cuando la similitud recuperada cae bajo el umbral (`DERMA_SIM_MIN`).
 - **Harness de evaluación** (`GET /metricas`) — mide, desde el audit log, cuánto edita
   el médico el borrador (proxy de calidad), la tasa de aprobación y la distribución de
   niveles de seguridad. Da una señal, sin GPU, de si el sistema mejora con el uso.
