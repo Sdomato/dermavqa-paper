@@ -254,7 +254,11 @@ def _borrador_task(query: str, k: int, exclude: str | None, tmp_paths: list[Path
             for e in evidencia
         ]
         borrador = generator.generate(query, evidence_dicts, tmp_paths or None)
-        seguridad = analizar(borrador, [e.answer for e in evidencia])
+        similitud_max = max((e.similitud for e in evidencia), default=None)
+        seguridad = analizar(
+            borrador, [e.answer for e in evidencia],
+            consulta=query, similitud_max=similitud_max, umbral_confianza=settings.sim_min,
+        )
         return {"consulta": query, "evidencia": evidencia, "borrador": borrador, "seguridad": seguridad}
     finally:
         for p in tmp_paths:

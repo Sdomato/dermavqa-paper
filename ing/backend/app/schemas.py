@@ -94,6 +94,18 @@ class Seguridad(BaseModel):
     cambio_de_entidad: bool = Field(
         False, description="El diagnóstico del borrador no coincide con el del caso más parecido"
     )
+    banderas_rojas: list[str] = Field(
+        default_factory=list, description="Señales de malignidad/urgencia en la consulta del paciente"
+    )
+    falsa_tranquilizacion: bool = Field(
+        False, description="El borrador tranquiliza/descarta pese a haber banderas rojas en la consulta"
+    )
+    evidencia_debil: bool = Field(
+        False, description="La similitud del caso más parecido está por debajo del umbral de confianza"
+    )
+    similitud_max: float | None = Field(
+        None, description="Similitud del caso más parecido usado como evidencia"
+    )
     terminos_riesgo: list[TerminoRiesgo] = Field(default_factory=list)
 
 
