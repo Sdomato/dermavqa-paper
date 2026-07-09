@@ -1,0 +1,12 @@
+{
+  "method": "vlm_lora_rag_aware",
+  "model_name": "final_adapter",
+  "dataset_variant": "dataset_enriched",
+  "split": "test",
+  "n": 314,
+  "mean_latency_s": 10.217347934070105,
+  "total_time_s": 3208.247251298013,
+  "max_new_tokens": 256,
+  "quantize": "4bit",
+  "rag_retriever": "e5_small"
+}

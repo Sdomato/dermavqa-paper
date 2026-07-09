@@ -1,0 +1,27 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_lora_rag_aware | Modelo: final_adapter
+  Prompt: RAG-aware con contextos pre-computados
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:20,  5.87it/s]Loading weights:   1%|          | 8/824 [00:00<00:23, 34.99it/s]Loading weights:   4%|▍         | 35/824 [00:00<00:06, 125.93it/s]Loading weights:   8%|▊         | 63/824 [00:00<00:04, 173.18it/s]Loading weights:  11%|█         | 88/824 [00:00<00:03, 190.60it/s]Loading weights:  14%|█▎        | 112/824 [00:00<00:03, 204.08it/s]Loading weights:  17%|█▋        | 137/824 [00:00<00:03, 210.36it/s]Loading weights:  20%|█▉        | 164/824 [00:00<00:02, 227.77it/s]Loading weights:  23%|██▎       | 191/824 [00:01<00:02, 238.69it/s]Loading weights:  27%|██▋       | 219/824 [00:01<00:02, 243.21it/s]Loading weights:  30%|██▉       | 244/824 [00:01<00:02, 239.55it/s]Loading weights:  33%|███▎      | 269/824 [00:01<00:02, 234.25it/s]Loading weights:  36%|███▌      | 293/824 [00:01<00:02, 235.51it/s]Loading weights:  38%|███▊      | 317/824 [00:01<00:02, 234.85it/s]Loading weights:  41%|████▏     | 341/824 [00:01<00:02, 234.99it/s]Loading weights:  44%|████▍     | 365/824 [00:01<00:01, 236.11it/s]Loading weights:  47%|████▋     | 390/824 [00:01<00:01, 240.10it/s]Loading weights:  50%|█████     | 416/824 [00:01<00:01, 245.96it/s]Loading weights:  56%|█████▋    | 464/824 [00:02<00:01, 315.21it/s]Loading weights:  66%|██████▌   | 540/824 [00:02<00:00, 444.26it/s]Loading weights:  75%|███████▌  | 618/824 [00:02<00:00, 539.68it/s]Loading weights:  84%|████████▍ | 694/824 [00:02<00:00, 601.81it/s]Loading weights:  93%|█████████▎| 768/824 [00:02<00:00, 637.89it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 322.24it/s]
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_lora_rag_aware/predictions_valid.csv
+Metricas operativas: 11.12s/ejemplo
+[W706 17:25:02.644038557 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

@@ -1,0 +1,56 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[dataset_enriched | vlm_lora_rag_aware] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  62%|██████▏   | 124/199 [00:00<00:00, 1238.85it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 1346.76it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_lora_rag_aware_valid.csv
+
+[dataset_enriched | vlm_lora_rag_aware] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3292.32it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_lora_rag_aware_test.csv
+
+Resumen (splits mixtos) -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/metrics_mixed.csv
+
+======================================================================
+/home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched
+======================================================================
+ dataset_variant                              method                  model_name split   n  empty_predictions  chrf_mean  rouge_l_mean  token_f1_mean  sacrebleu_corpus  chrf_corpus  bertscore_f1_mean
+dataset_enriched                            vlm_lora               final_adapter valid 157                  0     0.3612        0.2429         0.3052           10.9045      35.7047             0.7370
+dataset_enriched                            vlm_lora               final_adapter  test 314                  0     0.3647        0.2541         0.3167           11.5985      35.6905             0.7383
+dataset_enriched                       vlm_zero_shot Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.3067        0.1213         0.1908            1.0724      32.4538             0.6820
+dataset_enriched vlm_zero_shot_rag_e5_small_enriched Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.3145        0.1283         0.1958            1.1780      33.2983             0.6850
+dataset_enriched                       vlm_zero_shot Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.2978        0.1228         0.1888            1.4011      31.4085             0.6799
+dataset_enriched vlm_zero_shot_rag_e5_small_enriched Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.3105        0.1358         0.1986            1.7116      32.4702             0.6818
+dataset_enriched      vlm_lora_rag_e5_small_enriched               final_adapter valid 157                  0     0.3114        0.2182         0.2715            9.0327      31.2908             0.7234
+dataset_enriched      vlm_lora_rag_e5_small_enriched               final_adapter  test 314                  0     0.3019        0.2279         0.2740            8.7989      29.1699             0.7243
+dataset_enriched                  vlm_lora_rag_aware               final_adapter valid 157                  0     0.3025        0.2528         0.2874            9.9651      28.0861             0.7388
+dataset_enriched                  vlm_lora_rag_aware               final_adapter  test 314                  0     0.2979        0.2480         0.2883            9.0876      27.9465             0.7368
+[W706 18:19:05.485940700 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
