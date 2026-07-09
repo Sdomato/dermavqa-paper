@@ -186,7 +186,7 @@ def consulta(req: ConsultaRequest) -> ConsultaResponse:
 def consulta_imagen(
     titulo: str = Form(""),
     contenido: str = Form(""),
-    k: int | None = Form(None),
+    k: int | None = Form(None, ge=1),
     excluir_encounter_id: str | None = Form(None),
     imagenes: list[UploadFile] = File(default=[]),
 ) -> ConsultaResponse:
@@ -268,7 +268,7 @@ def _borrador_task(query: str, k: int, exclude: str | None, tmp_paths: list[Path
 def borrador(
     titulo: str = Form(""),
     contenido: str = Form(""),
-    k: int | None = Form(None),
+    k: int | None = Form(None, ge=1),
     excluir_encounter_id: str | None = Form(None),
     imagenes: list[UploadFile] = File(default=[]),
 ) -> BorradorJob:
@@ -315,6 +315,10 @@ def revisar(job_id: str, req: RevisionRequest) -> RevisionEntry:
         raise HTTPException(status_code=404, detail=f"Job no encontrado: {job_id}")
     if job.status != "done":
         raise HTTPException(status_code=409, detail=f"El borrador no está listo (status={job.status})")
+    # Idempotencia: un borrador se revisa una sola vez. Evita entradas de auditoría
+    # contradictorias y casos aprobados duplicados en el dataset (integridad clínica).
+    if any(e.get("job_id") == job_id for e in _audit.list()):
+        raise HTTPException(status_code=409, detail=f"El borrador ya fue revisado: {job_id}")
 
     result = job.result or {}
     borrador = result.get("borrador")
