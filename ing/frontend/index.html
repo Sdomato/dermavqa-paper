@@ -377,18 +377,26 @@
     }
 
     async function revisar(jobId, accion, textoFinal) {
+      const status = document.getElementById("revStatus");
       try {
         const body = { accion, revisor: "medico" };
         if (textoFinal != null) body.texto_final = textoFinal;
         const r = await fetch(`${API}/borrador/${jobId}/revision`, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
         });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        if (!r.ok) {
+          const detail = await r.json().then(j => j.detail).catch(() => "");
+          throw Object.assign(new Error(detail || `HTTP ${r.status}`), { status: r.status, detail });
+        }
         const c = { aprobar: "var(--teal)", editar: "var(--cyan)", rechazar: "var(--pink)" }[accion];
-        document.getElementById("revStatus").innerHTML =
-          `<span style="color:${c}">✓ ${accion} · registrado en auditoría</span>`;
+        status.innerHTML = `<span style="color:${c}">✓ ${accion} · registrado en auditoría</span>`;
       } catch (e) {
-        document.getElementById("revStatus").innerHTML = '<span class="err">No se pudo registrar la revisión</span>';
+        let msg;
+        if (e.status === 404) msg = "El borrador venció (el servidor se reinició). Volvé a generarlo.";
+        else if (e.status === 409) msg = e.detail || "El borrador ya fue revisado.";
+        else if (e.detail) msg = e.detail;
+        else msg = "No se pudo registrar la revisión (¿backend caído?).";
+        status.innerHTML = `<span class="err">${escapeHtml(msg)}</span>`;
       }
     }
 

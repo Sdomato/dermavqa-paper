@@ -127,6 +127,39 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 > `scripts/build_case_embeddings.py`, ver `ing/docs/handoff_embeddings_santino.md`).
 > Config inválida (ej. retriever desconocido) hace que el servicio **no arranque** (fail-fast).
 
+## Correr con modelos reales
+
+Por defecto el servicio arranca liviano (`tfidf` + `stub`) para ser demoable y testeable sin
+GPU. Para correr con los modelos reales:
+
+### Retrieval real — E5 (búsqueda semántica del paper)
+
+```bash
+DERMA_RETRIEVER=e5 make run
+```
+
+La primera vez descarga `intfloat/multilingual-e5-base` (~1.1 GB) e indexa la base al arrancar
+(unos minutos en CPU, una sola vez; luego queda en cache de HuggingFace). A diferencia de
+TF-IDF, matchea por **significado**: una consulta de *"placas rojas descamativas en codos y
+rodillas"* recupera casos de **psoriasis** aunque la palabra no aparezca en la consulta.
+Verificado en `GET /health` → `"retriever": "e5"`, búsqueda ~50 ms.
+
+### Generación real — VLM (Qwen2.5-VL-3B + LoRA)
+
+```bash
+DERMA_GENERATOR=vlm DERMA_ADAPTER_PATH=<ruta_al_final_adapter> make run
+```
+
+> **Requiere GPU CUDA.** El generador `vlm` carga Qwen2.5-VL-3B en 4-bit (bitsandbytes), que
+> **solo corre en GPU NVIDIA** — no en CPU ni en Apple Silicon (MPS). Además, el **adapter LoRA
+> fine-tuneado no está versionado en este repo**: se entrenó en la VM con GPU y de esa corrida
+> solo se trajeron los resultados (`outputs/results/dataset_*/vlm_lora/`: predicciones, métricas
+> y logs), no los pesos (`adapter_model.safetensors`). Por eso la generación real corre **en la
+> VM donde vive el adapter**; en local/demo el generador queda en `stub`, que arma el borrador a
+> partir del caso más parecido (placeholder, sin modelo). El flujo completo —recuperar →
+> borrador → análisis de seguridad → revisión médica → loop de mejora— es idéntico con `stub` o
+> `vlm`; lo único que cambia es de dónde sale el texto del borrador.
+
 ## Tests y lint
 
 ```bash
