@@ -9,6 +9,7 @@ casos existentes, así que no puede alucinar ni inventar recomendaciones.
 import logging
 import os
 import tempfile
+import threading
 import time
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -21,7 +22,7 @@ from fastapi.staticfiles import StaticFiles
 from .audit import AuditLog
 from .config import APP_VERSION, settings
 from .evaluacion import resumen_auditoria
-from .feedback import CasosAprobadosStore
+from .feedback import CasosAprobadosStore, entry_to_case
 from .generation.factory import build_generator
 from .jobs import JobStore
 from .retrieval.corpus import Case, load_corpus, resolve_image
@@ -51,20 +52,43 @@ _jobs = JobStore()
 _audit = AuditLog(settings.audit_path)
 _aprobados = CasosAprobadosStore(settings.aprobados_path)
 
+# Serializa las mutaciones del índice (rebuild / add del loop de mejora) con las
+# búsquedas. El índice y `_state["cases"]` deben verse siempre consistentes: una
+# búsqueda devuelve índices posicionales sobre `cases`, así que no puede correr a
+# la mitad de un append. Reentrante (RLock) por prudencia.
+_index_lock = threading.RLock()
+
 
 def _rebuild_index() -> None:
     """
-    (Re)construir el índice = casos base del dataset + casos aprobados (Fase 4).
+    (Re)construir el índice completo = casos base del dataset + casos aprobados.
 
-    Se llama al arrancar y cada vez que un médico aprueba un borrador, así un
-    caso aprobado queda recuperable de inmediato. Mantiene en sincronía la lista
-    `cases`, el retriever y el lookup `by_id`.
+    Se llama al arrancar. Mantiene en sincronía la lista `cases`, el retriever y
+    el lookup `by_id`.
     """
-    base = _state["base_cases"]
-    cases = base + _aprobados.to_cases()
-    _state["retriever"].index(cases)
-    _state["cases"] = cases
-    _state["by_id"] = {c.encounter_id: c for c in cases}
+    with _index_lock:
+        base = _state["base_cases"]
+        cases = base + _aprobados.to_cases()
+        _state["retriever"].index(cases)
+        _state["cases"] = cases
+        _state["by_id"] = {c.encounter_id: c for c in cases}
+
+
+def _indexar_aprobado(case: Case) -> None:
+    """
+    Sumar UN caso aprobado al índice en caliente, sin reconstruirlo entero.
+
+    El full rebuild re-embebe los ~1000 casos en cada aprobación; con E5 eso son
+    decenas de segundos y bloquea el request de revisión (medido: ~160 s con el
+    corpus crecido). Acá agregamos solo el caso nuevo (`retriever.add`): O(1) por
+    aprobación con E5, y TF-IDF cae a un rebuild barato. Bajo lock para no dejar
+    `cases` y el índice desincronizados frente a una búsqueda concurrente.
+    """
+    with _index_lock:
+        cases: list[Case] = _state["cases"]
+        cases.append(case)
+        _state["by_id"][case.encounter_id] = case
+        _state["retriever"].add([case], cases)
 
 
 @asynccontextmanager
@@ -154,14 +178,17 @@ def _guardar_uploads(imagenes: list[UploadFile]) -> list[Path]:
 
 def _responder(query: str, k: int, exclude: str | None, image_paths: list[Path] | None) -> ConsultaResponse:
     """Corre la búsqueda y arma la respuesta. Compartido por /consulta y /consulta/imagen."""
-    retriever = _state["retriever"]
     k = min(k, settings.max_k)
 
-    t0 = time.perf_counter()
-    hits = retriever.search(query, k=k, exclude_encounter_id=exclude, query_image_paths=image_paths)
-    tomo_ms = (time.perf_counter() - t0) * 1000
-
-    resultados = _to_casehits(hits)
+    # Búsqueda + resolución de casos bajo lock: el índice no puede mutar entre el
+    # search (que da posiciones) y _to_casehits (que las resuelve en `cases`).
+    with _index_lock:
+        t0 = time.perf_counter()
+        hits = _state["retriever"].search(
+            query, k=k, exclude_encounter_id=exclude, query_image_paths=image_paths
+        )
+        tomo_ms = (time.perf_counter() - t0) * 1000
+        resultados = _to_casehits(hits)
     logger.info("consulta k=%d img=%s -> %d hits en %.1f ms",
                 k, bool(image_paths), len(resultados), tomo_ms)
 
@@ -242,13 +269,13 @@ def imagen(image_id: str) -> FileResponse:
 def _borrador_task(query: str, k: int, exclude: str | None, tmp_paths: list[Path]) -> dict:
     """Recupera evidencia, arma el prompt RAG y genera el borrador. Limpia los temporales."""
     try:
-        retriever = _state["retriever"]
         generator = _state["generator"]
-        hits = retriever.search(
-            query, k=min(k, settings.max_k), exclude_encounter_id=exclude,
-            query_image_paths=tmp_paths or None,
-        )
-        evidencia = _to_casehits(hits)
+        with _index_lock:
+            hits = _state["retriever"].search(
+                query, k=min(k, settings.max_k), exclude_encounter_id=exclude,
+                query_image_paths=tmp_paths or None,
+            )
+            evidencia = _to_casehits(hits)
         evidence_dicts = [
             {"answer": e.answer, "similitud": e.similitud, "query_title": e.query_title}
             for e in evidencia
@@ -351,13 +378,15 @@ def revisar(job_id: str, req: RevisionRequest) -> RevisionEntry:
     # base y queda recuperable de inmediato. Rechazar no aporta a la base.
     consulta = result.get("consulta")
     if req.accion in ("aprobar", "editar") and texto_final and consulta:
-        _aprobados.agregar(
+        caso_aprobado = _aprobados.agregar(
             consulta=consulta, respuesta=texto_final, revisor=req.revisor, job_id=job_id,
         )
         try:
-            _rebuild_index()
-        except Exception:  # noqa: BLE001  (reindexar no debe tumbar la revisión)
-            logger.exception("No se pudo reindexar tras aprobar job=%s", job_id)
+            # Add incremental (no rebuild completo): con E5, re-embeber todo el
+            # corpus en el request tardaba decenas de segundos. Ver _indexar_aprobado.
+            _indexar_aprobado(entry_to_case(caso_aprobado))
+        except Exception:  # noqa: BLE001  (indexar no debe tumbar la revisión)
+            logger.exception("No se pudo indexar el caso aprobado tras job=%s", job_id)
 
     return RevisionEntry(**entry)
 

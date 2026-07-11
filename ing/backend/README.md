@@ -1,8 +1,11 @@
-# Backend — DermaAssist (Fase 1: retrieval)
+# Backend — DermaAssist
 
-API que, dada una consulta de paciente, devuelve los casos clínicos más
-parecidos de la base con su respuesta como evidencia. No genera texto: solo
-recupera casos existentes (cero riesgo de alucinación).
+API que asiste a un dermatólogo ante una consulta de paciente. Recupera los casos
+clínicos más parecidos de la base (evidencia), arma un **borrador RAG** anclado en
+ellos, lo pasa por una **capa de seguridad**, y registra la **revisión médica** que
+retroalimenta el sistema. Cubre las Fases 1–4 del [ROADMAP](../ROADMAP.md); el
+retrieval solo (Fase 1) no puede alucinar, y la generación queda siempre supeditada
+a la aprobación humana.
 
 ## Estructura
 
@@ -40,6 +43,8 @@ backend/
 | `GET` | `/borrador/{job_id}` | Poll del borrador: `status`, `evidencia`, `borrador` y `seguridad` |
 | `POST` | `/borrador/{job_id}/revision` | Registra la decisión médica (aprobar/editar/rechazar) en el audit log |
 | `GET` | `/auditoria` | Lista las revisiones registradas (dataset de validación clínica humana) |
+| `GET` | `/metricas` | Indicadores de calidad derivados del audit log (tasa de aprobación, edición media, niveles de seguridad) |
+| `GET` | `/dataset/aprobados` | Dataset de casos aprobados por médicos que crece con el uso (Fase 4) |
 | `GET` | `/casos/{encounter_id}` | Detalle de un caso de la base (404 si no existe) |
 | `GET` | `/imagen/{image_id}` | Sirve la foto clínica de un caso (404 si no está en local) |
 
@@ -120,12 +125,21 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 | `DERMA_VLM_MODEL` | `Qwen/Qwen2.5-VL-3B-Instruct` | Modelo base del generador `vlm` |
 | `DERMA_MAX_NEW_TOKENS` | `256` | Tokens máximos del borrador |
 | `DERMA_RAG_K` | `3` | Casos de evidencia que se pasan al generador como contexto |
+| `DERMA_SIM_MIN` | `0.35` | Umbral de similitud: por debajo, la evidencia se marca como débil. Calibrado para `tfidf` (ver nota) |
 | `DERMA_AUDIT_PATH` | `ing/backend/.data/revisiones.jsonl` | Archivo JSONL del audit log de revisiones |
+| `DERMA_APROBADOS_PATH` | `ing/backend/.data/casos_aprobados.jsonl` | Archivo JSONL de casos aprobados que retroalimentan la base (Fase 4) |
 
 > Para `e5` o `multimodal` hay que instalar `torch`/`transformers` (y `open_clip_torch` para
 > multimodal). El backend `multimodal` además necesita el cache `.npz` (generarlo con
 > `scripts/build_case_embeddings.py`, ver `ing/docs/handoff_embeddings_santino.md`).
 > Config inválida (ej. retriever desconocido) hace que el servicio **no arranque** (fail-fast).
+
+> **Nota sobre `DERMA_SIM_MIN` (evidencia débil):** el default `0.35` está calibrado para
+> `tfidf`, donde una consulta sin casos parecidos cae cerca de 0. Con `e5` el score es coseno
+> mapeado a `[0,1]` (`(cos+1)/2`), cuyo **piso empírico es ~0.9** incluso para texto irrelevante,
+> así que el chequeo de `evidencia_debil` prácticamente no dispara con `e5`. Si se usa `e5`/
+> `multimodal` en producción, hay que **recalibrar el umbral** para ese retriever (o pasar a una
+> señal relativa, ej. margen del top-1 sobre la mediana). Limitación conocida, no un bug.
 
 ## Correr con modelos reales
 

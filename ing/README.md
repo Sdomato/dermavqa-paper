@@ -36,7 +36,7 @@ La parte de ingeniería **reutiliza** los artefactos que ya están en `develop`:
 | Artefacto en `develop` | Se usa como |
 | --- | --- |
 | `src/vlm_infer.py` (con `--adapter`) | Servicio de generación de borradores |
-| Adapters LoRA (~160 MB) | Modelo que escribe los borradores |
+| Adapters LoRA (~160 MB, **en la VM de entrenamiento; no versionados**) | Modelo que escribe los borradores (requiere GPU CUDA) |
 | `src/multimodal_retrieval.py` + `retrieval_utils.py` | Servicio de retrieval / evidencia |
 | `src/evaluate_predictions.py` | Métricas y monitoreo |
 | Dataset IIYI (998 casos) | Base inicial de casos |
@@ -98,6 +98,11 @@ El objetivo del sistema es que el borrador que llega al médico sea **útil y se
 🟢 **Roadmap completo.** Próximos incrementos posibles: capturar imágenes en la aprobación
 para cerrar el loop también del VLM, y persistencia con trazabilidad real (hoy JSONL).
 Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.
+
+> **Correr con modelos reales:** el retrieval real (E5) corre localmente sin GPU; la
+> generación real (VLM + LoRA) requiere GPU CUDA y el adapter (que vive en la VM, no en el
+> repo). El porqué de cada límite y todas las decisiones de la demo están en
+> [`docs/decisiones-modelos-reales.md`](docs/decisiones-modelos-reales.md).
 
 ## Estructura del código
 

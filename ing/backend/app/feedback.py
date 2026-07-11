@@ -31,6 +31,19 @@ from .retrieval.corpus import Case
 SPLIT_APROBADO = "aprobado"
 
 
+def entry_to_case(entry: dict[str, Any]) -> Case:
+    """Convertir un registro aprobado (JSONL) en un `Case` buscable."""
+    return Case(
+        encounter_id=entry["encounter_id"],
+        split=SPLIT_APROBADO,
+        query_title=entry.get("consulta", ""),
+        query_content="",
+        query_text=entry.get("consulta", ""),
+        answer=entry.get("respuesta", ""),
+        image_ids=entry.get("image_ids", []) or [],
+    )
+
+
 class CasosAprobadosStore:
     """Almacén append-only de casos aprobados por un médico."""
 
@@ -81,15 +94,4 @@ class CasosAprobadosStore:
         """Convertir los casos aprobados en `Case` para sumarlos a la base buscable."""
         with self._lock:
             entries = list(self._entries)
-        return [
-            Case(
-                encounter_id=e["encounter_id"],
-                split=SPLIT_APROBADO,
-                query_title=e.get("consulta", ""),
-                query_content="",
-                query_text=e.get("consulta", ""),
-                answer=e.get("respuesta", ""),
-                image_ids=e.get("image_ids", []) or [],
-            )
-            for e in entries
-        ]
+        return [entry_to_case(e) for e in entries]

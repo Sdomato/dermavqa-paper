@@ -56,6 +56,19 @@ def _contiene_palabra(termino: str, texto_norm: str) -> bool:
     return re.search(rf"\b{re.escape(termino)}\b", texto_norm) is not None
 
 
+def _contiene_prefijo(termino: str, texto_norm: str) -> bool:
+    """
+    Match por prefijo de palabra: límite de palabra al inicio, cualquier sufijo después.
+
+    Se usa SOLO en la detección de banderas rojas, donde importa la recall clínica:
+    así un término del léxico captura sus conjugaciones/variantes sin enumerarlas una
+    por una ('sangra' → sangra/sangrado/sangrando/sangrante; 'asimetric' →
+    asimetrico/asimetrica; 'evolucion' → evoluciono/evoluciona). En una capa de
+    seguridad, sobre-señalar es preferible a dejar pasar un cuadro de alarma.
+    """
+    return re.search(rf"\b{re.escape(termino)}", texto_norm) is not None
+
+
 def flags_heuristicos(borrador: str, min_palabras: int = MIN_PALABRAS) -> list[str]:
     flags: list[str] = []
     t = (borrador or "").strip()
@@ -145,7 +158,8 @@ def banderas_rojas(consulta: str) -> list[str]:
     cn = _norm(consulta)
     hallados: list[str] = []
     for signo, grupos in BANDERAS_ROJAS:
-        if any(all(_contiene_palabra(t, cn) for t in grupo) for grupo in grupos):
+        # Prefijo (no palabra exacta): recall clínica sobre conjugaciones/variantes.
+        if any(all(_contiene_prefijo(t, cn) for t in grupo) for grupo in grupos):
             hallados.append(signo)
     return hallados
 

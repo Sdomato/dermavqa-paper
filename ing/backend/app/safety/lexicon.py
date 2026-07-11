@@ -63,16 +63,23 @@ BANDERAS_ROJAS = [
     ("lesion_pigmentada_cambiante", [
         ["lunar", "cambio"], ["lunar", "cambia"], ["lunar", "crece"], ["lunar", "crecio"],
         ["lunar", "sangra"], ["lunar", "asimetric"], ["lunar", "color"],
+        ["lunar", "evolucion"], ["lunar", "elevado"], ["lunar", "borde"], ["lunar", "oscurec"],
         ["mancha", "sangra"], ["mancha", "crece"], ["mancha", "negro"], ["mancha", "negra"],
+        ["mancha", "evolucion"], ["mancha", "borde"], ["mancha", "oscurec"],
         ["nevo", "cambio"], ["nevo", "crece"], ["nevo", "sangra"],
+        ["nevo", "asimetric"], ["nevo", "evolucion"],
         ["lesion pigmentada", "cambio"], ["lesion pigmentada", "crece"],
-        ["pigmentada", "asimetric"],
+        ["pigmentada", "asimetric"], ["pigmentada", "evolucion"],
     ]),
     ("lesion_no_cicatriza", [
-        ["no cicatriza"], ["no cierra"], ["no cura"], ["no termina de cerrar"],
-        ["ulcera", "meses"], ["herida", "no cierra"],
+        ["no cicatriza"], ["no cierra"], ["no cura"], ["no sana"], ["no termina de cerrar"],
+        ["ulcera", "meses"], ["ulcera", "semanas"], ["herida", "no cierra"],
+        ["llaga", "meses"], ["llaga", "no cierra"], ["llaga", "no sana"],
     ]),
-    ("lesion_acral", [["acral"], ["planta del pie"], ["subungueal"], ["region palmoplantar"]]),
+    ("lesion_acral", [
+        ["acral"], ["planta del pie"], ["subungueal"], ["region palmoplantar"],
+        ["palma de la mano"], ["palmoplantar"],
+    ]),
     ("crecimiento_rapido", [
         ["crecio", "semanas"], ["crecio", "dias"], ["crece rapido"], ["rapido crecimiento"],
         ["crecimiento rapido"], ["creciendo rapido"],

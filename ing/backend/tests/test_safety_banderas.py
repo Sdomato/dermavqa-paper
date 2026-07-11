@@ -37,6 +37,36 @@ def test_consulta_benigna_sin_banderas():
     assert banderas_rojas("Control de psoriasis conocida en placas estables") == []
 
 
+# ── Recall del léxico: conjugaciones, tildes y sinónimos ─────────────────────
+# Casos que el matching por palabra exacta dejaba pasar como "nivel bajo"
+# (detectados en testing). El matcher por prefijo + léxico ampliado los cubre.
+
+def test_bandera_gerundio_sangrando():
+    # "sangrando" (gerundio) debe disparar igual que "sangra".
+    assert "sangrado" in banderas_rojas("Tengo un lunar que está sangrando y se ve más oscuro")
+
+
+def test_bandera_asimetrico_con_tilde():
+    # ABCDE clásico: "asimétrico/a" (con tilde e inflexión) debe disparar.
+    b = banderas_rojas("Un lunar de bordes irregulares, asimétrico y con varios colores")
+    assert "lesion_pigmentada_cambiante" in b
+
+
+def test_bandera_melanoma_acral_palmar():
+    assert "lesion_acral" in banderas_rojas("Mancha oscura nueva en la palma de la mano")
+
+
+def test_bandera_llaga_no_sana():
+    b = banderas_rojas("Una llaga que no sana desde hace semanas")
+    assert "lesion_no_cicatriza" in b
+
+
+def test_bandera_lunar_evoluciono():
+    assert "lesion_pigmentada_cambiante" in banderas_rojas(
+        "Un lunar del pie que evolucionó y ahora está elevado"
+    )
+
+
 # ── Integración: las banderas fuerzan nivel alto ─────────────────────────────
 
 def test_banderas_fuerzan_nivel_alto():

@@ -56,6 +56,21 @@ class E5Retriever(Retriever):
         self._embeddings = self._encode([c.query_text for c in cases], prefix="passage: ")
         self._encounter_ids = [c.encounter_id for c in cases]
 
+    def add(self, new_cases: list[Case], all_cases: list[Case]) -> None:
+        """
+        Append incremental: embebe solo los casos nuevos y los apila al índice.
+
+        Evita re-embeber los ~1000 casos del corpus en cada aprobación (con E5 eso
+        son decenas de segundos). Embeber un caso nuevo es O(1). Si el índice aún
+        no existe (cold start), cae al build completo.
+        """
+        if self._embeddings is None:
+            self.index(all_cases)
+            return
+        nuevos = self._encode([c.query_text for c in new_cases], prefix="passage: ")
+        self._embeddings = np.vstack([self._embeddings, nuevos])
+        self._encounter_ids = self._encounter_ids + [c.encounter_id for c in new_cases]
+
     def search(
         self,
         query: str,
