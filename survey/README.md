@@ -20,6 +20,8 @@ dominio medico multimodal y subrepresentado en espanol.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
 - `contrastive_error_analysis.md`: muestreo contrastivo y explicaciones
   estructuradas para diagnosticar diferencias entre VLMs.
+- `explanation_trace_findings.md`: análisis de racionales post-hoc, patrones por
+  modelo y conclusiones para justificar las métricas en el paper.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
 - `enriched_vlm_experiments.md`: corrida LoRA/QLoRA de Santino sobre
