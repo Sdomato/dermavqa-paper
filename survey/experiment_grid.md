@@ -53,6 +53,20 @@ y versionarse como un artefacto del pipeline, no editarse manualmente.
 9. Fine-tunear con LoRA/QLoRA si hay GPU suficiente.
 10. Evaluar y consolidar resultados por variante de target.
 
+## Estado actual de ejecucion
+
+| Bloque | Estado | Artefactos |
+| --- | --- | --- |
+| Datasets `longest_answer` y `short_answer` | hecho | `outputs/datasets/dataset_longest_answer.*`, `outputs/datasets/dataset_short_answer.*` |
+| Dataset `llm_synthesized_answer` / `dataset_enriched` | hecho | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip` |
+| Retrieval textual enriched | hecho | `outputs/metrics/dataset_enriched/retrieval_textual/` |
+| Retrieval long/short textual, visual y multimodal | hecho | `outputs/metrics/dataset_longest_answer/`, `outputs/metrics/dataset_short_answer/` |
+| VLM zero-shot longest | hecho | `outputs/results/dataset_longest_answer/vlm_zero_shot/` |
+| VLM LoRA longest | hecho | `outputs/results/dataset_longest_answer/vlm_lora/` |
+| VLM LoRA enriched | hecho | `outputs/results/dataset_enriched/vlm_lora/` |
+| Revision clinica manual | pendiente | plantilla/criterios a consolidar |
+| Comparacion final paper | pendiente | `survey/final_comparison_snapshot.md` como base |
+
 ## Tabla final esperada
 
 | Metodo | ROUGE-L | F1 token | BERTScore | Recall@1 | Recall@5 | MRR | Notas |

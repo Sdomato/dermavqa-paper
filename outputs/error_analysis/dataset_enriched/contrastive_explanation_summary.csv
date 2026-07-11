@@ -1,0 +1,6 @@
+method,n,parse_success_rate,minimum_tokens_rate,mean_explanation_tokens,mean_answer_stability_f1
+lora,25,0.0,0.0,0.0,0.0
+lora_rag,25,0.0,0.0,0.0,0.0
+lora_rag_aware,25,0.0,0.0,0.0,0.0
+zero_shot,25,0.84,0.84,118.08,0.25491434066691726
+zero_shot_rag,25,0.8,0.8,114.56,0.29748184285812335

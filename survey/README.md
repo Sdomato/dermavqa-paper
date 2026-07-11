@@ -18,8 +18,33 @@ dominio medico multimodal y subrepresentado en espanol.
 - `experiment_grid.md`: condiciones experimentales, parametros y entregables.
 - `models_to_compare.md`: candidatos para retrieval textual, visual y VLM.
 - `evaluation_plan.md`: metricas automaticas, retrieval y revision cualitativa.
+- `contrastive_error_analysis.md`: muestreo contrastivo y explicaciones
+  estructuradas para diagnosticar diferencias entre VLMs.
+- `explanation_trace_findings.md`: análisis de racionales post-hoc, patrones por
+  modelo y conclusiones para justificar las métricas en el paper.
 - `team_execution_plan.md`: division de tareas, protocolo comun y metricas
   para comparar modelos fine-tuned.
+- `enriched_vlm_experiments.md`: corrida LoRA/QLoRA de Santino sobre
+  `dataset_enriched`, metricas, artefactos, observaciones y pendientes.
+- `final_comparison_snapshot.md`: foto comparativa actual entre retrieval,
+  VLM zero-shot, LoRA sobre respuesta larga y LoRA sobre enriquecido.
+- `paper_results_interpretation.md`: lectura de resultados, claim principal,
+  limitaciones y texto sugerido para el paper.
+- `../paper/draft.md`: borrador narrativo completo del paper.
+- `../notebooks/04_paper_results.ipynb`: regeneracion de tablas y figuras
+  paper-ready desde los artefactos versionados.
+- `../src/evaluate_retrieval_heldout.py`: baseline TF-IDF held-out train-only
+  para evitar leakage en las comparaciones principales longest/short.
+
+- `STRUCTURE.md`: convencion canonica de carpetas y artefactos del repo
+  (raiz de resultados, que se versiona, resolucion de imagenes).
+- `matias_execution_plan.md`: plan y progreso de la pata VLM (zero-shot + LoRA
+  sobre `dataset_longest_answer`): `src/vlm_infer.py`, `src/train_longest.py`,
+  `src/evaluate_predictions.py`.
+- `google_cloud_vlm_lora_runbook.md`: protocolo reproducible en Google Cloud
+  para entrenar Qwen2.5-VL-3B con LoRA/QLoRA sobre `dataset_enriched` y
+  `dataset_longest_answer_by_image`, con VM L4, smoke tests, background jobs,
+  monitoreo, bajada de resultados y reglas de versionado.
 - `related_work_matrix.csv`: matriz inicial para organizar papers relacionados.
 - `risks.md`: riesgos metodologicos, medicos y operativos.
 
@@ -30,7 +55,10 @@ dominio medico multimodal y subrepresentado en espanol.
   imagen-pregunta-respuesta para entrenamiento.
 - `requirements.txt` incluye dependencias para EDA, fine-tuning de VLMs y
   evaluacion (`transformers`, `peft`, `accelerate`, `bert-score`, `sacrebleu`).
-- `src/` existe pero todavia no contiene la implementacion modular.
+- `src/` contiene el pipeline modular: construccion de datasets, baselines de
+  retrieval (textual/visual/multimodal), VLM (zero-shot + LoRA) y evaluacion.
+- `outputs/paper/` contiene tablas y figuras SVG listas para usar en el paper.
+  Ver el README raiz y `STRUCTURE.md`.
 - `config.yaml` define paths relativos para datos y salidas.
 
 Estado observado:
@@ -172,6 +200,9 @@ Entregables:
 - predicciones fine-tuned;
 - notas de costo y viabilidad.
 
+Estado actual: Qwen2.5-VL-3B ya fue corrido en zero-shot/LoRA sobre
+`dataset_longest_answer` y en LoRA sobre `dataset_enriched`.
+
 ### 6. Subagente de evaluacion
 
 Responsable de comparar condiciones con metricas automaticas y revision manual.
@@ -213,25 +244,28 @@ Tareas:
 
 ## Roadmap sugerido
 
-1. Pasar el notebook exploratorio a scripts reproducibles.
-2. Auditar splits, conteos y targets del dataset.
-3. Implementar baseline textual TF-IDF.
-4. Implementar baseline textual con embeddings multilingues.
-5. Implementar recuperacion visual con encoder preentrenado.
-6. Implementar fusion multimodal y barrido de `alpha`.
-7. Correr VLM zero-shot con prompts fijos.
-8. Fine-tunear con LoRA/QLoRA si hay GPU suficiente.
-9. Evaluar con metricas automaticas y analisis cualitativo.
-10. Consolidar resultados en formato de paper ACL.
+1. Pasar el notebook exploratorio a scripts reproducibles. **Hecho.**
+2. Auditar splits, conteos y targets del dataset. **Hecho.**
+3. Implementar baseline textual TF-IDF. **Hecho.**
+4. Implementar baseline textual con embeddings multilingues. **Hecho.**
+5. Implementar recuperacion visual con encoder preentrenado. **Hecho para long/short.**
+6. Implementar fusion multimodal y barrido de `alpha`. **Hecho para long/short.**
+7. Correr VLM zero-shot con prompts fijos. **Hecho para longest.**
+8. Fine-tunear con LoRA/QLoRA si hay GPU suficiente. **Hecho para longest y enriched.**
+9. Evaluar con metricas automaticas y analisis cualitativo. **Metricas hechas; revision manual pendiente.**
+10. Consolidar resultados en formato de paper ACL. **Pendiente.**
 
 ## Decisiones abiertas
 
-- Modelo VLM concreto para zero-shot y LoRA.
-- Encoder visual para recuperacion de imagenes.
-- Encoder textual multilingue.
+- Modelo VLM concreto para zero-shot y LoRA: elegido para la corrida principal,
+  `Qwen/Qwen2.5-VL-3B-Instruct`.
+- Encoder visual para recuperacion de imagenes: implementado en scripts de
+  retrieval visual/multimodal; revisar solo si se cambia de modelo.
+- Encoder textual multilingue: TF-IDF, E5 y SBERT ya implementados.
 - Regla definitiva para seleccionar target de referencia.
 - Uso o no de metadatos de autor/ranking en filtrado de respuestas.
-- Presupuesto de GPU y tamano maximo de modelo.
+- Presupuesto de GPU y tamano maximo de modelo: para la corrida enriched se uso
+  una VM L4; queda reportar costo final de billing si esta disponible.
 
 ## Definicion de exito
 

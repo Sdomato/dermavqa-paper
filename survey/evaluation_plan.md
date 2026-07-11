@@ -31,6 +31,12 @@ Revisar manualmente una muestra pequena de casos de valid/test. Etiquetar:
 - caso donde la imagen aporta informacion clave;
 - caso donde el texto domina y la imagen no ayuda.
 
+Para diagnosticar diferencias entre las cuatro condiciones VLM sobre el dataset
+enriquecido, usar además el protocolo contrastivo de
+`survey/contrastive_error_analysis.md`. Las explicaciones generadas son
+justificaciones post-hoc basadas en evidencia observable, no trazas fieles de
+cadena de pensamiento.
+
 ## Comparaciones principales
 
 1. Recuperacion solo-texto vs recuperacion solo-imagen.

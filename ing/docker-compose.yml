@@ -1,0 +1,15 @@
+# Levanta el stack de DermaAssist.
+# Fase 1: solo la API de retrieval. Postgres y Redis se agregan en fases
+# posteriores (audit log y cola para la generación con VLM).
+services:
+  api:
+    build:
+      # Contexto = raíz del repo (el backend reutiliza src/ y outputs/).
+      context: ..
+      dockerfile: ing/backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DERMA_RETRIEVER: tfidf
+      DERMA_TOP_K: "5"
+      DERMA_INDEX_SPLITS: all

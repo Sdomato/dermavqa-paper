@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1630" height="540" viewBox="0 0 1630 540" role="img" aria-label="Main test comparison: ROUGE-L and token-F1">
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}.title{font-size:22px;font-weight:700}.axis-label{font-size:14px;font-weight:600}.tick{font-size:11px;fill:#555}.label{font-size:12px}.value{font-size:12px;font-weight:700}.axis{stroke:#333;stroke-width:1.3}.grid{stroke:#ddd;stroke-width:1}
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<text x="815.0" y="32" text-anchor="middle" class="title">Main test comparison: ROUGE-L and token-F1</text>
+<line x1="80" y1="70" x2="80" y2="400" class="axis"/>
+<line x1="80" y1="400" x2="1510" y2="400" class="axis"/>
+<line x1="75" y1="400.0" x2="1510" y2="400.0" class="grid"/>
+<text x="70" y="404.0" text-anchor="end" class="tick">0.00</text>
+<line x1="75" y1="334.0" x2="1510" y2="334.0" class="grid"/>
+<text x="70" y="338.0" text-anchor="end" class="tick">0.07</text>
+<line x1="75" y1="268.0" x2="1510" y2="268.0" class="grid"/>
+<text x="70" y="272.0" text-anchor="end" class="tick">0.14</text>
+<line x1="75" y1="202.0" x2="1510" y2="202.0" class="grid"/>
+<text x="70" y="206.0" text-anchor="end" class="tick">0.22</text>
+<line x1="75" y1="136.0" x2="1510" y2="136.0" class="grid"/>
+<text x="70" y="140.0" text-anchor="end" class="tick">0.29</text>
+<line x1="75" y1="70.0" x2="1510" y2="70.0" class="grid"/>
+<text x="70" y="74.0" text-anchor="end" class="tick">0.36</text>
+<rect x="100.1" y="202.0" width="28.0" height="198.0" fill="#4C78A8" rx="3"/>
+<rect x="134.1" y="165.3" width="28.0" height="234.7" fill="#F58518" rx="3"/>
+<text x="131.1" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="131.1" y="444.0" text-anchor="middle" class="label">TF-IDF</text>
+<rect x="202.2" y="205.7" width="28.0" height="194.3" fill="#4C78A8" rx="3"/>
+<rect x="236.2" y="162.6" width="28.0" height="237.4" fill="#F58518" rx="3"/>
+<text x="233.2" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="233.2" y="444.0" text-anchor="middle" class="label">E5</text>
+<rect x="304.4" y="196.5" width="28.0" height="203.5" fill="#4C78A8" rx="3"/>
+<rect x="338.4" y="153.4" width="28.0" height="246.6" fill="#F58518" rx="3"/>
+<text x="335.4" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="335.4" y="444.0" text-anchor="middle" class="label">SBERT</text>
+<rect x="406.5" y="170.8" width="28.0" height="229.2" fill="#4C78A8" rx="3"/>
+<rect x="440.5" y="112.2" width="28.0" height="287.8" fill="#F58518" rx="3"/>
+<text x="437.5" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="437.5" y="444.0" text-anchor="middle" class="label">VLM LoRA case-avg</text>
+<rect x="508.6" y="287.2" width="28.0" height="112.8" fill="#4C78A8" rx="3"/>
+<rect x="542.6" y="226.8" width="28.0" height="173.2" fill="#F58518" rx="3"/>
+<text x="539.6" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="539.6" y="444.0" text-anchor="middle" class="label">VLM zero-shot</text>
+<rect x="610.8" y="275.3" width="28.0" height="124.7" fill="#4C78A8" rx="3"/>
+<rect x="644.8" y="217.6" width="28.0" height="182.4" fill="#F58518" rx="3"/>
+<text x="641.8" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="641.8" y="444.0" text-anchor="middle" class="label">VLM zero-shot + RAG</text>
+<rect x="712.9" y="191.0" width="28.0" height="209.0" fill="#4C78A8" rx="3"/>
+<rect x="746.9" y="148.8" width="28.0" height="251.2" fill="#F58518" rx="3"/>
+<text x="743.9" y="428.0" text-anchor="middle" class="label">Enriched</text>
+<text x="743.9" y="444.0" text-anchor="middle" class="label">VLM LoRA + RAG</text>
+<rect x="815.1" y="348.7" width="28.0" height="51.3" fill="#4C78A8" rx="3"/>
+<rect x="849.1" y="334.0" width="28.0" height="66.0" fill="#F58518" rx="3"/>
+<text x="846.1" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="846.1" y="444.0" text-anchor="middle" class="label">TF-IDF train-only</text>
+<rect x="917.2" y="297.3" width="28.0" height="102.7" fill="#4C78A8" rx="3"/>
+<rect x="951.2" y="279.9" width="28.0" height="120.1" fill="#F58518" rx="3"/>
+<text x="948.2" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="948.2" y="444.0" text-anchor="middle" class="label">VLM LoRA</text>
+<rect x="1019.4" y="323.9" width="28.0" height="76.1" fill="#4C78A8" rx="3"/>
+<rect x="1053.4" y="299.2" width="28.0" height="100.8" fill="#F58518" rx="3"/>
+<text x="1050.4" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="1050.4" y="444.0" text-anchor="middle" class="label">VLM zero-shot by-image</text>
+<rect x="1121.5" y="323.9" width="28.0" height="76.1" fill="#4C78A8" rx="3"/>
+<rect x="1155.5" y="301.9" width="28.0" height="98.1" fill="#F58518" rx="3"/>
+<text x="1152.5" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="1152.5" y="444.0" text-anchor="middle" class="label">VLM zero-shot + RAG by-image</text>
+<rect x="1223.6" y="325.8" width="28.0" height="74.2" fill="#4C78A8" rx="3"/>
+<rect x="1257.6" y="315.7" width="28.0" height="84.3" fill="#F58518" rx="3"/>
+<text x="1254.6" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="1254.6" y="444.0" text-anchor="middle" class="label">VLM LoRA by-image</text>
+<rect x="1325.8" y="362.4" width="28.0" height="37.6" fill="#4C78A8" rx="3"/>
+<rect x="1359.8" y="369.8" width="28.0" height="30.3" fill="#F58518" rx="3"/>
+<text x="1356.8" y="428.0" text-anchor="middle" class="label">Longest</text>
+<text x="1356.8" y="444.0" text-anchor="middle" class="label">VLM LoRA + RAG by-image</text>
+<rect x="1427.9" y="388.1" width="28.0" height="11.9" fill="#4C78A8" rx="3"/>
+<rect x="1461.9" y="388.1" width="28.0" height="11.9" fill="#F58518" rx="3"/>
+<text x="1458.9" y="428.0" text-anchor="middle" class="label">Short</text>
+<text x="1458.9" y="444.0" text-anchor="middle" class="label">TF-IDF train-only</text>
+<rect x="1520" y="80" width="14" height="14" fill="#4C78A8"/>
+<text x="1540" y="92" class="label">ROUGE-L</text>
+<rect x="1520" y="104" width="14" height="14" fill="#F58518"/>
+<text x="1540" y="116" class="label">Token F1</text>
+</svg>

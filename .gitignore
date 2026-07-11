@@ -1,10 +1,80 @@
-# Images are too large for GitHub (1.2 GB) — copy manually after cloning
+﻿# Images are too large for GitHub (1.2 GB) â€” copy manually after cloning
 data/iiyi/images_final/
 data/iiyi/images_final.zip
+# Any image zip anywhere in the repo (e.g. images_final.zip at root, ~1 GB)
+images_final.zip
+**/images_final.zip
+# Raw image files anywhere â€” never version images
+*.jpg
+*.png
+*.jpeg
 
-# Generated outputs
-outputs/
-results/
+# Generated outputs â€” canonical results root is outputs/ (see survey/STRUCTURE.md).
+# Track lightweight datasets/metrics, ignore heavy artifacts.
+outputs/*
+!outputs/datasets/
+!outputs/metrics/
+!outputs/results/
+!outputs/paper/
+
+# Datasets: version json/jsonl/csv/zip only
+outputs/datasets/*
+!outputs/datasets/*.json
+!outputs/datasets/*.jsonl
+!outputs/datasets/*.csv
+!outputs/datasets/*.zip
+
+# Metrics: descend into the dir and version everything in it (light CSVs)
+
+# Paper-ready tables and figures; keep raw clinical images ignored above.
+outputs/paper/*
+!outputs/paper/README.md
+!outputs/paper/tables/
+!outputs/paper/figures/
+outputs/paper/tables/*
+outputs/paper/figures/*
+!outputs/paper/tables/*.csv
+!outputs/paper/tables/*.md
+!outputs/paper/figures/*.svg
+!outputs/paper/figures/*.md
+
+# Lightweight, paper-facing error analysis artifacts.
+!outputs/error_analysis/
+outputs/error_analysis/*
+!outputs/error_analysis/dataset_enriched/
+!outputs/error_analysis/dataset_longest_answer/
+outputs/error_analysis/dataset_enriched/*
+outputs/error_analysis/dataset_longest_answer/*
+!outputs/error_analysis/dataset_enriched/*.csv
+!outputs/error_analysis/dataset_enriched/*.jsonl
+!outputs/error_analysis/dataset_enriched/*.json
+!outputs/error_analysis/dataset_enriched/*.md
+!outputs/error_analysis/dataset_longest_answer/*.csv
+!outputs/error_analysis/dataset_longest_answer/*.jsonl
+!outputs/error_analysis/dataset_longest_answer/*.json
+!outputs/error_analysis/dataset_longest_answer/*.md
+!outputs/error_analysis/dataset_enriched/external_rationales/
+!outputs/error_analysis/dataset_enriched/external_rationales/*.csv
+!outputs/error_analysis/dataset_enriched/explanations/
+!outputs/error_analysis/dataset_enriched/explanations/*.csv
+!outputs/error_analysis/dataset_longest_answer/external_rationales/
+!outputs/error_analysis/dataset_longest_answer/external_rationales/*.csv
+!outputs/error_analysis/dataset_longest_answer/explanations/
+!outputs/error_analysis/dataset_longest_answer/explanations/*.csv
+
+# Predictions/results: descend, but ignore heavy artifacts (keep light CSV/JSON)
+outputs/results/**/*.npy
+outputs/results/**/*.npz
+outputs/results/**/*.pt
+outputs/results/**/*.bin
+outputs/results/**/*.safetensors
+outputs/results/**/final_adapter/
+outputs/results/**/*.pid
+outputs/results/**/auto_shutdown.log
+
+# Legacy top-level results/ root is deprecated â€” everything lives under outputs/ now.
+# Anchored with a leading slash so it does NOT also match outputs/results/.
+/results/
 checkpoints/
 
 # Local config (has absolute paths, varies per machine)
@@ -31,3 +101,4 @@ runs/
 # OS
 .DS_Store
 Thumbs.db
+

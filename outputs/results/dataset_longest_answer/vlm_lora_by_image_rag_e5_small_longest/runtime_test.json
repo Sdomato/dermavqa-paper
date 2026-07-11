@@ -1,0 +1,15 @@
+{
+  "method": "vlm_lora_by_image_rag_e5_small_longest",
+  "model_name": "final_adapter",
+  "dataset_variant": "dataset_longest_answer",
+  "rag_context_dataset": "dataset_longest_answer",
+  "rag_retriever": "e5_small",
+  "rag_retriever_model": "intfloat/multilingual-e5-small",
+  "rag_top_k": 3,
+  "split": "test",
+  "n": 314,
+  "mean_latency_s": 29.38679778384083,
+  "total_time_s": 9227.45450412602,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

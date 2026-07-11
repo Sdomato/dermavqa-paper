@@ -1,0 +1,624 @@
+
+[0/4] Ensuring by-image longest dataset exists...
+Rows: 2944
+Split counts: {'test': 314, 'train': 2473, 'valid': 157}
+Rows with unresolved image_path: 0
+Wrote: outputs/datasets/dataset_longest_answer_by_image.json
+Wrote: outputs/datasets/dataset_longest_answer_by_image.csv
+Wrote: outputs/datasets/dataset_longest_answer_by_image.zip
+
+[1/4] Base VLM zero-shot (valid)...
+
+[run] python3 -m src.vlm_infer_enriched --split valid
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot | Modelo: Qwen/Qwen2.5-VL-3B-Instruct
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:24,  5.70it/s]Loading weights:   1%|          | 8/824 [00:00<00:23, 34.43it/s]Loading weights:   4%|▍         | 33/824 [00:00<00:06, 117.58it/s]Loading weights:   7%|▋         | 57/824 [00:00<00:04, 160.21it/s]Loading weights:  10%|▉         | 81/824 [00:00<00:04, 185.25it/s]Loading weights:  13%|█▎        | 106/824 [00:00<00:03, 206.07it/s]Loading weights:  16%|█▌        | 131/824 [00:00<00:03, 219.11it/s]Loading weights:  19%|█▉        | 157/824 [00:00<00:02, 231.46it/s]Loading weights:  22%|██▏       | 183/824 [00:00<00:02, 233.64it/s]Loading weights:  25%|██▌       | 208/824 [00:01<00:02, 232.37it/s]Loading weights:  28%|██▊       | 233/824 [00:01<00:02, 231.50it/s]Loading weights:  32%|███▏      | 261/824 [00:01<00:02, 245.04it/s]Loading weights:  35%|███▌      | 289/824 [00:01<00:02, 254.72it/s]Loading weights:  38%|███▊      | 315/824 [00:01<00:02, 249.13it/s]Loading weights:  41%|████▏     | 341/824 [00:01<00:02, 236.88it/s]Loading weights:  45%|████▍     | 369/824 [00:01<00:01, 248.43it/s]Loading weights:  48%|████▊     | 397/824 [00:01<00:01, 257.02it/s]Loading weights:  51%|█████▏    | 423/824 [00:01<00:01, 251.27it/s]Loading weights:  59%|█████▉    | 486/824 [00:02<00:00, 356.89it/s]Loading weights:  68%|██████▊   | 562/824 [00:02<00:00, 472.81it/s]Loading weights:  78%|███████▊  | 642/824 [00:02<00:00, 563.60it/s]Loading weights:  87%|████████▋ | 718/824 [00:02<00:00, 620.39it/s]Loading weights:  97%|█████████▋| 798/824 [00:02<00:00, 667.25it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 327.66it/s]
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_zero_shot/predictions_valid.csv
+Metricas operativas: 15.32s/ejemplo
+[W627 15:43:54.794983967 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[run] python3 -m src.vlm_infer_longest_by_image --split valid
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_by_image | Modelo: Qwen/Qwen2.5-VL-3B-Instruct
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.04it/s]Loading weights:   1%|          | 9/824 [00:00<00:20, 40.04it/s]Loading weights:   4%|▍         | 37/824 [00:00<00:05, 134.67it/s]Loading weights:   8%|▊         | 63/824 [00:00<00:04, 173.59it/s]Loading weights:  11%|█         | 88/824 [00:00<00:03, 193.11it/s]Loading weights:  14%|█▎        | 113/824 [00:00<00:03, 204.91it/s]Loading weights:  17%|█▋        | 141/824 [00:00<00:03, 227.16it/s]Loading weights:  20%|██        | 168/824 [00:00<00:02, 240.07it/s]Loading weights:  24%|██▎       | 195/824 [00:01<00:02, 241.48it/s]Loading weights:  27%|██▋       | 220/824 [00:01<00:02, 237.83it/s]Loading weights:  30%|██▉       | 245/824 [00:01<00:02, 235.13it/s]Loading weights:  33%|███▎      | 273/824 [00:01<00:02, 247.48it/s]Loading weights:  36%|███▋      | 299/824 [00:01<00:02, 250.31it/s]Loading weights:  40%|███▉      | 327/824 [00:01<00:01, 249.74it/s]Loading weights:  43%|████▎     | 353/824 [00:01<00:01, 236.45it/s]Loading weights:  46%|████▌     | 381/824 [00:01<00:01, 246.63it/s]Loading weights:  49%|████▉     | 407/824 [00:01<00:01, 250.33it/s]Loading weights:  53%|█████▎    | 436/824 [00:01<00:01, 261.40it/s]Loading weights:  62%|██████▏   | 512/824 [00:02<00:00, 404.65it/s]Loading weights:  71%|███████▏  | 588/824 [00:02<00:00, 506.34it/s]Loading weights:  81%|████████  | 666/824 [00:02<00:00, 584.89it/s]Loading weights:  90%|█████████ | 742/824 [00:02<00:00, 633.68it/s]Loading weights: 100%|█████████▉| 821/824 [00:02<00:00, 651.68it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 330.09it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_zero_shot_by_image/predictions_valid.csv
+Metricas operativas: 15.45s/ejemplo
+[W627 16:24:34.196775470 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[2/4] Base VLM + train-only RAG (valid)...
+
+[run] python3 -m src.vlm_rag_infer --query-dataset enriched --context-dataset enriched --split valid --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3349.91it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.57it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.86it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.21it/s]Batches:  29%|██▊       | 4/14 [00:01<00:01,  5.20it/s]Batches:  43%|████▎     | 6/14 [00:01<00:01,  7.94it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.61it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 14.97it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.79it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Query dataset: dataset_enriched
+  Context dataset train: dataset_enriched (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_rag_e5_small_enriched | Modelo: Qwen/Qwen2.5-VL-3B-Instruct | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.04it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 70.93it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 136.14it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 185.42it/s]Loading weights:  12%|█▏        | 97/824 [00:00<00:03, 216.05it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 223.12it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:03, 224.55it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 224.82it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 240.19it/s]Loading weights:  28%|██▊       | 229/824 [00:01<00:02, 251.36it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 247.11it/s]Loading weights:  34%|███▍      | 280/824 [00:01<00:02, 241.50it/s]Loading weights:  37%|███▋      | 305/824 [00:01<00:02, 237.04it/s]Loading weights:  40%|████      | 333/824 [00:01<00:01, 248.33it/s]Loading weights:  44%|████▎     | 359/824 [00:01<00:01, 251.37it/s]Loading weights:  47%|████▋     | 387/824 [00:01<00:01, 251.22it/s]Loading weights:  50%|█████     | 413/824 [00:01<00:01, 238.01it/s]Loading weights:  57%|█████▋    | 466/824 [00:01<00:01, 317.70it/s]Loading weights:  66%|██████▌   | 544/824 [00:02<00:00, 448.64it/s]Loading weights:  75%|███████▌  | 620/824 [00:02<00:00, 535.42it/s]Loading weights:  84%|████████▍ | 696/824 [00:02<00:00, 597.43it/s]Loading weights:  94%|█████████▍| 774/824 [00:02<00:00, 650.08it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 333.86it/s]
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_zero_shot_rag_e5_small_enriched/predictions_valid.csv
+Metricas operativas: 17.75s/ejemplo
+[W627 17:11:26.555072606 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[run] python3 -m src.vlm_rag_infer --query-dataset longest --context-dataset longest --split valid --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3747.03it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.56it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.85it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.20it/s]Batches:  29%|██▊       | 4/14 [00:01<00:01,  5.19it/s]Batches:  43%|████▎     | 6/14 [00:01<00:01,  7.95it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.65it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 15.02it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.79it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Query dataset: dataset_longest_answer_by_image
+  Context dataset train: dataset_longest_answer_by_image (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_by_image_rag_e5_small_longest | Modelo: Qwen/Qwen2.5-VL-3B-Instruct | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.04it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 70.71it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 135.02it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 184.01it/s]Loading weights:  12%|█▏        | 95/824 [00:00<00:03, 208.31it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 223.63it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:03, 224.48it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 226.16it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 241.55it/s]Loading weights:  28%|██▊       | 229/824 [00:01<00:02, 252.80it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 248.76it/s]Loading weights:  34%|███▍      | 281/824 [00:01<00:02, 236.78it/s]Loading weights:  37%|███▋      | 306/824 [00:01<00:02, 240.50it/s]Loading weights:  40%|████      | 331/824 [00:01<00:02, 241.82it/s]Loading weights:  43%|████▎     | 356/824 [00:01<00:01, 241.87it/s]Loading weights:  46%|████▌     | 381/824 [00:01<00:01, 240.58it/s]Loading weights:  49%|████▉     | 406/824 [00:01<00:01, 241.88it/s]Loading weights:  52%|█████▏    | 431/824 [00:01<00:01, 241.03it/s]Loading weights:  61%|██████    | 504/824 [00:02<00:00, 382.69it/s]Loading weights:  70%|███████   | 580/824 [00:02<00:00, 491.95it/s]Loading weights:  80%|███████▉  | 656/824 [00:02<00:00, 566.24it/s]Loading weights:  89%|████████▉ | 732/824 [00:02<00:00, 620.20it/s]Loading weights:  98%|█████████▊| 810/824 [00:02<00:00, 665.83it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 328.66it/s]
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_zero_shot_by_image_rag_e5_small_longest/predictions_valid.csv
+Metricas operativas: 17.89s/ejemplo
+[W627 17:58:38.902414305 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[3/4] Fine-tuned VLM + train-only RAG (valid)...
+[warn] No existe adapter enriched: outputs/results/dataset_enriched/vlm_lora/final_adapter
+
+[run] python3 -m src.vlm_rag_infer --query-dataset longest --context-dataset longest --split valid --adapter outputs/results/dataset_longest_answer/vlm_lora_by_image/final_adapter --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3714.23it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.58it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.88it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.24it/s]Batches:  29%|██▊       | 4/14 [00:01<00:01,  5.25it/s]Batches:  43%|████▎     | 6/14 [00:01<00:01,  7.99it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.69it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 14.96it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.85it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'valid': 157 filas por imagen
+  Query dataset: dataset_longest_answer_by_image
+  Context dataset train: dataset_longest_answer_by_image (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_lora_by_image_rag_e5_small_longest | Modelo: final_adapter | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.03it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 70.59it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 135.66it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 184.85it/s]Loading weights:  12%|█▏        | 97/824 [00:00<00:03, 215.63it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 222.65it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:03, 224.33it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 225.71it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 241.01it/s]Loading weights:  28%|██▊       | 227/824 [00:01<00:02, 246.59it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 248.28it/s]Loading weights:  34%|███▍      | 280/824 [00:01<00:02, 242.24it/s]Loading weights:  37%|███▋      | 305/824 [00:01<00:02, 237.57it/s]Loading weights:  40%|████      | 333/824 [00:01<00:01, 248.55it/s]Loading weights:  44%|████▎     | 359/824 [00:01<00:01, 251.30it/s]Loading weights:  47%|████▋     | 387/824 [00:01<00:01, 250.94it/s]Loading weights:  50%|█████     | 413/824 [00:01<00:01, 237.32it/s]Loading weights:  57%|█████▋    | 466/824 [00:01<00:01, 316.40it/s]Loading weights:  66%|██████▌   | 544/824 [00:02<00:00, 446.78it/s]Loading weights:  75%|███████▌  | 620/824 [00:02<00:00, 533.49it/s]Loading weights:  84%|████████▍ | 696/824 [00:02<00:00, 596.27it/s]Loading weights:  94%|█████████▍| 774/824 [00:02<00:00, 649.17it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 333.32it/s]
+  10/157 generados
+  20/157 generados
+  30/157 generados
+  40/157 generados
+  50/157 generados
+  60/157 generados
+  70/157 generados
+  80/157 generados
+  90/157 generados
+  100/157 generados
+  110/157 generados
+  120/157 generados
+  130/157 generados
+  140/157 generados
+  150/157 generados
+  157/157 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_lora_by_image_rag_e5_small_longest/predictions_valid.csv
+Metricas operativas: 27.45s/ejemplo
+[W627 19:10:54.427592901 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[1/4] Base VLM zero-shot (test)...
+
+[run] python3 -m src.vlm_infer_enriched --split test
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'test': 314 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot | Modelo: Qwen/Qwen2.5-VL-3B-Instruct
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.04it/s]Loading weights:   1%|          | 9/824 [00:00<00:20, 40.03it/s]Loading weights:   4%|▍         | 37/824 [00:00<00:05, 134.49it/s]Loading weights:   8%|▊         | 63/824 [00:00<00:04, 173.18it/s]Loading weights:  11%|█         | 88/824 [00:00<00:03, 192.39it/s]Loading weights:  14%|█▎        | 113/824 [00:00<00:03, 203.84it/s]Loading weights:  17%|█▋        | 141/824 [00:00<00:03, 226.14it/s]Loading weights:  20%|██        | 167/824 [00:00<00:02, 236.19it/s]Loading weights:  24%|██▎       | 195/824 [00:01<00:02, 241.43it/s]Loading weights:  27%|██▋       | 220/824 [00:01<00:02, 237.48it/s]Loading weights:  30%|██▉       | 245/824 [00:01<00:02, 234.19it/s]Loading weights:  33%|███▎      | 273/824 [00:01<00:02, 246.26it/s]Loading weights:  36%|███▋      | 299/824 [00:01<00:02, 249.83it/s]Loading weights:  40%|███▉      | 327/824 [00:01<00:01, 250.50it/s]Loading weights:  43%|████▎     | 353/824 [00:01<00:01, 237.19it/s]Loading weights:  46%|████▌     | 381/824 [00:01<00:01, 248.07it/s]Loading weights:  50%|████▉     | 408/824 [00:01<00:01, 254.17it/s]Loading weights:  53%|█████▎    | 437/824 [00:01<00:01, 264.42it/s]Loading weights:  62%|██████▏   | 512/824 [00:02<00:00, 403.92it/s]Loading weights:  71%|███████▏  | 588/824 [00:02<00:00, 506.28it/s]Loading weights:  81%|████████  | 666/824 [00:02<00:00, 585.06it/s]Loading weights:  90%|█████████ | 742/824 [00:02<00:00, 634.16it/s]Loading weights: 100%|█████████▉| 821/824 [00:02<00:00, 652.83it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 329.95it/s]
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_zero_shot/predictions_test.csv
+Metricas operativas: 14.70s/ejemplo
+[W627 20:28:03.820060402 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[run] python3 -m src.vlm_infer_longest_by_image --split test
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'test': 314 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_by_image | Modelo: Qwen/Qwen2.5-VL-3B-Instruct
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:15,  6.06it/s]Loading weights:   1%|          | 9/824 [00:00<00:20, 40.16it/s]Loading weights:   4%|▍         | 37/824 [00:00<00:05, 135.15it/s]Loading weights:   8%|▊         | 63/824 [00:00<00:04, 173.47it/s]Loading weights:  11%|█         | 88/824 [00:00<00:03, 193.22it/s]Loading weights:  14%|█▎        | 113/824 [00:00<00:03, 205.15it/s]Loading weights:  17%|█▋        | 141/824 [00:00<00:03, 227.59it/s]Loading weights:  21%|██        | 169/824 [00:00<00:02, 242.73it/s]Loading weights:  24%|██▎       | 195/824 [00:01<00:02, 241.59it/s]Loading weights:  27%|██▋       | 220/824 [00:01<00:02, 238.18it/s]Loading weights:  30%|██▉       | 245/824 [00:01<00:02, 235.64it/s]Loading weights:  33%|███▎      | 273/824 [00:01<00:02, 248.15it/s]Loading weights:  36%|███▋      | 299/824 [00:01<00:02, 251.04it/s]Loading weights:  40%|███▉      | 327/824 [00:01<00:01, 251.95it/s]Loading weights:  43%|████▎     | 353/824 [00:01<00:01, 239.23it/s]Loading weights:  46%|████▌     | 381/824 [00:01<00:01, 250.26it/s]Loading weights:  50%|████▉     | 409/824 [00:01<00:01, 258.40it/s]Loading weights:  53%|█████▎    | 438/824 [00:01<00:01, 266.42it/s]Loading weights:  62%|██████▏   | 514/824 [00:02<00:00, 410.31it/s]Loading weights:  72%|███████▏  | 594/824 [00:02<00:00, 520.69it/s]Loading weights:  81%|████████▏ | 670/824 [00:02<00:00, 590.30it/s]Loading weights:  91%|█████████ | 750/824 [00:02<00:00, 646.88it/s]Loading weights: 100%|█████████▉| 821/824 [00:02<00:00, 657.84it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 332.68it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_zero_shot_by_image/predictions_test.csv
+Metricas operativas: 15.02s/ejemplo
+[W627 21:46:52.226605007 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[2/4] Base VLM + train-only RAG (test)...
+
+[run] python3 -m src.vlm_rag_infer --query-dataset enriched --context-dataset enriched --split test --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3462.61it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.58it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.87it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.24it/s]Batches:  29%|██▊       | 4/14 [00:01<00:01,  5.23it/s]Batches:  43%|████▎     | 6/14 [00:01<00:01,  7.99it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.71it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 15.03it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.85it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'test': 314 filas por imagen
+  Query dataset: dataset_enriched
+  Context dataset train: dataset_enriched (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_rag_e5_small_enriched | Modelo: Qwen/Qwen2.5-VL-3B-Instruct | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:15,  6.06it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 71.45it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 136.94it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 186.56it/s]Loading weights:  12%|█▏        | 97/824 [00:00<00:03, 217.32it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 224.34it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:02, 225.77it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 226.79it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 241.17it/s]Loading weights:  28%|██▊       | 229/824 [00:01<00:02, 252.51it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 248.11it/s]Loading weights:  34%|███▍      | 281/824 [00:01<00:02, 236.64it/s]Loading weights:  38%|███▊      | 309/824 [00:01<00:02, 248.11it/s]Loading weights:  41%|████      | 337/824 [00:01<00:01, 256.56it/s]Loading weights:  44%|████▍     | 363/824 [00:01<00:01, 250.39it/s]Loading weights:  47%|████▋     | 389/824 [00:01<00:01, 238.15it/s]Loading weights:  51%|█████     | 417/824 [00:01<00:01, 248.99it/s]Loading weights:  57%|█████▋    | 470/824 [00:01<00:01, 328.61it/s]Loading weights:  67%|██████▋   | 548/824 [00:02<00:00, 455.32it/s]Loading weights:  76%|███████▌  | 624/824 [00:02<00:00, 543.06it/s]Loading weights:  85%|████████▌ | 702/824 [00:02<00:00, 612.05it/s]Loading weights:  94%|█████████▍| 778/824 [00:02<00:00, 654.74it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 335.83it/s]
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_zero_shot_rag_e5_small_enriched/predictions_test.csv
+Metricas operativas: 18.07s/ejemplo
+[W627 23:21:51.912776682 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[run] python3 -m src.vlm_rag_infer --query-dataset longest --context-dataset longest --split test --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3479.63it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.57it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.85it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.20it/s]Batches:  29%|██▊       | 4/14 [00:01<00:01,  5.19it/s]Batches:  43%|████▎     | 6/14 [00:01<00:01,  7.93it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.67it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 14.85it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.78it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'test': 314 filas por imagen
+  Query dataset: dataset_longest_answer_by_image
+  Context dataset train: dataset_longest_answer_by_image (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_zero_shot_by_image_rag_e5_small_longest | Modelo: Qwen/Qwen2.5-VL-3B-Instruct | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:15,  6.06it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 71.19it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 136.48it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 185.96it/s]Loading weights:  12%|█▏        | 97/824 [00:00<00:03, 216.61it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 223.44it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:03, 225.07it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 226.22it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 241.54it/s]Loading weights:  28%|██▊       | 229/824 [00:01<00:02, 252.30it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 247.56it/s]Loading weights:  34%|███▍      | 280/824 [00:01<00:02, 241.76it/s]Loading weights:  37%|███▋      | 305/824 [00:01<00:02, 237.41it/s]Loading weights:  40%|████      | 333/824 [00:01<00:01, 247.88it/s]Loading weights:  44%|████▎     | 359/824 [00:01<00:01, 250.27it/s]Loading weights:  47%|████▋     | 387/824 [00:01<00:01, 250.43it/s]Loading weights:  50%|█████     | 413/824 [00:01<00:01, 237.50it/s]Loading weights:  57%|█████▋    | 466/824 [00:01<00:01, 317.21it/s]Loading weights:  66%|██████▌   | 544/824 [00:02<00:00, 447.80it/s]Loading weights:  75%|███████▌  | 620/824 [00:02<00:00, 534.72it/s]Loading weights:  84%|████████▍ | 696/824 [00:02<00:00, 596.96it/s]Loading weights:  94%|█████████▍| 774/824 [00:02<00:00, 649.73it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 334.07it/s]
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_zero_shot_by_image_rag_e5_small_longest/predictions_test.csv
+Metricas operativas: 18.03s/ejemplo
+[W628 00:56:40.502204075 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[3/4] Fine-tuned VLM + train-only RAG (test)...
+[warn] No existe adapter enriched: outputs/results/dataset_enriched/vlm_lora/final_adapter
+
+[run] python3 -m src.vlm_rag_infer --query-dataset longest --context-dataset longest --split test --adapter outputs/results/dataset_longest_answer/vlm_lora_by_image/final_adapter --retriever e5_small --top-k 3
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3423.65it/s]
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:08,  1.58it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.95it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.31it/s]Batches:  29%|██▊       | 4/14 [00:00<00:01,  5.30it/s]Batches:  43%|████▎     | 6/14 [00:01<00:00,  8.04it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.75it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 15.10it/s]Batches: 100%|██████████| 14/14 [00:01<00:00,  9.94it/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Split 'test': 314 filas por imagen
+  Query dataset: dataset_longest_answer_by_image
+  Context dataset train: dataset_longest_answer_by_image (842 casos unicos)
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_lora_by_image_rag_e5_small_longest | Modelo: final_adapter | retriever=intfloat/multilingual-e5-small | top_k=3
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:16,  6.04it/s]Loading weights:   2%|▏         | 16/824 [00:00<00:11, 71.21it/s]Loading weights:   5%|▍         | 41/824 [00:00<00:05, 136.41it/s]Loading weights:   8%|▊         | 69/824 [00:00<00:04, 185.75it/s]Loading weights:  12%|█▏        | 97/824 [00:00<00:03, 216.42it/s]Loading weights:  15%|█▍        | 123/824 [00:00<00:03, 223.32it/s]Loading weights:  18%|█▊        | 148/824 [00:00<00:03, 224.94it/s]Loading weights:  21%|██        | 173/824 [00:00<00:02, 226.16it/s]Loading weights:  24%|██▍       | 201/824 [00:01<00:02, 241.50it/s]Loading weights:  28%|██▊       | 229/824 [00:01<00:02, 252.13it/s]Loading weights:  31%|███       | 255/824 [00:01<00:02, 247.53it/s]Loading weights:  34%|███▍      | 280/824 [00:01<00:02, 241.74it/s]Loading weights:  37%|███▋      | 305/824 [00:01<00:02, 237.43it/s]Loading weights:  40%|████      | 333/824 [00:01<00:01, 248.53it/s]Loading weights:  44%|████▎     | 359/824 [00:01<00:01, 251.55it/s]Loading weights:  47%|████▋     | 387/824 [00:01<00:01, 251.34it/s]Loading weights:  50%|█████     | 413/824 [00:01<00:01, 238.08it/s]Loading weights:  57%|█████▋    | 466/824 [00:01<00:01, 317.88it/s]Loading weights:  66%|██████▌   | 545/824 [00:02<00:00, 451.57it/s]Loading weights:  75%|███████▌  | 620/824 [00:02<00:00, 535.32it/s]Loading weights:  84%|████████▍ | 696/824 [00:02<00:00, 597.92it/s]Loading weights:  94%|█████████▍| 774/824 [00:02<00:00, 650.74it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 334.43it/s]
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_lora_by_image_rag_e5_small_longest/predictions_test.csv
+Metricas operativas: 29.39s/ejemplo
+[W628 03:30:54.120209152 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+[4/4] Evaluating generated predictions...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[dataset_enriched | vlm_zero_shot] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  46%|████▌     | 91/199 [00:00<00:00, 750.43it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 941.51it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_zero_shot_valid.csv
+
+[dataset_enriched | vlm_zero_shot_rag_e5_small_enriched] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3595.30it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_zero_shot_rag_e5_small_enriched_valid.csv
+
+[dataset_longest_answer | vlm_zero_shot_by_image] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3382.11it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_zero_shot_by_image_valid.csv
+
+[dataset_longest_answer | vlm_zero_shot_by_image_rag_e5_small_longest] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3621.13it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_zero_shot_by_image_rag_e5_small_longest_valid.csv
+
+[dataset_longest_answer | vlm_lora_by_image_rag_e5_small_longest] 157 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3583.03it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_lora_by_image_rag_e5_small_longest_valid.csv
+
+[dataset_enriched | vlm_zero_shot] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3411.10it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_zero_shot_test.csv
+
+[dataset_enriched | vlm_zero_shot_rag_e5_small_enriched] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3691.03it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/per_case_vlm_zero_shot_rag_e5_small_enriched_test.csv
+
+[dataset_longest_answer | vlm_zero_shot_by_image] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3466.65it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_zero_shot_by_image_test.csv
+
+[dataset_longest_answer | vlm_zero_shot_by_image_rag_e5_small_longest] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 4386.61it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_zero_shot_by_image_rag_e5_small_longest_test.csv
+
+[dataset_longest_answer | vlm_lora_by_image_rag_e5_small_longest] 314 casos (0 predicciones vacias)
+  Calculando BERTScore (bert-base-multilingual-cased)...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3451.49it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-multilingual-cased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  Por caso -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/per_case_vlm_lora_by_image_rag_e5_small_longest_test.csv
+
+Resumen (splits mixtos) -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched/metrics_mixed.csv
+
+======================================================================
+/home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_enriched
+======================================================================
+ dataset_variant                              method                  model_name split   n  empty_predictions  chrf_mean  rouge_l_mean  token_f1_mean  sacrebleu_corpus  chrf_corpus  bertscore_f1_mean
+dataset_enriched                            vlm_lora               final_adapter valid 157                  0     0.3612        0.2429         0.3052           10.9045      35.7047             0.7370
+dataset_enriched                            vlm_lora               final_adapter  test 314                  0     0.3647        0.2541         0.3167           11.5985      35.6905             0.7383
+dataset_enriched                       vlm_zero_shot Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.3067        0.1213         0.1908            1.0724      32.4538             0.6820
+dataset_enriched vlm_zero_shot_rag_e5_small_enriched Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.3145        0.1283         0.1958            1.1780      33.2983             0.6850
+dataset_enriched                       vlm_zero_shot Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.2978        0.1228         0.1888            1.4011      31.4085             0.6799
+dataset_enriched vlm_zero_shot_rag_e5_small_enriched Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.3105        0.1358         0.1986            1.7116      32.4702             0.6818
+
+Resumen (splits mixtos) -> /home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer/metrics_mixed.csv
+
+======================================================================
+/home/andyd/projects/dermavqa-paper/outputs/metrics/dataset_longest_answer
+======================================================================
+       dataset_variant                                      method                  model_name split   n  empty_predictions  chrf_mean  rouge_l_mean  token_f1_mean  sacrebleu_corpus  chrf_corpus  bertscore_f1_mean
+dataset_longest_answer                           vlm_lora_by_image               final_adapter valid 157                  0     0.1411        0.0807         0.0967            0.2112      11.1687             0.6263
+dataset_longest_answer                           vlm_lora_by_image               final_adapter  test 314                  0     0.1678        0.0811         0.0922            0.2992      14.4740             0.6193
+dataset_longest_answer                      vlm_zero_shot_by_image Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.2199        0.0893         0.1253            0.7283      21.6370             0.6469
+dataset_longest_answer vlm_zero_shot_by_image_rag_e5_small_longest Qwen/Qwen2.5-VL-3B-Instruct valid 157                  0     0.2185        0.0909         0.1269            0.6578      22.9775             0.6466
+dataset_longest_answer      vlm_lora_by_image_rag_e5_small_longest               final_adapter valid 157                  0     0.1185        0.0555         0.0413            0.1083      10.2573             0.5648
+dataset_longest_answer                      vlm_zero_shot_by_image Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.2106        0.0832         0.1095            0.6235      21.9773             0.6463
+dataset_longest_answer vlm_zero_shot_by_image_rag_e5_small_longest Qwen/Qwen2.5-VL-3B-Instruct  test 314                  0     0.2024        0.0831         0.1066            0.6088      21.2261             0.6419
+dataset_longest_answer      vlm_lora_by_image_rag_e5_small_longest               final_adapter  test 314                  0     0.1205        0.0409         0.0333            0.0775      10.5408             0.5602
+[W628 03:31:50.009403499 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+
+Done. Main outputs:
+  Enriched metrics: outputs/metrics/dataset_enriched/metrics_mixed.csv
+  Longest metrics: outputs/metrics/dataset_longest_answer/metrics_mixed.csv
+  Comparison log dir: outputs/results/vlm_rag_comparison

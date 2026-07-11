@@ -1,0 +1,15 @@
+{
+  "method": "vlm_lora_rag_e5_small_enriched",
+  "model_name": "final_adapter",
+  "dataset_variant": "dataset_enriched",
+  "rag_context_dataset": "dataset_enriched",
+  "rag_retriever": "e5_small",
+  "rag_retriever_model": "intfloat/multilingual-e5-small",
+  "rag_top_k": 3,
+  "split": "test",
+  "n": 314,
+  "mean_latency_s": 11.716333714630588,
+  "total_time_s": 3678.9287863940044,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

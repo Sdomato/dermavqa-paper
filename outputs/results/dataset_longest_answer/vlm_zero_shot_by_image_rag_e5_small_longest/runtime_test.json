@@ -1,0 +1,15 @@
+{
+  "method": "vlm_zero_shot_by_image_rag_e5_small_longest",
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "dataset_variant": "dataset_longest_answer",
+  "rag_context_dataset": "dataset_longest_answer",
+  "rag_retriever": "e5_small",
+  "rag_retriever_model": "intfloat/multilingual-e5-small",
+  "rag_top_k": 3,
+  "split": "test",
+  "n": 314,
+  "mean_latency_s": 18.03357542753193,
+  "total_time_s": 5662.542684245025,
+  "max_new_tokens": 256,
+  "quantize": "4bit"
+}

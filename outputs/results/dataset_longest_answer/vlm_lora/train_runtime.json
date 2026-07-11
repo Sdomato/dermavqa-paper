@@ -1,0 +1,15 @@
+{
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "n_train": 842,
+  "n_eval": 56,
+  "epochs": 3.779,
+  "lr": 0.0002,
+  "batch_size": 1,
+  "grad_accum": 16,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "total_train_time_s": 10464.0,
+  "peak_vram_gb": 15.0,
+  "adapter_size_mb": 160.0,
+  "notes": "Early stopping at epoch 3.78. All images per case (no [:1] limit). GPU: NVIDIA L4 (us-east1-c)."
+}

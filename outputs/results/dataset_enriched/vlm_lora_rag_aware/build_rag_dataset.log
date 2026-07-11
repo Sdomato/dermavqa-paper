@@ -1,0 +1,18 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+[dataset_enriched] Cargando splits...
+  Train: 2473 filas | índice único: 842 encounters
+  Construyendo índice E5-small sobre 842 preguntas...
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 3527.10it/s]
+  Codificando 842 preguntas del corpus...
+Batches:   0%|          | 0/14 [00:00<?, ?it/s]Batches:   7%|▋         | 1/14 [00:00<00:07,  1.63it/s]Batches:  14%|█▍        | 2/14 [00:00<00:04,  2.98it/s]Batches:  21%|██▏       | 3/14 [00:00<00:02,  4.37it/s]Batches:  29%|██▊       | 4/14 [00:00<00:01,  5.42it/s]Batches:  43%|████▎     | 6/14 [00:01<00:00,  8.23it/s]Batches:  57%|█████▋    | 8/14 [00:01<00:00, 10.98it/s]Batches:  79%|███████▊  | 11/14 [00:01<00:00, 15.25it/s]Batches: 100%|██████████| 14/14 [00:01<00:00, 10.11it/s]
+  Recuperando contextos para split 'train' (2473 filas)...
+    -> 2473 filas procesadas
+  Recuperando contextos para split 'valid' (157 filas)...
+    -> 157 filas procesadas
+  Recuperando contextos para split 'test' (314 filas)...
+    -> 314 filas procesadas
+
+Dataset RAG guardado en outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune_rag_e5_small.jsonl (2944 filas)
+  2944 filas con 3 contextos recuperados
+[W706 15:04:26.581867399 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())

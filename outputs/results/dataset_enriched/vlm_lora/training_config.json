@@ -1,0 +1,20 @@
+{
+  "model_name": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "dataset_variant": "dataset_enriched",
+  "epochs": 1,
+  "lr": 0.0002,
+  "batch_size": 1,
+  "grad_accum": 16,
+  "eval_steps": 50,
+  "save_steps": 50,
+  "save_total_limit": 0,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "max_pixels": 200704,
+  "min_pixels": 50176,
+  "n_train": 2473,
+  "n_eval": 157,
+  "adapter_dir": "/home/sdomato/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_lora/final_adapter",
+  "checkpoints_dir": "/home/sdomato/projects/dermavqa-paper/outputs/results/dataset_enriched/vlm_lora/checkpoints"
+}

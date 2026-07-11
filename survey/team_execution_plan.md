@@ -23,8 +23,27 @@ El trabajo se organiza alrededor de tres variantes de dataset:
   `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip`.
 - El baseline de retrieval textual sobre `dataset_enriched` ya esta corrido.
 - Los resultados resumidos estan en
-  `results/dataset_enriched/retrieval_textual/`.
+  `outputs/metrics/dataset_enriched/retrieval_textual/`.
+- Las visualizaciones del baseline textual enriquecido ya estan agregadas:
+  `chrF`, `sacreBLEU`, BERTScore F1 y ganador en valid por `chrF`.
+- El notebook/script de LoRA/QLoRA sobre `dataset_enriched` ya esta preparado y
+  ejecutado con Qwen2.5-VL-3B en una VM L4; los resultados estan en
+  `outputs/results/dataset_enriched/vlm_lora/` y
+  `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
+- La corrida enriquecida esta documentada en
+  `survey/enriched_vlm_experiments.md` y la comparacion preliminar en
+  `survey/final_comparison_snapshot.md`.
+- La documentacion y validacion basica de `dataset_enriched` ya esta cerrada en
+  `outputs/datasets/README.md` y `survey/dataset_notes.md`.
+- Pendiente especifico: costo aproximado de la sintesis LLM, porque no hay logs
+  versionables de usage/tokens/costo.
 - Las imagenes no se suben a GitHub porque el equipo ya las tiene localmente.
+
+> **Nota de convencion (actualizada 2026-06-20):** la raiz canonica de resultados
+> es `outputs/` — predicciones en `outputs/results/<dataset>/<metodo>/` y metricas
+> en `outputs/metrics/<dataset>/`. Donde este documento escribe `results/...` (mas
+> abajo), leer `outputs/results/...` u `outputs/metrics/...` segun corresponda.
+> Detalle en `STRUCTURE.md`.
 
 ## Responsabilidades por participante
 
@@ -51,14 +70,14 @@ Tareas:
   - ganador en valid segun `chrF`.
 - Fine-tunear un VLM con LoRA/QLoRA sobre `dataset_enriched`.
 - Guardar resultados de fine-tuning en
-  `results/dataset_enriched/vlm_lora/`.
+  `outputs/results/dataset_enriched/vlm_lora/`.
 
 Entregables:
 
 - Dataset enriquecido documentado.
 - Notebook/resultados de retrieval textual enriquecido con plots.
 - Notebook de LoRA/QLoRA sobre dataset enriquecido.
-- Predicciones y metricas en valid/test.
+- Predicciones y metricas en valid/test ya generadas para `dataset_enriched`.
 
 ### Damian
 
@@ -75,8 +94,8 @@ Tareas:
   - retrieval visual con CLIP/OpenCLIP;
   - retrieval multimodal texto + imagen.
 - Implementar retrieval visual para `dataset_short_answer`.
-- Agregar graficos al retrieval textual que Santino ya hizo sobre
-  `dataset_enriched`.
+- Revisar o extender, si hace falta, los graficos del retrieval textual que
+  Santino ya dejo sobre `dataset_enriched`.
 
 Resultados esperados:
 
@@ -84,7 +103,7 @@ Resultados esperados:
 - `results/dataset_longest_answer/retrieval_visual/`
 - `results/dataset_longest_answer/retrieval_multimodal/`
 - `results/dataset_short_answer/retrieval_visual/`
-- plots agregados en `results/dataset_enriched/retrieval_textual/`
+- revision opcional de plots en `results/dataset_enriched/retrieval_textual/`
 
 ### Matias
 
@@ -202,19 +221,19 @@ mejor enfoque combinando:
 
 ## Estructura esperada de resultados
 
+Predicciones y artefactos por metodo van en `outputs/results/`; los resumenes de
+metricas en `outputs/metrics/` (ver `STRUCTURE.md`).
+
 ```text
-results/
-  dataset_enriched/
-    retrieval_textual/
-    vlm_lora/
-  dataset_longest_answer/
-    retrieval_textual/
-    retrieval_visual/
-    retrieval_multimodal/
-    vlm_zero_shot/
-    vlm_lora/
-  dataset_short_answer/
-    retrieval_visual/
+outputs/
+  results/                       # predicciones + artefactos por metodo
+    dataset_enriched/{retrieval_textual,vlm_lora}/
+    dataset_longest_answer/{retrieval_textual,retrieval_visual,retrieval_multimodal,vlm_zero_shot,vlm_lora}/
+    dataset_short_answer/retrieval_visual/
+  metrics/                       # resumenes de metricas (VERSIONADO)
+    dataset_enriched/...
+    dataset_longest_answer/...
+    dataset_short_answer/...
 ```
 
 ## Reglas de colaboracion
@@ -225,4 +244,3 @@ results/
 - Si un resultado pesa mucho, subir solo metricas agregadas y documentar donde
   conseguir el artefacto completo.
 - Mantener nombres de carpetas consistentes por dataset y metodo.
-

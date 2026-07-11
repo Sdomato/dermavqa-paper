@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="480" viewBox="0 0 820 480" role="img" aria-label="Dataset sizes by split">
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}.title{font-size:22px;font-weight:700}.axis-label{font-size:14px;font-weight:600}.tick{font-size:11px;fill:#555}.label{font-size:12px}.value{font-size:12px;font-weight:700}.axis{stroke:#333;stroke-width:1.3}.grid{stroke:#ddd;stroke-width:1}
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<text x="410.0" y="32" text-anchor="middle" class="title">Dataset sizes by split</text>
+<text x="22" y="225.0" transform="rotate(-90 22 225.0)" text-anchor="middle" class="axis-label">Rows / image rows</text>
+<line x1="80" y1="70" x2="80" y2="380" class="axis"/>
+<line x1="80" y1="380" x2="780" y2="380" class="axis"/>
+<line x1="75" y1="380.0" x2="780" y2="380.0" class="grid"/>
+<text x="70" y="384.0" text-anchor="end" class="tick">0</text>
+<line x1="75" y1="318.0" x2="780" y2="318.0" class="grid"/>
+<text x="70" y="322.0" text-anchor="end" class="tick">569</text>
+<line x1="75" y1="256.0" x2="780" y2="256.0" class="grid"/>
+<text x="70" y="260.0" text-anchor="end" class="tick">1138</text>
+<line x1="75" y1="194.0" x2="780" y2="194.0" class="grid"/>
+<text x="70" y="198.0" text-anchor="end" class="tick">1706</text>
+<line x1="75" y1="132.0" x2="780" y2="132.0" class="grid"/>
+<text x="70" y="136.0" text-anchor="end" class="tick">2275</text>
+<line x1="75" y1="70.0" x2="780" y2="70.0" class="grid"/>
+<text x="70" y="74.0" text-anchor="end" class="tick">2844</text>
+<rect x="137.7" y="110.4" width="34" height="269.6" fill="#4C78A8" rx="3"/>
+<rect x="179.7" y="362.9" width="34" height="17.1" fill="#F58518" rx="3"/>
+<rect x="221.7" y="345.8" width="34" height="34.2" fill="#54A24B" rx="3"/>
+<text x="196.7" y="410" text-anchor="middle" class="label">Longest</text>
+<rect x="371.0" y="110.4" width="34" height="269.6" fill="#4C78A8" rx="3"/>
+<rect x="413.0" y="362.9" width="34" height="17.1" fill="#F58518" rx="3"/>
+<rect x="455.0" y="345.8" width="34" height="34.2" fill="#54A24B" rx="3"/>
+<text x="430.0" y="410" text-anchor="middle" class="label">Short</text>
+<rect x="604.3" y="110.4" width="34" height="269.6" fill="#4C78A8" rx="3"/>
+<rect x="646.3" y="362.9" width="34" height="17.1" fill="#F58518" rx="3"/>
+<rect x="688.3" y="345.8" width="34" height="34.2" fill="#54A24B" rx="3"/>
+<text x="663.3" y="410" text-anchor="middle" class="label">Enriched</text>
+<rect x="685" y="70" width="14" height="14" fill="#4C78A8"/>
+<text x="707" y="82" class="label">train</text>
+<rect x="685" y="94" width="14" height="14" fill="#F58518"/>
+<text x="707" y="106" class="label">valid</text>
+<rect x="685" y="118" width="14" height="14" fill="#54A24B"/>
+<text x="707" y="130" class="label">test</text>
+</svg>

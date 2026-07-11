@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="500" viewBox="0 0 820 500" role="img" aria-label="VLM latency vs semantic quality">
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#222}.title{font-size:22px;font-weight:700}.axis-label{font-size:14px;font-weight:600}.tick{font-size:11px;fill:#555}.label{font-size:12px}.value{font-size:12px;font-weight:700}.axis{stroke:#333;stroke-width:1.3}.grid{stroke:#ddd;stroke-width:1}
+</style>
+<rect width="100%" height="100%" fill="white"/>
+<text x="410.0" y="32" text-anchor="middle" class="title">VLM latency vs semantic quality</text>
+<text x="425.0" y="478" text-anchor="middle" class="axis-label">Mean latency (seconds/example)</text>
+<text x="22" y="247.5" transform="rotate(-90 22 247.5)" text-anchor="middle" class="axis-label">BERTScore F1</text>
+<line x1="80" y1="70" x2="80" y2="425" class="axis"/>
+<line x1="80" y1="425" x2="770" y2="425" class="axis"/>
+<line x1="80.0" y1="70" x2="80.0" y2="430" class="grid"/>
+<text x="80.0" y="447" text-anchor="middle" class="tick">0</text>
+<line x1="75" y1="425.0" x2="770" y2="425.0" class="grid"/>
+<text x="70" y="429.0" text-anchor="end" class="tick">0.53</text>
+<line x1="218.0" y1="70" x2="218.0" y2="430" class="grid"/>
+<text x="218.0" y="447" text-anchor="middle" class="tick">11</text>
+<line x1="75" y1="354.0" x2="770" y2="354.0" class="grid"/>
+<text x="70" y="358.0" text-anchor="end" class="tick">0.58</text>
+<line x1="356.0" y1="70" x2="356.0" y2="430" class="grid"/>
+<text x="356.0" y="447" text-anchor="middle" class="tick">22</text>
+<line x1="75" y1="283.0" x2="770" y2="283.0" class="grid"/>
+<text x="70" y="287.0" text-anchor="end" class="tick">0.62</text>
+<line x1="494.0" y1="70" x2="494.0" y2="430" class="grid"/>
+<text x="494.0" y="447" text-anchor="middle" class="tick">32</text>
+<line x1="75" y1="212.0" x2="770" y2="212.0" class="grid"/>
+<text x="70" y="216.0" text-anchor="end" class="tick">0.67</text>
+<line x1="632.0" y1="70" x2="632.0" y2="430" class="grid"/>
+<text x="632.0" y="447" text-anchor="middle" class="tick">43</text>
+<line x1="75" y1="141.0" x2="770" y2="141.0" class="grid"/>
+<text x="70" y="145.0" text-anchor="end" class="tick">0.72</text>
+<line x1="770.0" y1="70" x2="770.0" y2="430" class="grid"/>
+<text x="770.0" y="447" text-anchor="middle" class="tick">54</text>
+<line x1="75" y1="70.0" x2="770" y2="70.0" class="grid"/>
+<text x="70" y="74.0" text-anchor="end" class="tick">0.77</text>
+<circle cx="680.0" cy="114.9" r="7" fill="#4C78A8"/>
+<text x="690.0" y="106.9" class="label">Enriched VLM LoRA case-avg</text>
+<circle cx="267.6" cy="200.3" r="7" fill="#E45756"/>
+<text x="277.6" y="192.3" class="label">Enriched VLM zero-shot</text>
+<circle cx="310.6" cy="197.3" r="7" fill="#54A24B"/>
+<text x="320.6" y="189.3" class="label">Enriched VLM zero-shot + RAG</text>
+<circle cx="229.6" cy="134.4" r="7" fill="#4C78A8"/>
+<text x="239.6" y="126.4" class="label">Enriched VLM LoRA + RAG</text>
+<circle cx="271.7" cy="251.2" r="7" fill="#E45756"/>
+<text x="281.7" y="243.2" class="label">Longest VLM zero-shot by-image</text>
+<circle cx="310.2" cy="257.2" r="7" fill="#54A24B"/>
+<text x="320.2" y="249.2" class="label">Longest VLM zero-shot + RAG by-image</text>
+<circle cx="341.1" cy="291.7" r="7" fill="#4C78A8"/>
+<text x="351.1" y="283.7" class="label">Longest VLM LoRA by-image</text>
+<circle cx="455.2" cy="380.1" r="7" fill="#E45756"/>
+<text x="465.2" y="372.1" class="label">Longest VLM LoRA + RAG by-image</text>
+</svg>

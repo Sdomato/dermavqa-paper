@@ -1,0 +1,41 @@
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Split 'test': 314 filas por imagen
+  Imagenes faltantes: 0 (en 0 filas)
+  Metodo: vlm_lora_by_image | Modelo: final_adapter
+Loading weights:   0%|          | 0/824 [00:00<?, ?it/s]Loading weights:   0%|          | 1/824 [00:00<02:17,  5.99it/s]Loading weights:   1%|          | 8/824 [00:00<00:23, 35.35it/s]Loading weights:   4%|▍         | 33/824 [00:00<00:06, 119.84it/s]Loading weights:   7%|▋         | 59/824 [00:00<00:04, 169.20it/s]Loading weights:  11%|█         | 87/824 [00:00<00:03, 198.90it/s]Loading weights:  14%|█▎        | 112/824 [00:00<00:03, 207.99it/s]Loading weights:  17%|█▋        | 137/824 [00:00<00:03, 213.93it/s]Loading weights:  20%|█▉        | 164/824 [00:00<00:02, 230.14it/s]Loading weights:  23%|██▎       | 189/824 [00:01<00:02, 235.15it/s]Loading weights:  26%|██▌       | 215/824 [00:01<00:02, 241.27it/s]Loading weights:  29%|██▉       | 243/824 [00:01<00:02, 244.23it/s]Loading weights:  33%|███▎      | 268/824 [00:01<00:02, 238.38it/s]Loading weights:  36%|███▌      | 293/824 [00:01<00:02, 234.40it/s]Loading weights:  39%|███▉      | 321/824 [00:01<00:02, 245.33it/s]Loading weights:  42%|████▏     | 347/824 [00:01<00:01, 248.91it/s]Loading weights:  46%|████▌     | 375/824 [00:01<00:01, 249.10it/s]Loading weights:  49%|████▊     | 400/824 [00:01<00:01, 240.92it/s]Loading weights:  52%|█████▏    | 425/824 [00:01<00:01, 236.21it/s]Loading weights:  61%|██████    | 502/824 [00:02<00:00, 384.04it/s]Loading weights:  70%|██████▉   | 576/824 [00:02<00:00, 485.34it/s]Loading weights:  79%|███████▉  | 654/824 [00:02<00:00, 565.76it/s]Loading weights:  89%|████████▊ | 730/824 [00:02<00:00, 618.32it/s]Loading weights:  98%|█████████▊| 806/824 [00:02<00:00, 659.55it/s]Loading weights: 100%|██████████| 824/824 [00:02<00:00, 325.88it/s]
+  10/314 generados
+  20/314 generados
+  30/314 generados
+  40/314 generados
+  50/314 generados
+  60/314 generados
+  70/314 generados
+  80/314 generados
+  90/314 generados
+  100/314 generados
+  110/314 generados
+  120/314 generados
+  130/314 generados
+  140/314 generados
+  150/314 generados
+  160/314 generados
+  170/314 generados
+  180/314 generados
+  190/314 generados
+  200/314 generados
+  210/314 generados
+  220/314 generados
+  230/314 generados
+  240/314 generados
+  250/314 generados
+  260/314 generados
+  270/314 generados
+  280/314 generados
+  290/314 generados
+  300/314 generados
+  310/314 generados
+  314/314 generados
+
+Predicciones guardadas en /home/andyd/projects/dermavqa-paper/outputs/results/dataset_longest_answer/vlm_lora_by_image/predictions_test.csv
+Metricas operativas: 20.45s/ejemplo

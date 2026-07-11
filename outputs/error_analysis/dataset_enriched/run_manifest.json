@@ -1,0 +1,12 @@
+{
+  "dataset_variant": "enriched",
+  "dataset_name": "dataset_enriched",
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "adapter": "outputs/results/dataset_enriched/vlm_lora/final_adapter",
+  "rag_aware_adapter": "outputs/results/dataset_enriched/vlm_lora_rag_aware/final_adapter",
+  "minimum_explanation_tokens": 100,
+  "n_per_bucket": 2,
+  "started_at": "2026-07-08T18:05:35.814357+00:00",
+  "git_commit": "8868a534e7c462a1c596e1388fc57eb6c26f80de",
+  "git_dirty": true
+}
