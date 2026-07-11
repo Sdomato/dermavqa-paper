@@ -12,16 +12,16 @@ reproducible y honesta entre estrategias de adaptación para un dominio médico
 multimodal y subrepresentado en español. Ver `survey/README.md` para el roadmap
 completo y `survey/team_execution_plan.md` para la división de tareas.
 
-## Equipo y responsabilidades
+## Líneas de trabajo
 
-| Persona | Foco | Dataset principal |
+| Línea | Foco | Dataset principal |
 | --- | --- | --- |
-| **Santino** | Dataset enriquecido (síntesis LLM) + LoRA/QLoRA sobre enriquecido | `dataset_enriched` |
-| **Damián** | Construcción de datasets long/short + baselines de retrieval (textual, visual, multimodal) | `dataset_longest_answer`, `dataset_short_answer` |
-| **Matías** | VLM zero-shot + LoRA/QLoRA sobre respuesta larga + liderazgo del paper | `dataset_longest_answer` |
+| Dataset enriquecido | Dataset enriquecido (síntesis LLM) + LoRA/QLoRA sobre enriquecido | `dataset_enriched` |
+| Retrieval | Construcción de datasets long/short + baselines de retrieval (textual, visual, multimodal) | `dataset_longest_answer_by_image`, `dataset_short_answer` |
+| VLM respuesta larga | VLM zero-shot + LoRA/QLoRA sobre respuesta larga | `dataset_longest_answer_by_image` |
 
-**Comparación estrella del trabajo:** LoRA sobre respuesta larga (Matías) vs
-LoRA sobre enriquecido (Santino), ambos contra retrieval multimodal (Damián).
+**Comparación estrella del trabajo:** LoRA sobre respuesta larga vs LoRA
+sobre enriquecido, ambos contra retrieval multimodal.
 
 ## Estructura del repo
 
@@ -61,16 +61,23 @@ varias vistas del mismo corpus:
 
 | Variante | Target | Archivo / artefacto |
 | --- | --- | --- |
-| `longest_answer` | Respuesta original más larga | `outputs/datasets/dataset_longest_answer.{json,csv}` |
-| `longest_answer_by_image` | Igual a `longest_answer`, pero una fila por imagen para VLM comparable | `outputs/datasets/dataset_longest_answer_by_image.{json,jsonl,csv,zip}` |
+| `longest_answer_by_image` | Respuesta original más larga, una fila por imagen (target canónico de respuesta larga: retrieval, zero-shot y LoRA se evalúan todos con esta misma unidad, ver "Nota de versión" en `paper/draft.md` §5) | `outputs/datasets/dataset_longest_answer_by_image.{json,jsonl,csv,zip}` |
 | `short_answer` | Respuesta más corta (diagnóstico breve) | `outputs/datasets/dataset_short_answer.{json,csv}` |
 | `enriched` | Respuestas consolidadas por un LLM (Azure) | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip` |
 
-Esquema del dataset canónico (`dataset_longest_answer.json`): `encounter_id`,
-`author_id`, `image_ids` (lista), `query_title_es`, `query_content_es`,
-`query_title_en`, `query_content_en`, `_split`, `answer_es`, `answer_en`,
-`answer_author_id`, `n_responses`. Splits en `_split`: `train` (842),
-`valid_ht` (56), `test_ht_spanishtestsetcorrected` (100).
+`dataset_longest_answer.{json,csv}` (una fila por caso, sin expandir a
+imagen) es un artefacto **intermedio**: `build_answer_datasets.py` lo genera
+primero y `build_longest_by_image_dataset.py` lo expande a
+`dataset_longest_answer_by_image`. No se usa como target final de ningún
+resultado reportado — la corrida de VLM sobre una imagen por caso quedó
+superada porque no era comparable con los baselines de retrieval y el
+zero-shot, evaluados por imagen (ver `paper/draft.md` §5).
+
+Esquema del dataset canónico (`dataset_longest_answer_by_image.json`, una
+fila por imagen): `split`, `encounter_id`, `image_id`, `image_path`,
+`question_es`, `answer_es`. Splits: `train` (842 casos), `valid_ht` (56
+casos, 157 imágenes), `test_ht_spanishtestsetcorrected` (100 casos, 314
+imágenes).
 
 ## Setup
 
@@ -102,11 +109,11 @@ Todos se ejecutan como módulo desde la raíz del repo (`python -m src.<nombre>`
 ### Construcción de datasets
 | Script | Qué hace |
 | --- | --- |
-| `build_answer_datasets.py` | Genera `dataset_longest_answer` y `dataset_short_answer` desde los JSON crudos de IIYI. |
-| `build_longest_by_image_dataset.py` | Expande `dataset_longest_answer` a una fila por imagen para entrenar el VLM con la misma unidad que `dataset_enriched`. |
+| `build_answer_datasets.py` | Genera `dataset_longest_answer` (intermedio, una fila por caso) y `dataset_short_answer` desde los JSON crudos de IIYI. |
+| `build_longest_by_image_dataset.py` | Expande `dataset_longest_answer` a `dataset_longest_answer_by_image` (una fila por imagen), el target canónico de respuesta larga usado en todos los resultados reportados. |
 | `build_llm_synthesized_dataset.py` | Genera el dataset enriquecido vía Azure OpenAI (síntesis extractiva, con trazabilidad). Ver `survey/dataset_notes.md`. |
 
-### Baselines de retrieval (Damián)
+### Baselines de retrieval
 Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieval_short.py` (short).
 | Script | Modelo / método |
 | --- | --- |
@@ -119,19 +126,31 @@ Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieva
 | `evaluate_retrieval.py` | Métricas de los baselines: `--dataset longest_answer\|short_answer`. |
 | `plot_retrieval_scores.py` | Gráficos de distribución de scores (PNG 300 dpi). |
 
-### VLM (Matías)
+> Los scripts de arriba corren top-1 sobre todo el corpus (`dataset_longest_answer`,
+> una fila por caso) y sirven para exploración rápida en CPU. **Los números
+> reportados en el paper para respuesta larga vienen de
+> `evaluate_retrieval_heldout.py`** (ver tabla más abajo), que evalúa
+> train-only (sin data leakage) sobre `dataset_longest_answer_by_image` — la
+> misma unidad que usan zero-shot y LoRA, para que las cinco filas de la
+> Tabla 1 sean comparables entre sí.
+
+### VLM
 | Script | Qué hace |
 | --- | --- |
-| `vlm_infer.py` | Inferencia Qwen2.5-VL-3B 4-bit zero-shot; `--adapter <path>` para LoRA. `--dry-run` valida prompts/imágenes sin GPU. |
-| `train_longest.py` | Fine-tuning QLoRA (r=16, α=32) sobre `train`, selección con `valid`. `--dry-run` valida el formato chat sin GPU. |
+| `train_longest_by_image.py` | Fine-tuning QLoRA sobre `dataset_longest_answer_by_image` (todas las imágenes por caso, early stopping), con el mismo motor que enriched. **Script canónico de respuesta larga.** |
+| `vlm_infer_longest_by_image.py` | Inferencia Qwen2.5-VL sobre `dataset_longest_answer_by_image` (zero-shot o con `--adapter` LoRA). **Script canónico de respuesta larga.** |
 | `train_enriched.py` | Fine-tuning QLoRA by-image sobre `dataset_enriched`; wrapper de `vlm_lora_training.py`. |
-| `train_longest_by_image.py` | Fine-tuning QLoRA by-image sobre `dataset_longest_answer_by_image`, con el mismo motor que enriched. |
 | `vlm_infer_enriched.py` | Inferencia Qwen2.5-VL sobre `dataset_enriched`, compatible con adapter LoRA; wrapper de `vlm_by_image_utils.py`. |
-| `vlm_infer_longest_by_image.py` | Inferencia Qwen2.5-VL sobre `dataset_longest_answer_by_image`, compatible con adapter LoRA. |
 | `vlm_by_image_utils.py` | Utilidades compartidas para datasets by-image: loader, resolución de imágenes, prompt, modelo e inferencia. |
 | `vlm_lora_training.py` | Motor compartido de QLoRA reproducible: seed, collator, LoRA config, runtime, métricas y logs. |
 | `evaluate_predictions.py` | Mismas métricas que `evaluate_retrieval.py` sobre los CSV de predicciones del VLM (comparabilidad). |
 | `build_paper_results.py` | Consolida métricas y genera tablas/figuras SVG paper-ready en `outputs/paper/`. |
+
+> El fine-tuning/inferencia con una imagen por caso (sin expandir a
+> `by_image`) quedó **superado**: esa corrida no era comparable con los
+> baselines de retrieval ni con el zero-shot, evaluados por imagen. Los
+> scripts correspondientes se eliminaron; el log de esa corrida queda
+> documentado únicamente en `paper/draft.md` §5.
 
 ## How to Reproduce
 
@@ -141,19 +160,14 @@ Todos los comandos se ejecutan desde la raíz del repositorio. Las semillas est�
 
 | Script | Artefacto generado |
 | --- | --- |
-| `src/build_answer_datasets.py` | `outputs/datasets/dataset_longest_answer.{json,csv}`, `dataset_short_answer.{json,csv}` |
-| `src/build_longest_by_image_dataset.py` | `outputs/datasets/dataset_longest_answer_by_image.*` |
+| `src/build_answer_datasets.py` | `outputs/datasets/dataset_longest_answer.{json,csv}` (intermedio), `dataset_short_answer.{json,csv}` |
+| `src/build_longest_by_image_dataset.py` | `outputs/datasets/dataset_longest_answer_by_image.*` (target canónico de respuesta larga) |
 | `src/build_llm_synthesized_dataset.py` | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.*` (requiere Azure key) |
-| `src/tfidf_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/tfidf_results.json` |
-| `src/sbert_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/sbert_results.json` |
-| `src/e5_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual/e5_results.json` |
-| `src/visual_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_visual/visual_results.json` |
-| `src/multimodal_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_multimodal/multimodal_alpha0.60_results.json` |
-| `src/evaluate_retrieval.py` | `outputs/metrics/dataset_longest_answer/metrics_{summary,per_case}.csv` |
-| `src/evaluate_retrieval_heldout.py` | `outputs/metrics/*/retrieval_heldout/metrics_{summary,per_case}.csv` |
+| `src/evaluate_retrieval_heldout.py --dataset dataset_longest_answer_by_image` | `outputs/metrics/dataset_longest_answer_by_image/retrieval_heldout/metrics_{summary,per_case}.csv` — **retrieval reportado en la Tabla 1** (train-only, sin leakage) |
+| `src/tfidf_retrieval.py` / `sbert_retrieval.py` / `e5_retrieval.py` / `visual_retrieval.py` / `multimodal_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_{textual,visual,multimodal}/*` (exploración CPU, no reportado en Tabla 1) |
 | `src/build_paper_results.py` | `outputs/paper/{tables,figures}/*` |
-| `src/train_longest.py` | `outputs/results/dataset_longest_answer/vlm_lora/final_adapter/` |
-| `scripts/run_longest_by_image_vlm_lora.sh` | `outputs/results/dataset_longest_answer/vlm_lora_by_image/` |
+| `src/train_longest_by_image.py` / `scripts/run_longest_by_image_vlm_lora.sh` | `outputs/results/dataset_longest_answer/vlm_lora_by_image/` — **LoRA reportado en la Tabla 1** |
+| `src/vlm_infer_longest_by_image.py` | `outputs/results/dataset_longest_answer/vlm_zero_shot_by_image/predictions_{valid,test}.csv` — **zero-shot reportado en la Tabla 1** |
 | `scripts/run_enriched_vlm_lora.sh` | `outputs/results/dataset_enriched/vlm_lora/` |
 | `scripts/run_vlm_rag_comparison.sh` | `outputs/results/dataset_*/vlm_*_rag_*/predictions_*.csv` |
 
@@ -194,23 +208,18 @@ make dry-run
 
 ```bash
 # Validar formato de datos sin GPU (recomendado antes de lanzar en la nube)
-python -m src.vlm_infer --split valid --limit 5 --dry-run
-python -m src.train_longest --dry-run --limit 5
+python -m src.vlm_infer_longest_by_image --split valid --limit 5 --dry-run
+python -m src.train_longest_by_image --dry-run --limit 5
 
-# LoRA sobre dataset_longest_answer (one-shot con un caso por encounter)
-python -m src.train_longest --seed 42
-python -m src.vlm_infer --split valid --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
-python -m src.vlm_infer --split test  --adapter outputs/results/dataset_longest_answer/vlm_lora/final_adapter
-
-# LoRA sobre dataset_longest_answer_by_image (una fila por imagen)
+# LoRA sobre dataset_longest_answer_by_image (todas las imágenes por caso, early stopping)
 bash scripts/run_longest_by_image_vlm_lora.sh --seed 42
 
 # LoRA sobre dataset_enriched (respuestas sintetizadas por LLM)
 bash scripts/run_enriched_vlm_lora.sh --seed 42
 
-# VLM zero-shot (sin fine-tuning)
-python -m src.vlm_infer --split valid
-python -m src.vlm_infer --split test
+# VLM zero-shot sobre dataset_longest_answer_by_image (sin fine-tuning)
+python -m src.vlm_infer_longest_by_image --split valid
+python -m src.vlm_infer_longest_by_image --split test
 ```
 
 ---
@@ -229,7 +238,7 @@ bash scripts/run_vlm_rag_comparison.sh
 ```bash
 # Evaluar predicciones VLM generadas
 python -m src.evaluate_predictions \
-    outputs/results/dataset_longest_answer/vlm_zero_shot/predictions_test.csv
+    outputs/results/dataset_longest_answer/vlm_zero_shot_by_image/predictions_test.csv
 
 # Regenerar tablas y figuras paper-ready con todos los resultados disponibles
 make paper
@@ -257,28 +266,40 @@ make paper
 ## Estado actual
 
 **Hecho:**
-- Datasets `longest` / `short` / `enriched` construidos y versionados.
-- Baselines de retrieval textual corridos (TF-IDF, E5, SBERT) sobre long y short.
+- Datasets `longest_by_image` / `short` / `enriched` construidos y versionados.
+- Baselines de retrieval held-out (TF-IDF, E5, SBERT; train-only, sin leakage)
+  corridos sobre `dataset_longest_answer_by_image` y `dataset_short_answer`.
 - Retrieval textual enriquecido corrido (en `outputs/metrics/dataset_enriched/`).
-- VLM zero-shot y LoRA sobre `dataset_longest_answer` corridos con Qwen2.5-VL-3B.
+- VLM zero-shot y LoRA sobre `dataset_longest_answer_by_image` corridos con
+  Qwen2.5-VL-3B (todas las imágenes por caso, early stopping en L4).
 - LoRA/QLoRA sobre `dataset_enriched` corrido en Google Cloud L4 por 1 epoch.
 - Predicciones y métricas de `dataset_enriched/vlm_lora` guardadas en
   `outputs/results/dataset_enriched/vlm_lora/` y
   `outputs/metrics/dataset_enriched/metrics_mixed.csv`.
 
-**Falta:** revisión clínica manual de ~20 casos, tabla comparativa final
-normalizada, análisis cruzado entre targets si se decide hacerlo, tabla de
-costos y escritura del paper.
+**Falta:** revisión clínica manual de ~20 casos, análisis cruzado entre
+targets si se decide hacerlo, tabla de costos y escritura final del paper.
 
-### Resultados de retrieval textual disponibles (longest_answer, n=998)
+### Resultados de respuesta larga (dataset_longest_answer_by_image, test n=100)
 
-| Modelo | chrF | ROUGE-L | token-F1 | BERTScore-F1 |
-| --- | --- | --- | --- | --- |
-| TF-IDF | 0.158 | 0.084 | 0.083 | 0.656 |
-| E5 | 0.167 | 0.084 | 0.081 | 0.656 |
-| SBERT | 0.174 | 0.088 | 0.085 | 0.657 |
+Los cinco métodos evaluados con la misma unidad (por imagen, agregado por
+caso), sin data leakage — ver `paper/draft.md` §5, Tabla 1:
 
-(fuente: `outputs/metrics/dataset_longest_answer/metrics_summary.csv`)
+| Método | sacreBLEU | chrF corpus | chrF mean | ROUGE-L | token-F1 | BERTScore-F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| TF-IDF held-out | 0.785 | 13.501 | 0.156 | 0.057 | 0.075 | – |
+| E5 held-out | 0.305 | 13.956 | 0.156 | 0.076 | 0.096 | – |
+| SBERT held-out | 0.633 | 16.735 | 0.169 | 0.073 | 0.097 | – |
+| **Qwen2.5-VL zero-shot** | 0.352 | 16.163 | **0.204** | 0.080 | 0.103 | 0.643 |
+| Qwen2.5-VL LoRA | 0.211 | 13.810 | 0.161 | 0.080 | 0.088 | 0.618 |
+
+Zero-shot rinde mejor que LoRA y que los tres retrieval en todas las métricas
+salvo sacreBLEU. LoRA no mejora sobre zero-shot en respuesta larga — a
+diferencia del dataset enriquecido, donde LoRA sí supera a retrieval (ver
+tabla siguiente). Detalle e interpretación en `paper/draft.md` §5.
+
+(fuente: `outputs/metrics/dataset_longest_answer_by_image/retrieval_heldout/metrics_summary.csv`
+y `outputs/paper/tables/paper_main_test_comparison.csv`)
 
 ### Resultados VLM enriquecido disponibles (dataset_enriched)
 

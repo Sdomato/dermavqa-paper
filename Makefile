@@ -71,8 +71,8 @@ paper:
 # ── Validación sin GPU ────────────────────────────────────────────────────────
 
 dry-run:
-	@echo "\n[dry-run 1/2] Validando prompts e imágenes de vlm_infer (sin modelo)..."
-	$(PYTHON) -m src.vlm_infer --split valid --limit 5 --dry-run
+	@echo "\n[dry-run 1/2] Validando prompts e imágenes de vlm_infer_longest_by_image (sin modelo)..."
+	$(PYTHON) -m src.vlm_infer_longest_by_image --split valid --limit 5 --dry-run
 
-	@echo "\n[dry-run 2/2] Validando formato chat de train_longest (sin modelo)..."
-	$(PYTHON) -m src.train_longest --dry-run --limit 5
+	@echo "\n[dry-run 2/2] Validando formato chat de train_longest_by_image (sin modelo)..."
+	$(PYTHON) -m src.train_longest_by_image --dry-run --limit 5
