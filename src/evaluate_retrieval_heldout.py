@@ -2,20 +2,22 @@
 Held-out textual retrieval baselines for the paper tables.
 
 This script evaluates retrieval using only the train split as the retrieval
-index, then queries valid/test cases. It is intentionally CPU-friendly and
-currently implements TF-IDF, which gives a leakage-free baseline for the
-longest-answer and short-answer dataset variants.
+index, then queries valid/test cases. It is CPU-friendly and implements
+TF-IDF, multilingual E5-small and multilingual SBERT, giving leakage-free
+baselines for the longest-answer, short-answer and longest-by-image dataset
+variants.
 
 Outputs:
   outputs/results/<dataset_variant>/retrieval_textual_heldout/
-    predictions_valid_tfidf.csv
-    predictions_test_tfidf.csv
+    predictions_valid_<method>.csv
+    predictions_test_<method>.csv
   outputs/metrics/<dataset_variant>/retrieval_heldout/
     metrics_summary.csv
     metrics_per_case.csv
 
 Usage:
   python -m src.evaluate_retrieval_heldout --dataset all
+  python -m src.evaluate_retrieval_heldout --dataset dataset_longest_answer_by_image --methods tfidf,e5,sbert
 """
 
 from __future__ import annotations
@@ -27,9 +29,16 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 import sacrebleu
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+METHOD_LABELS = {
+    "tfidf": ("retrieval_tfidf_train_only", "TF-IDF"),
+    "e5": ("retrieval_e5_train_only", "intfloat/multilingual-e5-small"),
+    "sbert": ("retrieval_sbert_train_only", "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"),
+}
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -37,15 +46,21 @@ DATASETS = {
     "dataset_longest_answer": {
         "path": PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.csv",
         "target": "longest_answer",
+        "split_col": "_split",
+        "splits": {"valid_ht": "valid", "test_ht_spanishtestsetcorrected": "test"},
     },
     "dataset_short_answer": {
         "path": PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.csv",
         "target": "short_answer",
+        "split_col": "_split",
+        "splits": {"valid_ht": "valid", "test_ht_spanishtestsetcorrected": "test"},
     },
-}
-SPLITS = {
-    "valid_ht": "valid",
-    "test_ht_spanishtestsetcorrected": "test",
+    "dataset_longest_answer_by_image": {
+        "path": PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer_by_image.csv",
+        "target": "longest_answer",
+        "split_col": "split",
+        "splits": {"valid": "valid", "test": "test"},
+    },
 }
 
 
@@ -68,6 +83,8 @@ def clean_text(value: Any) -> str:
 
 
 def question_text(record: dict[str, str]) -> str:
+    if "question_es" in record:
+        return clean_text(record.get("question_es", ""))
     return clean_text(f"{record.get('query_title_es', '')} {record.get('query_content_es', '')}")
 
 
@@ -126,7 +143,9 @@ def evaluate_predictions(
     split: str,
     predictions: list[dict[str, Any]],
     elapsed_s: float,
+    method_key: str,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    method_name, model_name = METHOD_LABELS[method_key]
     pred_texts = [clean_text(row["predicted_answer_es"]) for row in predictions]
     ref_texts = [clean_text(row["reference_answer_es"]) for row in predictions]
     rouge_values = [rouge_l_f1(pred, ref) for pred, ref in zip(pred_texts, ref_texts)]
@@ -144,8 +163,8 @@ def evaluate_predictions(
             {
                 "dataset_variant": dataset_variant,
                 "target": target,
-                "method": "retrieval_tfidf_train_only",
-                "model": "TF-IDF",
+                "method": method_name,
+                "model": model_name,
                 "split": split,
                 "unit": "case",
                 "encounter_id": row["encounter_id"],
@@ -160,8 +179,8 @@ def evaluate_predictions(
     summary = {
         "dataset_variant": dataset_variant,
         "target": target,
-        "method": "retrieval_tfidf_train_only",
-        "model": "TF-IDF",
+        "method": method_name,
+        "model": model_name,
         "split": split,
         "unit": "case",
         "n": len(predictions),
@@ -171,96 +190,159 @@ def evaluate_predictions(
         "rouge_l_mean": mean(rouge_values),
         "token_f1_mean": mean(token_values),
         "mean_latency_s": elapsed_s / len(predictions) if predictions else 0.0,
-        "source": f"outputs/results/{dataset_variant}/retrieval_textual_heldout/predictions_{split}_tfidf.csv",
-        "notes": "TF-IDF retrieval with train split as the only retrieval index",
+        "source": f"outputs/results/{dataset_variant}/retrieval_textual_heldout/predictions_{split}_{method_key}.csv",
+        "notes": f"{model_name} retrieval with train split as the only retrieval index",
     }
     return per_case, summary
 
 
-def run_dataset(dataset_variant: str) -> None:
+def encode_e5(train_texts: list[str], query_texts: list[str]) -> tuple[np.ndarray, np.ndarray]:
+    import torch
+    from transformers import AutoModel, AutoTokenizer
+
+    torch.set_num_threads(1)
+    model_id = "intfloat/multilingual-e5-small"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModel.from_pretrained(model_id).to(device).eval()
+
+    def mean_pool(token_embeddings: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        mask = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
+        return (token_embeddings * mask).sum(dim=1) / mask.sum(dim=1).clamp(min=1e-9)
+
+    def encode(texts: list[str], prefix: str) -> np.ndarray:
+        all_embeddings: list[np.ndarray] = []
+        for start in range(0, len(texts), 64):
+            batch = [prefix + t for t in texts[start : start + 64]]
+            encoded = tokenizer(
+                batch, padding=True, truncation=True, max_length=512, return_tensors="pt"
+            ).to(device)
+            with torch.no_grad():
+                output = model(**encoded)
+            embeddings = mean_pool(output.last_hidden_state, encoded["attention_mask"])
+            embeddings = torch.nn.functional.normalize(embeddings, p=2, dim=1)
+            all_embeddings.append(embeddings.cpu().numpy())
+        return np.vstack(all_embeddings)
+
+    train_emb = encode(train_texts, "passage: ")
+    query_emb = encode(query_texts, "query: ")
+    return train_emb, query_emb
+
+
+def encode_sbert(train_texts: list[str], query_texts: list[str]) -> tuple[np.ndarray, np.ndarray]:
+    import torch
+    from sentence_transformers import SentenceTransformer
+
+    torch.set_num_threads(1)
+    model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+    train_emb = model.encode(train_texts, batch_size=64, show_progress_bar=False, normalize_embeddings=True)
+    query_emb = model.encode(query_texts, batch_size=64, show_progress_bar=False, normalize_embeddings=True)
+    return np.asarray(train_emb), np.asarray(query_emb)
+
+
+def compute_similarities(
+    method_key: str, train_texts: list[str], query_texts: list[str]
+) -> np.ndarray:
+    """Returns a (n_queries, n_train) similarity matrix."""
+    if method_key == "tfidf":
+        vectorizer = TfidfVectorizer(
+            lowercase=True,
+            strip_accents="unicode",
+            ngram_range=(1, 2),
+            min_df=1,
+            max_df=0.95,
+            sublinear_tf=True,
+            norm="l2",
+        )
+        train_matrix = vectorizer.fit_transform(train_texts)
+        query_matrix = vectorizer.transform(query_texts)
+        return cosine_similarity(query_matrix, train_matrix)
+    if method_key == "e5":
+        train_emb, query_emb = encode_e5(train_texts, query_texts)
+    elif method_key == "sbert":
+        train_emb, query_emb = encode_sbert(train_texts, query_texts)
+    else:
+        raise ValueError(f"Unknown method: {method_key}")
+    return query_emb @ train_emb.T
+
+
+def run_dataset(dataset_variant: str, methods: list[str]) -> None:
     config = DATASETS[dataset_variant]
+    split_col = config["split_col"]
+    splits = config["splits"]
     records = read_csv(config["path"])
-    train_records = [row for row in records if row.get("_split") == "train"]
+    train_records = [row for row in records if row.get(split_col) == "train"]
     if not train_records:
         raise ValueError(f"No train records found for {dataset_variant}")
-
-    vectorizer = TfidfVectorizer(
-        lowercase=True,
-        strip_accents="unicode",
-        ngram_range=(1, 2),
-        min_df=1,
-        max_df=0.95,
-        sublinear_tf=True,
-        norm="l2",
-    )
     train_texts = [question_text(row) for row in train_records]
-    train_matrix = vectorizer.fit_transform(train_texts)
 
     predictions_dir = PROJECT_ROOT / "outputs" / "results" / dataset_variant / "retrieval_textual_heldout"
     metrics_dir = PROJECT_ROOT / "outputs" / "metrics" / dataset_variant / "retrieval_heldout"
     all_per_case: list[dict[str, Any]] = []
     summaries: list[dict[str, Any]] = []
 
-    for raw_split, split in SPLITS.items():
-        query_records = [row for row in records if row.get("_split") == raw_split]
-        query_texts = [question_text(row) for row in query_records]
-        start = time.perf_counter()
-        query_matrix = vectorizer.transform(query_texts)
-        similarities = cosine_similarity(query_matrix, train_matrix)
-        elapsed_s = time.perf_counter() - start
+    for method_key in methods:
+        method_name, model_name = METHOD_LABELS[method_key]
+        for raw_split, split in splits.items():
+            query_records = [row for row in records if row.get(split_col) == raw_split]
+            query_texts = [question_text(row) for row in query_records]
+            start = time.perf_counter()
+            similarities = compute_similarities(method_key, train_texts, query_texts)
+            elapsed_s = time.perf_counter() - start
 
-        predictions: list[dict[str, Any]] = []
-        for row_index, query_record in enumerate(query_records):
-            best_index = int(similarities[row_index].argmax())
-            retrieved = train_records[best_index]
-            predictions.append(
-                {
-                    "dataset_variant": dataset_variant,
-                    "target": config["target"],
-                    "method": "retrieval_tfidf_train_only",
-                    "model": "TF-IDF",
-                    "split": split,
-                    "unit": "case",
-                    "encounter_id": query_record["encounter_id"],
-                    "retrieved_encounter_id": retrieved["encounter_id"],
-                    "similarity_score": round(float(similarities[row_index, best_index]), 6),
-                    "question_es": question_text(query_record),
-                    "reference_answer_es": clean_text(query_record.get("answer_es", "")),
-                    "predicted_answer_es": clean_text(retrieved.get("answer_es", "")),
-                }
+            predictions: list[dict[str, Any]] = []
+            for row_index, query_record in enumerate(query_records):
+                best_index = int(similarities[row_index].argmax())
+                retrieved = train_records[best_index]
+                predictions.append(
+                    {
+                        "dataset_variant": dataset_variant,
+                        "target": config["target"],
+                        "method": method_name,
+                        "model": model_name,
+                        "split": split,
+                        "unit": "case",
+                        "encounter_id": query_record["encounter_id"],
+                        "retrieved_encounter_id": retrieved["encounter_id"],
+                        "similarity_score": round(float(similarities[row_index, best_index]), 6),
+                        "question_es": question_text(query_record),
+                        "reference_answer_es": clean_text(query_record.get("answer_es", "")),
+                        "predicted_answer_es": clean_text(retrieved.get("answer_es", "")),
+                    }
+                )
+
+            write_csv(
+                predictions_dir / f"predictions_{split}_{method_key}.csv",
+                predictions,
+                [
+                    "dataset_variant",
+                    "target",
+                    "method",
+                    "model",
+                    "split",
+                    "unit",
+                    "encounter_id",
+                    "retrieved_encounter_id",
+                    "similarity_score",
+                    "question_es",
+                    "reference_answer_es",
+                    "predicted_answer_es",
+                ],
             )
-
-        write_csv(
-            predictions_dir / f"predictions_{split}_tfidf.csv",
-            predictions,
-            [
-                "dataset_variant",
-                "target",
-                "method",
-                "model",
-                "split",
-                "unit",
-                "encounter_id",
-                "retrieved_encounter_id",
-                "similarity_score",
-                "question_es",
-                "reference_answer_es",
-                "predicted_answer_es",
-            ],
-        )
-        per_case, summary = evaluate_predictions(
-            dataset_variant=dataset_variant,
-            target=config["target"],
-            split=split,
-            predictions=predictions,
-            elapsed_s=elapsed_s,
-        )
-        all_per_case.extend(per_case)
-        summaries.append(summary)
-        print(
-            f"{dataset_variant} {split}: {len(predictions)} cases, "
-            f"chrF={summary['chrf_mean']:.3f}, BERTScore=not-computed"
-        )
+            per_case, summary = evaluate_predictions(
+                dataset_variant=dataset_variant,
+                target=config["target"],
+                split=split,
+                predictions=predictions,
+                elapsed_s=elapsed_s,
+                method_key=method_key,
+            )
+            all_per_case.extend(per_case)
+            summaries.append(summary)
+            print(
+                f"{dataset_variant} [{method_key}] {split}: {len(predictions)} cases, "
+                f"chrF={summary['chrf_mean']:.3f}"
+            )
 
     write_csv(
         metrics_dir / "metrics_per_case.csv",
@@ -311,14 +393,20 @@ def parse_args() -> argparse.Namespace:
         default="all",
         help="Dataset variant to evaluate.",
     )
+    parser.add_argument(
+        "--methods",
+        default="tfidf",
+        help="Comma-separated methods to run: tfidf,e5,sbert",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    methods = [m.strip() for m in args.methods.split(",") if m.strip()]
     variants = DATASETS if args.dataset == "all" else {args.dataset: DATASETS[args.dataset]}
     for dataset_variant in variants:
-        run_dataset(dataset_variant)
+        run_dataset(dataset_variant, methods)
 
 
 if __name__ == "__main__":
