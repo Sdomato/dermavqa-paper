@@ -98,10 +98,12 @@ caso más similar. Para el dataset enriquecido evaluamos:
 - `intfloat/multilingual-e5-small`;
 - `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`.
 
-Para las variantes de respuesta larga y corta agregamos un baseline TF-IDF
-held-out train-only: el índice contiene únicamente casos de train, y las
-consultas de valid/test recuperan contra ese índice. Esto evita leakage entre
-test y el corpus de recuperación.
+Para las variantes de respuesta larga y corta agregamos baselines held-out
+train-only: el índice de recuperación contiene únicamente casos de train, y
+las consultas de valid/test recuperan contra ese índice. Esto evita leakage
+entre test y el corpus de recuperación. Para respuesta larga corrimos los tres
+métodos (TF-IDF, E5, SBERT) en esta modalidad held-out; para respuesta corta,
+por ahora solo TF-IDF.
 
 ### 3.2 VLM zero-shot y LoRA
 
@@ -137,9 +139,14 @@ comparable el costo de optimización, la corrida enriquecida se entrenó durante
 optimizer steps. Por eso la comparación principal debe leerse como
 **compute-matched**: mismo modelo, mismos hiperparámetros LoRA y número de
 updates prácticamente igual, pero targets y unidades de entrenamiento
-distintas. La bitácora también documenta una segunda corrida de
-`dataset_longest_answer` con todas las imágenes por caso y early stopping en
-L4; la usamos como ablation, no como la fila principal versionada.
+distintas. Para la Tabla 1 usamos la corrida de `dataset_longest_answer_by_image`
+(todas las imágenes por caso, con early stopping en L4) como fila principal de
+respuesta larga, porque es la versión de dataset consistente con los
+baselines de retrieval y con el zero-shot, evaluados por imagen y agregados
+por caso. La corrida original de una imagen por caso da un chrF medio muy
+similar (0.157 vs. 0.161), así que el cambio de fila principal no altera la
+conclusión, pero corrige una inconsistencia de versión de dataset entre filas
+de la Tabla 1 (ver nota más abajo).
 
 **Figura 2. Curva de entrenamiento QLoRA sobre el dataset enriquecido.** Se reportan loss de entrenamiento y validación durante la corrida en Google Cloud.
 
@@ -191,10 +198,20 @@ La Tabla 1 muestra la comparación principal sobre test.
 | Enriquecido | E5 retrieval | caso | 100 | 8.555 | 30.091 | 0.308 | 0.212 | 0.259 | 0.714 |
 | Enriquecido | SBERT retrieval | caso | 100 | 8.795 | 29.816 | 0.309 | 0.222 | 0.269 | 0.720 |
 | Enriquecido | Qwen2.5-VL LoRA | caso | 100 | 5.022 | 34.532 | 0.368 | 0.250 | 0.314 | 0.737 |
-| Respuesta larga | TF-IDF train-only | caso | 100 | 0.462 | 13.160 | 0.148 | 0.056 | 0.072 | - |
-| Respuesta larga | Qwen2.5-VL zero-shot | caso | 100 | 0.409 | 20.548 | 0.182 | 0.072 | 0.092 | 0.628 |
-| Respuesta larga | Qwen2.5-VL LoRA | caso | 100 | 0.328 | 11.082 | 0.157 | 0.112 | 0.131 | 0.667 |
+| Respuesta larga | TF-IDF held-out | caso | 100 | 0.785 | 13.501 | 0.156 | 0.057 | 0.075 | - |
+| Respuesta larga | E5 held-out | caso | 100 | 0.305 | 13.956 | 0.156 | 0.076 | 0.096 | - |
+| Respuesta larga | SBERT held-out | caso | 100 | 0.633 | 16.735 | 0.169 | 0.073 | 0.097 | - |
+| Respuesta larga | Qwen2.5-VL zero-shot | caso | 100 | 0.352 | 16.163 | 0.204 | 0.080 | 0.103 | 0.643 |
+| Respuesta larga | Qwen2.5-VL LoRA | caso | 100 | 0.211 | 13.810 | 0.161 | 0.080 | 0.088 | 0.618 |
 | Respuesta corta | TF-IDF train-only | caso | 100 | 0.773 | 9.958 | 0.089 | 0.013 | 0.013 | - |
+
+*Nota de versión:* las filas de respuesta larga usan `dataset_longest_answer_by_image`
+de forma consistente en los cinco métodos (retrieval, zero-shot y LoRA
+evaluados por imagen y agregados por caso, n=100). En una versión anterior de
+esta tabla, la fila de retrieval y de LoRA venían de una versión distinta del
+dataset que la fila de zero-shot, lo que hacía la comparación zero-shot vs.
+LoRA no comparable. Ya está corregido; ver Sección 9 para el script que
+regenera estos baselines.
 
 En el dataset enriquecido, Qwen2.5-VL LoRA supera a los tres baselines de
 retrieval textual en chrF mean, ROUGE-L, token-F1, BERTScore F1 y chrF corpus.
@@ -203,10 +220,18 @@ Esto sugiere que retrieval conserva más frases o formulaciones cercanas a las
 referencias, mientras que el VLM fine-tuneado genera respuestas más
 reestructuradas.
 
-En el dataset de respuesta larga, LoRA mejora frente a zero-shot en ROUGE-L,
-token-F1 y BERTScore F1, pero no en chrF. Esto indica que el fine-tuning puede
-mejorar el ajuste semántico/estilístico al target sin necesariamente aumentar
-el solapamiento superficial.
+En el dataset de respuesta larga, con los cinco métodos evaluados de forma
+consistente, el panorama es distinto al que sugería la versión anterior de
+esta tabla: **zero-shot es el método que mejor rinde** (chrF 0.204), por
+encima de LoRA (0.161) y de los tres retrieval (0.156-0.169). LoRA no mejora
+sobre zero-shot en ninguna métrica (chrF, ROUGE-L, token-F1 ni BERTScore F1) y
+apenas empata o supera a retrieval. Fine-tunear con LoRA sobre respuesta larga
+no aporta frente a no entrenar nada, algo que solo se ve una vez que se
+corrigen los tres baselines de retrieval y se los compara contra el mismo
+dataset que usan zero-shot y LoRA. Esto refuerza la lectura de la Sección 5.1:
+el problema en respuesta larga no es el método (retrieval vs. zero-shot vs.
+LoRA), es el target — heterogéneo, largo y con estilos narrativos dispares —
+y por eso ningún método logra despegarse claramente de los demás.
 
 Comparando ambas filas de LoRA entre sí, el modelo entrenado sobre el target
 enriquecido obtiene resultados claramente mejores que el mismo modelo entrenado
@@ -218,7 +243,11 @@ lugar de la respuesta más larga del foro original, que arrastra variaciones de
 estilo, longitud y narrativa personal. Eso le da al modelo una señal de
 aprendizaje más consistente y un objetivo más estable durante la evaluación. La
 brecha sugiere que, en este dominio, la calidad y uniformidad del target
-supervisado pesan tanto como la capacidad del VLM.
+supervisado pesan tanto como la capacidad del VLM. La bitácora también
+documenta una segunda corrida de `dataset_longest_answer` con una imagen por
+caso (sin expandir a filas por imagen); da un chrF medio muy similar (0.157),
+pero queda fuera de la Tabla 1 porque no es evaluable con el mismo protocolo
+por-imagen que usamos para los baselines y el zero-shot.
 
 **Figura 3. Comparación principal por chrF.** El VLM LoRA enriquecido presenta el mayor chrF medio entre las filas principales, mientras que los retrieval enriquecidos conservan mayor sacreBLEU corpus.
 
@@ -236,16 +265,20 @@ supervisado pesan tanto como la capacidad del VLM.
 
 ![Figura 6. Latencia versus calidad semántica](../outputs/paper/figures/vlm_latency_vs_bertscore.svg)
 
-En nuestras corridas sobre respuesta larga, la latencia media por ejemplo del
-zero-shot fue de aproximadamente 26,7 segundos contra 12,5 segundos del LoRA,
-medidas sobre el mismo split de test con el mismo presupuesto de tokens. Es
-decir, el VLM fine-tuneado mejoró simultáneamente las dos dimensiones que
-cruza la Figura 6: obtuvo mayor BERTScore F1 y, al mismo tiempo, redujo el
-tiempo medio de inferencia. Una causa probable es que el modelo aprendió a
-generar respuestas más cortas y alineadas con la longitud típica del target,
-mientras que el zero-shot tiende a aprovechar el presupuesto completo de
-tokens. El resultado debilita la heurística usual de que zero-shot es la opción
-más liviana cuando ya se cuenta con un adapter entrenado para el dominio.
+En nuestras corridas sobre respuesta larga (dataset_longest_answer_by_image,
+consistente en las dos filas), la latencia media por imagen fue de 15,0
+segundos para zero-shot contra 20,4 segundos para LoRA, medidas sobre el mismo
+split de test con el mismo presupuesto de tokens. Es decir, en respuesta larga
+el VLM fine-tuneado no mejora ninguna de las dos dimensiones que cruza la
+Figura 6: tiene menor BERTScore F1 que zero-shot y además es más lento. Esto
+contrasta con el caso enriquecido, donde LoRA+RAG sí logra una mejora conjunta
+frente a LoRA solo (Tabla 2). Una lectura posible es que, sobre un target
+heterogéneo como respuesta larga, el fine-tuning no logra que el modelo
+converja a una longitud de respuesta más eficiente, mientras que sobre un
+target consistente como el enriquecido sí lo consigue. El resultado refuerza
+la idea central del paper: la calidad del target de entrenamiento condiciona
+tanto la calidad de la respuesta como el comportamiento de latencia del
+modelo fine-tuneado, no solo su exactitud.
 
 **Figura 7. Distribución de métricas del VLM LoRA enriquecido en test.** Las distribuciones por imagen muestran variabilidad importante entre casos, lo que motiva la revisión cualitativa.
 
@@ -369,8 +402,14 @@ Este estudio tiene varias limitaciones:
   revisor clínico.
 - Las comparaciones mezclan targets distintos: respuesta corta, respuesta larga
   y respuesta enriquecida.
-- Los baselines held-out limpios para respuesta larga/corta incluyen TF-IDF; E5,
-  SBERT, visual y multimodal held-out pueden agregarse como trabajo futuro.
+- Para respuesta larga ya contamos con baselines held-out limpios de TF-IDF, E5
+  y SBERT (Tabla 1); para respuesta corta solo TF-IDF. Visual y multimodal
+  held-out (sin leakage) quedan como trabajo futuro — las corridas visual/
+  multimodal existentes usan un índice de recuperación que mezcla train con
+  valid/test y no son comparables a las demás filas de la Tabla 1.
+- Respuesta corta y respuesta visual/multimodal todavía no se evaluaron sobre
+  `dataset_longest_answer_by_image`; solo respuesta larga tiene el dataset y
+  los baselines unificados en esta versión.
 - El modelo base utilizado fue Qwen2.5-VL-**3B**-Instruct y no la variante 7B.
   La elección no se debe a calidad esperada sino a presupuesto de VRAM: la
   variante 7B requiere al menos 24 GB de VRAM para QLoRA con entradas
@@ -396,7 +435,9 @@ regenerar tablas y figuras:
 
 ```bash
 make data            # construye los datasets, incluida la variante enriquecida
-make eval-retrieval  # métricas de los baselines de recuperación held-out
+make eval-retrieval  # métricas de los baselines de recuperación held-out (TF-IDF)
+python -m src.evaluate_retrieval_heldout --dataset dataset_longest_answer_by_image --methods tfidf,e5,sbert
+                      # baselines held-out TF-IDF/E5/SBERT sobre respuesta larga por imagen
 bash scripts/run_vlm_rag_comparison.sh  # corridas VLM con contexto recuperado (requiere GPU y adapters)
 make paper           # consolida métricas y genera tablas y figuras paper-ready
 ```
