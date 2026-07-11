@@ -1,0 +1,17 @@
+# API
+fastapi>=0.110
+uvicorn[standard]>=0.27
+python-multipart>=0.0.9   # uploads multipart en /consulta/imagen
+
+# Retrieval TF-IDF (backend por defecto, liviano)
+scikit-learn>=1.3
+numpy>=1.24
+
+# Retrieval E5 (opcional, calidad paper) — descomentar para usar DERMA_RETRIEVER=e5
+# torch>=2.2
+# transformers>=4.45
+
+# Tests y lint
+pytest>=8.0
+httpx>=0.27
+ruff>=0.6

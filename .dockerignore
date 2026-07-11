@@ -1,0 +1,18 @@
+# El contexto de build es la raíz del repo, pero la imagen solo necesita
+# src/, outputs/datasets/ e ing/backend/. Excluimos lo pesado/irrelevante
+# para que el build local no mande gigas al daemon.
+.git
+*.zip
+data/
+notebooks/
+survey/
+paper/
+outputs/results/
+outputs/metrics/
+outputs/paper/
+ing/frontend/
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+.venv/
+engineering_proposal.md
