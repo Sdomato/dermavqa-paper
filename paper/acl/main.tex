@@ -122,7 +122,7 @@ Target & Recuperador & chrF$_m$ & R-L & Tok-F1 \\
 \label{tab:retrieval}
 \end{table}
 
-SBERT obtiene el mejor chrF medio en ambos targets, seguido de cerca por el recuperador visual, que resulta competitivo pese a no usar texto. \texttt{multilingual-e5-small} rinde de forma similar al resto de los métodos textuales sin destacarse como el mejor recuperador puro; lo mantenemos como recuperador de RAG por eficiencia computacional, ya que maximizar la similitud recuperada no fue el criterio de esa elección. La fusión multimodal no mejora sobre su mejor componente individual en ningún target, lo que sugiere que la señal visual y textual no son complementarias con esta estrategia de fusión simple.
+SBERT obtiene el mejor chrF medio en ambos targets, seguido de cerca por el recuperador visual, que resulta competitivo pese a no usar texto. \texttt{multilingual-e5-small} rinde de forma similar al resto de los métodos textuales sin destacarse como el mejor recuperador puro pese a tener el mismo número de parámetros que SBERT (117,7M) y mayor latencia media de consulta. Elegimos \texttt{multilingual-e5-small} para el índice de RAG antes de contar con esta comparación; los resultados sugieren que SBERT hubiera sido una elección igual o más fuerte, y dejamos como trabajo futuro re-evaluar el ciclo de RAG completo con ese recuperador. La fusión multimodal no mejora sobre su mejor componente individual en ningún target, lo que sugiere que la señal visual y textual no son complementarias con esta estrategia de fusión simple.
 
 \begin{table*}[t]
 \centering
