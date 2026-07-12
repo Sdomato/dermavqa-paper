@@ -8,6 +8,51 @@ sigue en la rama `develop`.
 
 ---
 
+## Quickstart (para el evaluador)
+
+> Levantar y probar el sistema en un par de minutos. Todos los comandos se corren **desde la
+> raíz del repo** (el backend reutiliza `src/` y `outputs/`). Requiere Python 3.11.
+
+**Opción A — baseline (recomendada para la primera prueba).** Sin GPU y sin descargar modelos:
+retrieval TF-IDF + generador `stub`. Alcanza para evaluar el sistema completo —retrieval →
+borrador → capa de seguridad → revisión médica → loop de mejora—.
+
+```bash
+pip install -r ing/backend/requirements.txt
+cd ing/backend && make run
+```
+
+Abrir la consola del médico en **http://localhost:8000/app/** (docs interactivas en `/docs`).
+Verificar que levantó:
+
+```bash
+curl -s localhost:8000/health
+# {"status":"ok", ..., "retriever":"tfidf", "casos_indexados":998, ...}
+```
+
+**Opción B — retrieval real multimodal (E5 + BiomedCLIP, texto + imagen).** Corre en CPU (no
+requiere GPU) y usa el cache de embeddings **ya versionado** (`outputs/embeddings/case_embeddings.npz`),
+así que no hay que regenerar nada. Suma las dependencias del encoder:
+
+```bash
+pip install -r ing/backend/requirements.txt torch transformers open_clip_torch pillow
+cd ing/backend && DERMA_RETRIEVER=multimodal make run
+```
+
+La **primera** consulta carga E5 + descarga BiomedCLIP (~100 s, una sola vez); después ~60 ms.
+En este modo la **foto de la consulta influye en la búsqueda** (detalle en
+[`docs/decisiones-modelos-reales.md`](docs/decisiones-modelos-reales.md)).
+
+> **Sobre las fotos clínicas:** no están versionadas (~1 GB, y por convención las imágenes no van
+> a git). El sistema **funciona igual sin ellas** — los thumbnails simplemente no se muestran. Para
+> ver las fotos de los casos y probar la búsqueda por imagen, copiar el set a
+> `data/iiyi/images_final/` (ver la sección *Datos* del README de la raíz).
+
+> Con **Docker** (`docker compose up` desde `ing/`) se levanta el baseline TF-IDF en un solo
+> comando; el modo multimodal se corre localmente con la Opción B.
+
+---
+
 ## Qué construimos
 
 **DermaAssist**: un asistente que ayuda a un dermatólogo a responder consultas de pacientes
