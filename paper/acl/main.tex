@@ -90,6 +90,40 @@ Construimos un índice \texttt{multilingual-e5-small} sobre las 842 preguntas ú
 
 Evaluamos dos usos de ese contexto. \textbf{RAG en inferencia} mantiene el modelo base o el adapter LoRA original y solo modifica el prompt. \textbf{LoRA RAG-aware} entrena y evalúa un adapter nuevo con el mismo formato de imagen, pregunta y tres contextos, eliminando el desajuste entre entrenamiento e inferencia. Esta última condición se ejecutó para el objetivo enriquecido.
 
+\subsection{Comparación de recuperadores}
+\label{sec:retrieval-comparison}
+
+Para justificar la elección de \texttt{multilingual-e5-small} como recuperador de RAG, comparamos cinco métodos de recuperación \emph{entre sí} bajo el mismo protocolo held-out train-only (nunca contra las condiciones generativas de la Tabla~\ref{tab:vlm}, que no son comparables por construcción): TF--IDF, \texttt{multilingual-e5-small}, \texttt{paraphrase-multilingual-MiniLM-L12-v2} (SBERT), un recuperador visual con BiomedCLIP \citep{zhang2023biomedclip} sobre la imagen únicamente, y una fusión tardía texto+imagen (E5 + BiomedCLIP, $\alpha=0,6$ para el texto). Cada método recupera del índice de train el caso más similar a la consulta y devuelve su respuesta; validación y test solo consultan ese índice, igual que en el RAG principal.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrr}
+\toprule
+Target & Recuperador & chrF$_m$ & R-L & Tok-F1 \\
+\midrule
+\multirow{5}{*}{Resp. larga}
+ & TF--IDF & 0,156 & 0,060 & 0,078 \\
+ & E5-small & 0,155 & 0,073 & 0,095 \\
+ & SBERT & \textbf{0,174} & \textbf{0,077} & 0,099 \\
+ & Visual & 0,173 & 0,076 & \textbf{0,102} \\
+ & Multimodal & 0,153 & 0,066 & 0,085 \\
+\midrule
+\multirow{5}{*}{Enriquecido}
+ & TF--IDF & 0,301 & 0,216 & 0,266 \\
+ & E5-small & 0,306 & 0,212 & 0,259 \\
+ & SBERT & \textbf{0,314} & \textbf{0,226} & \textbf{0,274} \\
+ & Visual & 0,306 & 0,208 & 0,260 \\
+ & Multimodal & 0,303 & 0,210 & 0,258 \\
+\bottomrule
+\end{tabular}
+\caption{Comparación de recuperadores entre sí (held-out, train-only), test por imagen ($n=314$). Ningún método se compara aquí contra las condiciones generativas.}
+\label{tab:retrieval}
+\end{table}
+
+SBERT obtiene el mejor chrF medio en ambos targets, seguido de cerca por el recuperador visual, que resulta competitivo pese a no usar texto. \texttt{multilingual-e5-small} rinde de forma similar al resto de los métodos textuales sin destacarse como el mejor recuperador puro; lo mantenemos como recuperador de RAG por eficiencia computacional, ya que maximizar la similitud recuperada no fue el criterio de esa elección. La fusión multimodal no mejora sobre su mejor componente individual en ningún target, lo que sugiere que la señal visual y textual no son complementarias con esta estrategia de fusión simple.
+
 \begin{table*}[t]
 \centering
 \scriptsize
@@ -161,7 +195,7 @@ La respuesta a RQ1 es condicionada: bajo el mismo cómputo, LoRA aprende mucho m
 
 Para RQ2, la adaptación eficiente sí supera al modelo base en el target enriquecido, pero no constituye una mejora universal. En respuesta larga, el modelo base conserva mayor similitud semántica. La calidad del target parece dominar la utilidad del fine-tuning.
 
-Para RQ3, RAG ofrece mejoras pequeñas al modelo base enriquecido, pero empeora los adapters cuando se agrega únicamente en inferencia. Entrenar con el prompt RAG reduce ese desajuste y recupera BERTScore, aunque todavía no supera a LoRA simple. El análisis de \texttt{explanation} refuerza una interpretación concreta: recuperar por similitud de pregunta no garantiza similitud clínica, y los casos vecinos pueden aportar diagnósticos o tratamientos de otro paciente. Un paso futuro es recuperar con representaciones multimodales y filtrar evidencia por entidad diagnóstica, localización y morfología.
+Para RQ3, RAG ofrece mejoras pequeñas al modelo base enriquecido, pero empeora los adapters cuando se agrega únicamente en inferencia. Entrenar con el prompt RAG reduce ese desajuste y recupera BERTScore, aunque todavía no supera a LoRA simple. El análisis de \texttt{explanation} refuerza una interpretación concreta: recuperar por similitud de pregunta no garantiza similitud clínica, y los casos vecinos pueden aportar diagnósticos o tratamientos de otro paciente. La comparación aislada de recuperadores (Tabla~\ref{tab:retrieval}) muestra que la fusión texto+imagen no supera a su mejor componente individual con late fusion simple; un paso futuro es explorar representaciones multimodales conjuntas y filtrar evidencia por entidad diagnóstica, localización y morfología.
 
 \section{Conclusiones}
 
@@ -169,7 +203,7 @@ Comparamos inferencia zero-shot, QLoRA/LoRA y RAG para VQA dermatológico en esp
 
 \section*{Limitaciones}
 
-El test contiene 100 encuentros; las 314 imágenes no son observaciones independientes. No ejecutamos múltiples semillas ni intervalos de confianza agrupados por encuentro, por lo que las diferencias pequeñas no implican significancia estadística. El target enriquecido es sintético y puede consolidar errores de las respuestas originales o del LLM. La auditoría clínica y la muestra de explicaciones son dirigidas y no fueron validadas por dermatólogos; además, el analista externo no recibió el ground truth. Solo evaluamos Qwen2.5-VL-3B por restricciones de cómputo, un recuperador textual E5 para RAG y un único valor de $k$. La condición RAG-aware no se entrenó sobre respuesta larga. Finalmente, las métricas de similitud textual no miden seguridad, calibración ni validez diagnóstica.
+El test contiene 100 encuentros; las 314 imágenes no son observaciones independientes. No ejecutamos múltiples semillas ni intervalos de confianza agrupados por encuentro, por lo que las diferencias pequeñas no implican significancia estadística. El target enriquecido es sintético y puede consolidar errores de las respuestas originales o del LLM. La auditoría clínica y la muestra de explicaciones son dirigidas y no fueron validadas por dermatólogos; además, el analista externo no recibió el ground truth. Solo evaluamos Qwen2.5-VL-3B por restricciones de cómputo; para RAG usamos exclusivamente \texttt{multilingual-e5-small} (la Tabla~\ref{tab:retrieval} compara recuperadores de forma aislada, pero no probamos SBERT ni visual dentro del ciclo RAG) y un único valor de $k$. La condición RAG-aware no se entrenó sobre respuesta larga. Finalmente, las métricas de similitud textual no miden seguridad, calibración ni validez diagnóstica.
 
 \section*{Consideraciones éticas}
 
