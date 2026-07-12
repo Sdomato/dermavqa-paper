@@ -152,8 +152,20 @@ Mismo texto, CON la foto de ENC00168 → #1 ENC00168 (sim 0.99)
 
 La foto cambia por completo el ranking → la señal visual efectivamente manda. Detalle técnico:
 el modelo que codifica la foto de la query debe ser el **mismo** que generó el cache (BiomedCLIP,
-512-dim); lo confirmamos por el `meta` del `.npz` y por el test (un caso recupera su propia foto
-como #1). **Limitación:** el índice visual sale del cache `.npz` (solo los 998 casos base); los
+512-dim); lo confirmamos por el `meta` del `.npz` y por el test (un caso de una sola foto recupera
+su propia imagen como #1).
+
+**Casos con varias fotos (característica del pooling).** El embedding visual de un caso es el
+**promedio** (centroide) de los embeddings de sus imágenes, re-normalizado. Es robusto en el caso
+típico y con la consulta completa. Ahora bien, si una de las fotos de un caso es visualmente
+atípica respecto a las otras (p. ej. ENC00854, que mezcla dos entidades), consultar con **esa sola
+foto** puede no traerlo al #1 —sí lo hace con sus fotos representativas o con las tres juntas, que
+reproducen el centroide almacenado—. Es un trade-off conocido del *mean-pooling* (el centroide no
+se parece a ninguna imagen individual), no un error de indexado. La mejora natural: indexar
+**por-imagen** (una fila por foto) y quedarse con el **máximo** score visual entre las imágenes del
+caso (*max-pooling*), de modo que cualquier foto miembro recupere su caso.
+
+**Limitación:** el índice visual sale del cache `.npz` (solo los 998 casos base); los
 casos aprobados por el loop (Fase 4) no están en el cache, así que en modo `multimodal` no son
 recuperables (sí con `tfidf`/`e5`, que embeben en vivo). Notas de entorno: la primera consulta
 carga E5 + descarga BiomedCLIP (~100 s, una vez); e instalar `open_clip_torch` **actualizó torch

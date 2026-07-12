@@ -36,7 +36,7 @@ backend/
 | Método | Ruta | Descripción |
 | --- | --- | --- |
 | `GET` | `/` | Redirige a `/docs` |
-| `GET` | `/health` | Estado, versión, backend y nº de casos indexados |
+| `GET` | `/health` | Estado, versión, retriever, generador, y nº de casos indexados y aprobados |
 | `POST` | `/consulta` | Solo-texto (JSON). Devuelve los K casos más similares (con respuesta y timing) |
 | `POST` | `/consulta/imagen` | Multipart: texto + imágenes. El backend multimodal fusiona la señal visual |
 | `POST` | `/borrador` | Encola un borrador RAG (recupera evidencia + genera). Devuelve `job_id` |
@@ -134,12 +134,16 @@ docker run -p 8000:8000 ghcr.io/sdomato/dermavqa-assist-api:latest
 > `scripts/build_case_embeddings.py`, ver `ing/docs/handoff_embeddings_santino.md`).
 > Config inválida (ej. retriever desconocido) hace que el servicio **no arranque** (fail-fast).
 
-> **Nota sobre `DERMA_SIM_MIN` (evidencia débil):** el default `0.35` está calibrado para
-> `tfidf`, donde una consulta sin casos parecidos cae cerca de 0. Con `e5` el score es coseno
-> mapeado a `[0,1]` (`(cos+1)/2`), cuyo **piso empírico es ~0.9** incluso para texto irrelevante,
-> así que el chequeo de `evidencia_debil` prácticamente no dispara con `e5`. Si se usa `e5`/
-> `multimodal` en producción, hay que **recalibrar el umbral** para ese retriever (o pasar a una
-> señal relativa, ej. margen del top-1 sobre la mediana). Limitación conocida, no un bug.
+> **`DERMA_SIM_MIN` es un umbral por-retriever (decisión consciente):** el default `0.35` está
+> calibrado para `tfidf`, donde una consulta sin casos parecidos cae cerca de 0. Con `e5` el score
+> es coseno mapeado a `[0,1]` (`(cos+1)/2`), cuyo **piso empírico es ~0.9** incluso para texto
+> irrelevante, por lo que la señal `evidencia_debil` es efectivamente específica de `tfidf`.
+> (En `multimodal` la fusión normaliza los scores por consulta con min-max, así que el `similitud`
+> del top-1 queda en ~1.0 por construcción: el `similitud` es un score **relativo de ranking**, no
+> una distancia absoluta, y el guard de evidencia débil debe leerse en esa clave.)
+> Decidimos **no** parchearlo con un número mágico sin datos de calibración: para producción con
+> `e5`/`multimodal` la vía correcta es recalibrar el umbral para ese retriever, o pasar a una señal
+> relativa (margen del top-1 sobre la mediana). Es una limitación acotada y documentada, no un bug.
 
 ## Correr con modelos reales
 
@@ -176,10 +180,12 @@ DERMA_RETRIEVER=multimodal make run
 - Verificado: consultando con la **foto propia** de un caso, ese caso vuelve como #1
   (sim 0.99); con el mismo texto pero sin foto, el top-1 es otro. La señal visual manda.
 
-> **Limitación:** el índice visual sale del cache `.npz`, que solo tiene los 998 casos base.
-> Los casos **aprobados por el loop de mejora** (Fase 4) no están en el cache, así que en modo
-> `multimodal` **no son recuperables** (sí lo son con `tfidf`/`e5`, que embeben en vivo). Para
-> sumarlos habría que regenerar el cache o embeber el caso aprobado al vuelo (mejora futura).
+> **Alcance del índice visual (por diseño):** el modo `multimodal` rankea sobre el cache `.npz`
+> precomputado (los 998 casos base), lo que le da latencia ~60 ms sin recalcular embeddings. Como
+> contrapartida, los casos que suma el loop de mejora (Fase 4) todavía no viven en ese cache, así
+> que hoy se recuperan por `tfidf`/`e5` (que embeben en vivo) y no por `multimodal`. Cerrar esa
+> brecha —regenerar el cache por lote o embeber el caso aprobado al vuelo— es la mejora natural del
+> siguiente incremento.
 
 ### Generación real — VLM (Qwen2.5-VL-3B + LoRA)
 
