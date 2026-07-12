@@ -99,10 +99,11 @@ El objetivo del sistema es que el borrador que llega al médico sea **útil y se
 para cerrar el loop también del VLM, y persistencia con trazabilidad real (hoy JSONL).
 Ver [`ROADMAP.md`](ROADMAP.md) para el detalle por fase.
 
-> **Correr con modelos reales:** el retrieval real (E5) corre localmente sin GPU; la
-> generación real (VLM + LoRA) requiere GPU CUDA y el adapter (que vive en la VM, no en el
-> repo). El porqué de cada límite y todas las decisiones de la demo están en
-> [`docs/decisiones-modelos-reales.md`](docs/decisiones-modelos-reales.md).
+> **Correr con modelos reales:** el retrieval real corre localmente sin GPU — texto (E5) o
+> **texto + imagen** (`multimodal`, E5 + BiomedCLIP), el único modo en que la foto de la
+> consulta influye en la búsqueda. La generación real (VLM + LoRA) sí requiere GPU CUDA y el
+> adapter (que vive en la VM, no en el repo). El porqué de cada límite y todas las decisiones
+> de la demo están en [`docs/decisiones-modelos-reales.md`](docs/decisiones-modelos-reales.md).
 
 ## Estructura del código
 

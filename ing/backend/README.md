@@ -158,6 +158,29 @@ TF-IDF, matchea por **significado**: una consulta de *"placas rojas descamativas
 rodillas"* recupera casos de **psoriasis** aunque la palabra no aparezca en la consulta.
 Verificado en `GET /health` → `"retriever": "e5"`, búsqueda ~50 ms.
 
+### Retrieval multimodal — texto + imagen (E5 + BiomedCLIP)
+
+Es el único modo en el que **la foto de la consulta influye en la búsqueda**. Con `tfidf`
+y `e5` (solo texto) el frontend deja adjuntar una imagen y el endpoint la acepta, pero el
+retriever la **ignora**. `multimodal` embebe la imagen con **BiomedCLIP** y la fusiona con
+el texto: `score = 0.6·texto(E5) + 0.4·visual(BiomedCLIP)`.
+
+```bash
+pip install open_clip_torch pillow      # deps del encoder visual (una vez)
+DERMA_RETRIEVER=multimodal make run
+```
+
+- **Corre en CPU, no requiere GPU** (a diferencia del VLM). Consume el cache de embeddings
+  de los casos (`outputs/embeddings/case_embeddings.npz`, ya generado); no recalcula la base.
+- La **primera** consulta carga E5 + descarga BiomedCLIP (~100 s una vez); después, ~60 ms.
+- Verificado: consultando con la **foto propia** de un caso, ese caso vuelve como #1
+  (sim 0.99); con el mismo texto pero sin foto, el top-1 es otro. La señal visual manda.
+
+> **Limitación:** el índice visual sale del cache `.npz`, que solo tiene los 998 casos base.
+> Los casos **aprobados por el loop de mejora** (Fase 4) no están en el cache, así que en modo
+> `multimodal` **no son recuperables** (sí lo son con `tfidf`/`e5`, que embeben en vivo). Para
+> sumarlos habría que regenerar el cache o embeber el caso aprobado al vuelo (mejora futura).
+
 ### Generación real — VLM (Qwen2.5-VL-3B + LoRA)
 
 ```bash

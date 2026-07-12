@@ -88,7 +88,9 @@ DERMA_RETRIEVER=e5 make run
   **psoriasis** aunque la palabra "psoriasis" no aparezca en la consulta. Búsqueda ~50 ms.
 
 Así, la demo corre con **modelo real en la mitad que se puede (retrieval)** y **stub honesto
-en la mitad que no (generación)**.
+en la mitad que no (generación)**. Más aún: pasamos de E5 (solo texto) a **multimodal**
+(texto + imagen con BiomedCLIP), que también corre en CPU y hace que la foto de la consulta
+influya en la búsqueda — ver Decisión 8.
 
 ---
 
@@ -103,6 +105,7 @@ en la mitad que no (generación)**.
 | 5 | **Reindexado incremental (`add`) en vez de rebuild** | Con E5, aprobar re-embebía todo el corpus: ~160 s bloqueantes | Reindex en background (introduce race con búsquedas) |
 | 6 | **`evidencia_debil`: documentar, no recalibrar a ciegas** | Con E5 el piso de similitud es ~0.9; el umbral 0.35 (tfidf) no dispara | Poner un número mágico sin datos de calibración |
 | 7 | **Limpiar la data de test (con backup)** | Los agentes de testeo dejaron ~20 casos basura en el store | Pushear/demostrar con datos sucios |
+| 8 | **Activar retrieval multimodal (E5 + BiomedCLIP)** | Es el único modo donde la foto de la consulta influye en la búsqueda; corre en CPU | Quedarse en E5 (texto): el frontend sube fotos pero se ignoran |
 
 ### Detalle de las decisiones de código
 
@@ -134,6 +137,28 @@ prácticamente no dispara. No lo "arreglamos" con un número mágico porque reca
 requiere datos; lo **documentamos** como limitación conocida y recomendamos, para producción
 con E5, un umbral por-retriever o una señal relativa (margen del top-1 sobre la mediana).
 
+**Decisión 8 — Imágenes en la búsqueda (retriever multimodal).**
+Pregunta que surgió: *"¿ahora se pueden subir imágenes?"*. El frontend siempre tuvo el input
+de foto y los endpoints (`/consulta/imagen`, `/borrador`) la aceptan, **pero con `tfidf`/`e5`
+(solo texto) la imagen se ignora**. El único retriever que la usa es `multimodal`, que embebe
+la foto con **BiomedCLIP** y la fusiona con el texto de E5 (`0.6·texto + 0.4·visual`). Se
+puede porque **corre en CPU** (no como el VLM) y el cache de embeddings de los casos ya existe;
+solo faltaba instalar `open_clip_torch`. Lo activamos y verificamos con un A/B:
+
+```
+Mismo texto, SIN foto  → #1 ENC00008
+Mismo texto, CON la foto de ENC00168 → #1 ENC00168 (sim 0.99)
+```
+
+La foto cambia por completo el ranking → la señal visual efectivamente manda. Detalle técnico:
+el modelo que codifica la foto de la query debe ser el **mismo** que generó el cache (BiomedCLIP,
+512-dim); lo confirmamos por el `meta` del `.npz` y por el test (un caso recupera su propia foto
+como #1). **Limitación:** el índice visual sale del cache `.npz` (solo los 998 casos base); los
+casos aprobados por el loop (Fase 4) no están en el cache, así que en modo `multimodal` no son
+recuperables (sí con `tfidf`/`e5`, que embeben en vivo). Notas de entorno: la primera consulta
+carga E5 + descarga BiomedCLIP (~100 s, una vez); e instalar `open_clip_torch` **actualizó torch
+2.11 → 2.13** (la suite de 122 tests sigue verde).
+
 ---
 
 ## 4. Cómo se corren los modelos reales (referencia)
@@ -153,7 +178,9 @@ Ver también la sección "Correr con modelos reales" en
 
 ## 5. Estado de la demo tras estas decisiones
 
-- **Retrieval:** E5 real (calidad paper), verificado. 🟢
+- **Retrieval:** multimodal real (E5 texto + BiomedCLIP imagen), en CPU. La foto de la
+  consulta influye en la búsqueda (verificado con A/B). Se puede volver a solo-texto con
+  `DERMA_RETRIEVER=e5` o al liviano `tfidf`. 🟢
 - **Generación:** stub (placeholder honesto anclado en el caso más parecido). El flujo
   completo —recuperar → borrador → seguridad → revisión → loop de mejora— funciona idéntico
   con stub o VLM; sólo cambia de dónde sale el texto del borrador. 🟢
