@@ -284,9 +284,8 @@ make paper
 - Baselines de retrieval held-out textuales (TF-IDF, E5, SBERT; train-only,
   sin leakage) corridos sobre `dataset_longest_answer_by_image`.
 - Baselines held-out visual (BiomedCLIP) y multimodal (E5+BiomedCLIP)
-  agregados a `evaluate_retrieval_heldout.py` sobre `dataset_longest_answer_by_image`
-  y `dataset_enriched` — **falta correrlos** (requieren imágenes locales +
-  `open_clip_torch`; no se corrieron en este entorno).
+  agregados a `evaluate_retrieval_heldout.py` y corridos sobre
+  `dataset_longest_answer_by_image` y `dataset_enriched`.
 - Retrieval textual enriquecido corrido (en `outputs/metrics/dataset_enriched/`).
 - VLM zero-shot y LoRA sobre `dataset_longest_answer_by_image` corridos con
   Qwen2.5-VL-3B (todas las imágenes por caso, early stopping en L4).
@@ -308,13 +307,20 @@ caso), sin data leakage — ver `paper/draft.md` §5, Tabla 1:
 | TF-IDF held-out | 0.785 | 13.501 | 0.156 | 0.057 | 0.075 | – |
 | E5 held-out | 0.305 | 13.956 | 0.156 | 0.076 | 0.096 | – |
 | SBERT held-out | 0.633 | 16.735 | 0.169 | 0.073 | 0.097 | – |
+| Visual (BiomedCLIP) held-out | 0.433 | 14.872 | 0.173 | 0.076 | 0.102 | – |
+| Multimodal (E5+BiomedCLIP) held-out | 0.323 | 12.819 | 0.153 | 0.066 | 0.085 | – |
 | **Qwen2.5-VL zero-shot** | 0.352 | 16.163 | **0.204** | 0.080 | 0.103 | 0.643 |
 | Qwen2.5-VL LoRA | 0.211 | 13.810 | 0.161 | 0.080 | 0.088 | 0.618 |
 
-Zero-shot rinde mejor que LoRA y que los tres retrieval en todas las métricas
-salvo sacreBLEU. LoRA no mejora sobre zero-shot en respuesta larga — a
-diferencia del dataset enriquecido, donde LoRA sí supera a retrieval (ver
-tabla siguiente). Detalle e interpretación en `paper/draft.md` §5.
+Zero-shot rinde mejor que LoRA y que los cinco retrieval en todas las métricas
+salvo sacreBLEU. Entre los retrieval, SBERT y visual quedan prácticamente
+empatados en chrF; la fusión multimodal no mejora sobre su mejor componente
+individual. LoRA no mejora sobre zero-shot en respuesta larga — a diferencia
+del dataset enriquecido, donde LoRA sí supera a retrieval (ver tabla
+siguiente). El paper ACL (`paper/acl/main.tex`, Tabla 2) compara los
+recuperadores entre sí sin contrastarlos contra las condiciones generativas;
+detalle e interpretación de la versión más larga en `paper/draft.md` §5
+(desactualizado respecto al ACL, ver nota en el repo).
 
 (fuente: `outputs/metrics/dataset_longest_answer_by_image/retrieval_heldout/metrics_summary.csv`
 y `outputs/paper/tables/paper_main_test_comparison.csv`)
