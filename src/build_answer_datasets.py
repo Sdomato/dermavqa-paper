@@ -1,28 +1,19 @@
 """
-Build two answer-style datasets from the raw IIYI JSON splits.
+Build dataset_longest_answer from the raw IIYI JSON splits.
 
-Datasets produced
------------------
-dataset_longest_answer
-    One record per encounter.  The "answer" field contains the Spanish
-    response whose text is the longest (by character count) among all
-    responses for that encounter.
+One record per encounter. The "answer" field contains the Spanish response
+whose text is the longest (by character count) among all responses for that
+encounter. This is an intermediate artifact: build_longest_by_image_dataset.py
+expands it to dataset_longest_answer_by_image, the canonical target used by
+retrieval, zero-shot and LoRA.
 
-dataset_short_answer
-    One record per encounter.  The "answer" field contains the Spanish
-    response whose text is the *shortest* (i.e. the most concise
-    diagnosis / brief label) among all responses for that encounter.
-
-Both datasets include every encounter that has at least one response.
-Records with ties are broken by selecting the first qualifying response
-in list order.
+Every encounter with at least one response is included. Ties are broken by
+selecting the first qualifying response in list order.
 
 Output
 ------
 outputs/datasets/dataset_longest_answer.json
 outputs/datasets/dataset_longest_answer.csv
-outputs/datasets/dataset_short_answer.json
-outputs/datasets/dataset_short_answer.csv
 """
 
 from __future__ import annotations
@@ -77,28 +68,12 @@ def load_splits(data_dir: Path, split_names: list[str]) -> list[dict[str, Any]]:
     return records
 
 
-def select_answer(responses: list[dict[str, Any]], longest: bool) -> dict[str, Any] | None:
-    """
-    Pick a single response from *responses*.
-
-    Parameters
-    ----------
-    responses:
-        List of response dicts, each with at minimum ``content_es``.
-    longest:
-        If True, pick the response with the longest ``content_es`` text.
-        If False, pick the response with the shortest ``content_es`` text.
-
-    Returns
-    -------
-    The selected response dict, or None when the list is empty.
-    """
+def select_answer(responses: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Pick the response with the longest content_es text, or None if empty."""
     valid = [r for r in responses if r.get("content_es", "").strip()]
     if not valid:
         return None
-    return max(valid, key=lambda r: len(r["content_es"])) if longest else min(
-        valid, key=lambda r: len(r["content_es"])
-    )
+    return max(valid, key=lambda r: len(r["content_es"]))
 
 
 def build_record(
@@ -115,15 +90,13 @@ def build_record(
     return record
 
 
-def build_dataset(
-    raw_records: list[dict[str, Any]], longest: bool
-) -> list[dict[str, Any]]:
-    """Iterate over raw encounters and build answer-selected dataset."""
+def build_dataset(raw_records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Iterate over raw encounters and build the longest-answer dataset."""
     dataset: list[dict[str, Any]] = []
     skipped = 0
     for raw in raw_records:
         responses = raw.get("responses", [])
-        chosen = select_answer(responses, longest=longest)
+        chosen = select_answer(responses)
         if chosen is None:
             skipped += 1
             continue
@@ -163,9 +136,8 @@ def main() -> None:
     raw_records = load_splits(DATA_DIR, SPLITS)
     print(f"  Total encounters loaded: {len(raw_records)}")
 
-    # ---- Dataset 1: longest answer ----------------------------------------
     print("\n=== Building dataset_longest_answer ===")
-    longest_ds = build_dataset(raw_records, longest=True)
+    longest_ds = build_dataset(raw_records)
     print(f"  Records: {len(longest_ds)}")
     save_json(longest_ds, OUT_DIR / "dataset_longest_answer.json")
     save_csv(longest_ds, OUT_DIR / "dataset_longest_answer.csv")
@@ -173,16 +145,6 @@ def main() -> None:
     # Quick sanity check: show length distribution of chosen answers
     lengths = [len(r["answer_es"]) for r in longest_ds]
     print(f"  answer_es length — min:{min(lengths)}  mean:{sum(lengths)//len(lengths)}  max:{max(lengths)}")
-
-    # ---- Dataset 2: short answer -------------------------------------------
-    print("\n=== Building dataset_short_answer ===")
-    short_ds = build_dataset(raw_records, longest=False)
-    print(f"  Records: {len(short_ds)}")
-    save_json(short_ds, OUT_DIR / "dataset_short_answer.json")
-    save_csv(short_ds, OUT_DIR / "dataset_short_answer.csv")
-
-    lengths_s = [len(r["answer_es"]) for r in short_ds]
-    print(f"  answer_es length — min:{min(lengths_s)}  mean:{sum(lengths_s)//len(lengths_s)}  max:{max(lengths_s)}")
 
     print("\nDone.\n")
 
