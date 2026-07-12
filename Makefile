@@ -17,6 +17,8 @@ help:
 	@echo "    bash scripts/run_enriched_vlm_lora.sh       Fine-tuning enriched + infer + eval"
 	@echo "    bash scripts/run_longest_by_image_vlm_lora.sh  Fine-tuning longest_by_image + infer + eval"
 	@echo "    bash scripts/run_vlm_rag_comparison.sh      Zero-shot y LoRA con RAG"
+	@echo "    python -m src.evaluate_retrieval_heldout --dataset all --methods tfidf,e5,sbert,visual,multimodal"
+	@echo "                                                 Retrieval held-out incl. visual/multimodal (requiere imágenes + open_clip)"
 	@echo ""
 
 all: data retrieval eval-retrieval paper
@@ -24,43 +26,27 @@ all: data retrieval eval-retrieval paper
 # ── Fase 1: construcción de datasets ──────────────────────────────────────────
 
 data:
-	@echo "\n[data 1/2] Construyendo dataset_longest_answer y dataset_short_answer..."
+	@echo "\n[data] Construyendo dataset_longest_answer (intermedio) y dataset_longest_answer_by_image..."
 	$(PYTHON) -m src.build_answer_datasets
-	@echo "\n[data 2/2] Expandiendo a dataset_longest_answer_by_image (una fila por imagen)..."
 	$(PYTHON) -m src.build_longest_by_image_dataset
 
 # ── Fase 2: baselines de retrieval ────────────────────────────────────────────
 
 retrieval: data
-	@echo "\n[retrieval 1/5] TF-IDF (longest y short)..."
+	@echo "\n[retrieval] TF-IDF, Sentence-BERT, Multilingual E5 (exploración CPU, todo el corpus)..."
 	$(PYTHON) -m src.tfidf_retrieval
-	$(PYTHON) -m src.tfidf_retrieval_short
-
-	@echo "\n[retrieval 2/5] Sentence-BERT (longest y short)..."
 	$(PYTHON) -m src.sbert_retrieval
-	$(PYTHON) -m src.sbert_retrieval_short
-
-	@echo "\n[retrieval 3/5] Multilingual E5 (longest y short)..."
 	$(PYTHON) -m src.e5_retrieval
-	$(PYTHON) -m src.e5_retrieval_short
-
-	@echo "\n[retrieval 4/5] Visual BiomedCLIP (longest y short — requiere imágenes)..."
-	$(PYTHON) -m src.visual_retrieval
-	$(PYTHON) -m src.visual_retrieval_short
-
-	@echo "\n[retrieval 5/5] Multimodal late-fusion alpha=0.6 (longest y short)..."
-	$(PYTHON) -m src.multimodal_retrieval --alpha 0.6
-	$(PYTHON) -m src.multimodal_retrieval_short --alpha 0.6
 
 # ── Fase 3: evaluación de retrieval ──────────────────────────────────────────
 
 eval-retrieval: retrieval
-	@echo "\n[eval-retrieval 1/2] Métricas all-split (longest y short)..."
+	@echo "\n[eval-retrieval 1/2] Métricas all-split (exploración)..."
 	$(PYTHON) -m src.evaluate_retrieval --dataset longest_answer
-	$(PYTHON) -m src.evaluate_retrieval --dataset short_answer
 
-	@echo "\n[eval-retrieval 2/2] Retrieval held-out sin data leakage (train-only)..."
-	$(PYTHON) -m src.evaluate_retrieval_heldout --dataset all
+	@echo "\n[eval-retrieval 2/2] Retrieval held-out sin data leakage (train-only, reportado en el paper)..."
+	$(PYTHON) -m src.evaluate_retrieval_heldout --dataset dataset_longest_answer_by_image --methods tfidf,e5,sbert
+	$(PYTHON) -m src.evaluate_retrieval_heldout --dataset dataset_enriched --methods tfidf,e5,sbert
 
 # ── Fase 4: tablas y figuras paper-ready ─────────────────────────────────────
 

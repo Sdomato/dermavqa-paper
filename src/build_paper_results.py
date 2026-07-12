@@ -447,37 +447,11 @@ def build_longest_retrieval_rows() -> list[dict[str, str]]:
     return rows
 
 
-def build_short_retrieval_rows() -> list[dict[str, str]]:
-    metrics_path = PROJECT_ROOT / "outputs" / "metrics" / "dataset_short_answer" / "metrics_summary.csv"
-    rows: list[dict[str, str]] = []
-    for source in read_csv(metrics_path):
-        model_name = source.get("model", "")
-        method = "retrieval_" + model_name.split("/")[0].replace("retrieval_", "")
-        rows.append(
-            metric_row(
-                dataset_variant="dataset_short_answer",
-                target="short_answer",
-                method=method,
-                model=model_name,
-                split="all",
-                unit="case",
-                n=source.get("n", ""),
-                chrf_mean=safe_float(source.get("chrf_mean")),
-                rouge_l_mean=safe_float(source.get("rouge_l_mean")),
-                token_f1_mean=safe_float(source.get("token_f1_mean")),
-                bertscore_f1_mean=safe_float(source.get("bertscore_f1_mean")),
-                source="outputs/metrics/dataset_short_answer/metrics_summary.csv",
-                notes="all-split retrieval summary for short-answer target",
-            )
-        )
-    return rows
-
-
 def build_retrieval_heldout_rows() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for dataset_variant, target in [
         ("dataset_longest_answer", "longest_answer"),
-        ("dataset_short_answer", "short_answer"),
+        ("dataset_enriched", "enriched_answer"),
     ]:
         metrics_path = (
             PROJECT_ROOT
@@ -608,7 +582,6 @@ def build_dataset_split_counts() -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for dataset_name, path, split_col in [
         ("dataset_longest_answer", PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.csv", "_split"),
-        ("dataset_short_answer", PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.csv", "_split"),
     ]:
         source_rows = read_csv(path)
         case_counts = Counter(row.get(split_col, "") for row in source_rows)
@@ -682,11 +655,6 @@ def main_test_rows(all_rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 continue
             if row.get("method") in {"retrieval_sbert", "retrieval_multimodal"}:
                 extra.append(row)
-        if row.get("dataset_variant") == "dataset_short_answer":
-            if "dataset_short_answer" in datasets_with_heldout_retrieval:
-                continue
-            if row.get("method") in {"retrieval_textual_sbert", "retrieval_multimodal"}:
-                extra.append(row)
     order = {
         ("dataset_enriched", "retrieval_tfidf"): 10,
         ("dataset_enriched", "retrieval_e5"): 11,
@@ -704,9 +672,6 @@ def main_test_rows(all_rows: list[dict[str, str]]) -> list[dict[str, str]]:
         ("dataset_longest_answer", "vlm_zero_shot_by_image_rag_e5_small_longest"): 26,
         ("dataset_longest_answer", "vlm_lora_by_image"): 27,
         ("dataset_longest_answer", "vlm_lora_by_image_rag_e5_small_longest"): 28,
-        ("dataset_short_answer", "retrieval_tfidf_train_only"): 30,
-        ("dataset_short_answer", "retrieval_textual_sbert"): 31,
-        ("dataset_short_answer", "retrieval_multimodal"): 32,
     }
     combined = keep + extra
     return sorted(
@@ -719,7 +684,6 @@ def short_name(row: dict[str, str]) -> str:
     dataset_labels = {
         "dataset_enriched": "Enriched",
         "dataset_longest_answer": "Longest",
-        "dataset_short_answer": "Short",
     }
     dataset = dataset_labels.get(row.get("dataset_variant", ""), row.get("dataset_variant", "dataset"))
     method = method_label(row.get("method", ""))
@@ -1067,7 +1031,7 @@ def write_svg_answer_length_alignment(path: Path) -> None:
 
 
 def write_dataset_split_chart(path: Path, rows: list[dict[str, str]]) -> None:
-    datasets = ["dataset_longest_answer", "dataset_short_answer", "dataset_enriched"]
+    datasets = ["dataset_longest_answer", "dataset_enriched"]
     splits = ["train", "valid", "test"]
     lookup = {(row["dataset_variant"], row["split"]): int(row["image_row_count"]) for row in rows}
     width = 820
@@ -1084,7 +1048,6 @@ def write_dataset_split_chart(path: Path, rows: list[dict[str, str]]) -> None:
     colors = {"train": "#4C78A8", "valid": "#F58518", "test": "#54A24B"}
     labels = {
         "dataset_longest_answer": "Longest",
-        "dataset_short_answer": "Short",
         "dataset_enriched": "Enriched",
     }
     lines = svg_header(width, height, "Dataset sizes by split")
@@ -1784,7 +1747,7 @@ def write_missing_metrics_report(path: Path, rows: list[dict[str, str]]) -> None
             "## Caveats",
             "",
             "- The main table uses `dataset_enriched/vlm_lora_case_avg` for fair case-level comparison (`n=100` on test); raw image-level enriched VLM metrics remain in `paper_all_metrics_long.csv`.",
-            "- For `dataset_longest_answer` and `dataset_short_answer`, the main table uses leakage-free TF-IDF retrieval against train only when `src.evaluate_retrieval_heldout` has been run; legacy all-split retrieval rows remain in `paper_all_metrics_long.csv` for appendix context.",
+            "- For `dataset_longest_answer`, the main table uses leakage-free TF-IDF retrieval against train only when `src.evaluate_retrieval_heldout` has been run; legacy all-split retrieval rows remain in `paper_all_metrics_long.csv` for appendix context.",
             "- Enriched case-level corpus scores concatenate de-duplicated predictions from all images in a case; this avoids oracle image selection but is not identical to averaging per-image metrics.",
             "- BERTScore is not recomputed by this script; rows generated without BERTScore keep that field empty unless a prior metric artifact exists.",
             "- Human clinical review labels still need a reviewer before final medical-safety claims; `paper_clinical_review_20.csv` is the structured review sheet.",
@@ -1862,7 +1825,6 @@ def run() -> None:
     all_rows.extend(build_enriched_vlm_rows())
     all_rows.extend(build_enriched_vlm_case_average_rows())
     all_rows.extend(build_longest_retrieval_rows())
-    all_rows.extend(build_short_retrieval_rows())
     all_rows.extend(build_retrieval_heldout_rows())
     all_rows.extend(build_longest_vlm_rows())
 

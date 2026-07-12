@@ -1,4 +1,19 @@
-# Paper draft
+# Paper
+
+## Versión ACL en LaTeX
+
+La versión científica compilable está en [`acl/main.tex`](acl/main.tex). Desde
+PowerShell se genera el PDF con:
+
+```powershell
+cd paper\acl
+.\compile.ps1
+```
+
+El borrador Markdown se conserva como base narrativa e historial de la
+evolución del trabajo.
+
+## Borrador narrativo
 
 Esta carpeta contiene el borrador narrativo del trabajo.
 

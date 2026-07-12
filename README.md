@@ -17,7 +17,7 @@ completo y `survey/team_execution_plan.md` para la división de tareas.
 | Línea | Foco | Dataset principal |
 | --- | --- | --- |
 | Dataset enriquecido | Dataset enriquecido (síntesis LLM) + LoRA/QLoRA sobre enriquecido | `dataset_enriched` |
-| Retrieval | Construcción de datasets long/short + baselines de retrieval (textual, visual, multimodal) | `dataset_longest_answer_by_image`, `dataset_short_answer` |
+| Retrieval | Construcción de datasets + baselines de retrieval (textual, visual, multimodal) | `dataset_longest_answer_by_image`, `dataset_enriched` |
 | VLM respuesta larga | VLM zero-shot + LoRA/QLoRA sobre respuesta larga | `dataset_longest_answer_by_image` |
 
 **Comparación estrella del trabajo:** LoRA sobre respuesta larga vs LoRA
@@ -36,7 +36,7 @@ sobre enriquecido, ambos contra retrieval multimodal.
 ├── paper/                     # Borrador narrativo del paper
 ├── src/                        # Pipeline modular (ver Scripts)
 ├── outputs/                   # Raíz canónica de artefactos (ver survey/STRUCTURE.md)
-│   ├── datasets/              # Datasets procesados (versionados): long / short / enriched.zip
+│   ├── datasets/              # Datasets procesados (versionados): longest_by_image / enriched.zip
 │   ├── results/<dataset>/<método>/   # Predicciones + artefactos por método (CSV livianos versionados; .npy/adapters NO)
 │   ├── metrics/<dataset>/     # Métricas resumidas por dataset (versionado)
 │   └── paper/{tables,figures}/ # Tablas y figuras finales para el paper (versionado)
@@ -62,8 +62,12 @@ varias vistas del mismo corpus:
 | Variante | Target | Archivo / artefacto |
 | --- | --- | --- |
 | `longest_answer_by_image` | Respuesta original más larga, una fila por imagen (target canónico de respuesta larga: retrieval, zero-shot y LoRA se evalúan todos con esta misma unidad, ver "Nota de versión" en `paper/draft.md` §5) | `outputs/datasets/dataset_longest_answer_by_image.{json,jsonl,csv,zip}` |
-| `short_answer` | Respuesta más corta (diagnóstico breve) | `outputs/datasets/dataset_short_answer.{json,csv}` |
-| `enriched` | Respuestas consolidadas por un LLM (Azure) | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip` |
+| `enriched` | Respuestas consolidadas por un LLM (Azure), una fila por imagen | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.zip` |
+
+Ambas variantes comparten esquema (una fila por imagen) y por eso son las
+únicas evaluadas por `evaluate_retrieval_heldout.py`: retrieval, zero-shot y
+LoRA siempre se comparan sobre la misma unidad. `dataset_short_answer` se
+eliminó del repo (código y outputs) — dejó de ser un target de interés.
 
 `dataset_longest_answer.{json,csv}` (una fila por caso, sin expandir a
 imagen) es un artefacto **intermedio**: `build_answer_datasets.py` lo genera
@@ -109,30 +113,40 @@ Todos se ejecutan como módulo desde la raíz del repo (`python -m src.<nombre>`
 ### Construcción de datasets
 | Script | Qué hace |
 | --- | --- |
-| `build_answer_datasets.py` | Genera `dataset_longest_answer` (intermedio, una fila por caso) y `dataset_short_answer` desde los JSON crudos de IIYI. |
+| `build_answer_datasets.py` | Genera `dataset_longest_answer` (intermedio, una fila por caso) desde los JSON crudos de IIYI. |
 | `build_longest_by_image_dataset.py` | Expande `dataset_longest_answer` a `dataset_longest_answer_by_image` (una fila por imagen), el target canónico de respuesta larga usado en todos los resultados reportados. |
 | `build_llm_synthesized_dataset.py` | Genera el dataset enriquecido vía Azure OpenAI (síntesis extractiva, con trazabilidad). Ver `survey/dataset_notes.md`. |
 
 ### Baselines de retrieval
-Cada modalidad tiene dos variantes: `<x>_retrieval.py` (longest) y `<x>_retrieval_short.py` (short).
 | Script | Modelo / método |
 | --- | --- |
 | `tfidf_retrieval.py` | TF-IDF (sklearn) |
 | `e5_retrieval.py` | Multilingual E5 (`intfloat/multilingual-e5-base`) |
 | `sbert_retrieval.py` | Sentence-BERT (`paraphrase-multilingual-MiniLM-L12-v2`) |
-| `visual_retrieval.py` | BiomedCLIP (solo imagen) |
-| `multimodal_retrieval.py` | Late fusion texto+imagen: `s = α·s_text + (1-α)·s_image` |
 | `retrieval_utils.py` | Utilidades compartidas (carga de dataset, query text, top-1). |
-| `evaluate_retrieval.py` | Métricas de los baselines: `--dataset longest_answer\|short_answer`. |
+| `evaluate_retrieval.py` | Métricas de los baselines: `--dataset longest_answer`. |
 | `plot_retrieval_scores.py` | Gráficos de distribución de scores (PNG 300 dpi). |
 
 > Los scripts de arriba corren top-1 sobre todo el corpus (`dataset_longest_answer`,
 > una fila por caso) y sirven para exploración rápida en CPU. **Los números
-> reportados en el paper para respuesta larga vienen de
-> `evaluate_retrieval_heldout.py`** (ver tabla más abajo), que evalúa
-> train-only (sin data leakage) sobre `dataset_longest_answer_by_image` — la
-> misma unidad que usan zero-shot y LoRA, para que las cinco filas de la
-> Tabla 1 sean comparables entre sí.
+> reportados en el paper vienen de `evaluate_retrieval_heldout.py`**, que
+> evalúa train-only (sin data leakage) sobre `dataset_longest_answer_by_image`
+> y `dataset_enriched` — la misma unidad que usan zero-shot y LoRA, para que
+> todas las filas de la Tabla 1 sean comparables entre sí. Incluye textual
+> (TF-IDF/E5/SBERT), visual (BiomedCLIP) y multimodal (E5+BiomedCLIP late
+> fusion, `--alpha`, default 0.6). visual/multimodal reemplazan a los viejos
+> `visual_retrieval.py`/`multimodal_retrieval.py` (eliminados): esos corrían
+> sobre todo el corpus mezclado — filtraban valid/test al índice de
+> recuperación — y sobre `dataset_longest_answer` en vez de `_by_image`.
+> visual/multimodal requieren imágenes locales (`data/iiyi/images_final/`) y
+> `open_clip_torch`:
+> ```bash
+> python -m src.evaluate_retrieval_heldout --dataset dataset_longest_answer_by_image --methods tfidf,e5,sbert,visual,multimodal
+> python -m src.evaluate_retrieval_heldout --dataset dataset_enriched --methods tfidf,e5,sbert,visual,multimodal
+> ```
+> Corré todos los métodos que quieras reportar **en una sola invocación**:
+> cada corrida sobreescribe `metrics_summary.csv`/`metrics_per_case.csv`
+> completos (no los mergea con corridas anteriores).
 
 ### VLM
 | Script | Qué hace |
@@ -160,11 +174,11 @@ Todos los comandos se ejecutan desde la raíz del repositorio. Las semillas est�
 
 | Script | Artefacto generado |
 | --- | --- |
-| `src/build_answer_datasets.py` | `outputs/datasets/dataset_longest_answer.{json,csv}` (intermedio), `dataset_short_answer.{json,csv}` |
+| `src/build_answer_datasets.py` | `outputs/datasets/dataset_longest_answer.{json,csv}` (intermedio) |
 | `src/build_longest_by_image_dataset.py` | `outputs/datasets/dataset_longest_answer_by_image.*` (target canónico de respuesta larga) |
 | `src/build_llm_synthesized_dataset.py` | `outputs/datasets/dermavqa_iiyi_llm_synthesized_answer_finetune.*` (requiere Azure key) |
-| `src/evaluate_retrieval_heldout.py --dataset dataset_longest_answer_by_image` | `outputs/metrics/dataset_longest_answer_by_image/retrieval_heldout/metrics_{summary,per_case}.csv` — **retrieval reportado en la Tabla 1** (train-only, sin leakage) |
-| `src/tfidf_retrieval.py` / `sbert_retrieval.py` / `e5_retrieval.py` / `visual_retrieval.py` / `multimodal_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_{textual,visual,multimodal}/*` (exploración CPU, no reportado en Tabla 1) |
+| `src/evaluate_retrieval_heldout.py --dataset dataset_longest_answer_by_image\|dataset_enriched --methods tfidf,e5,sbert,visual,multimodal` | `outputs/metrics/<dataset_variant>/retrieval_heldout/metrics_{summary,per_case}.csv` — **retrieval reportado en la Tabla 1** (train-only, sin leakage) |
+| `src/tfidf_retrieval.py` / `sbert_retrieval.py` / `e5_retrieval.py` | `outputs/results/dataset_longest_answer/retrieval_textual*/*` (exploración CPU, no reportado en Tabla 1) |
 | `src/build_paper_results.py` | `outputs/paper/{tables,figures}/*` |
 | `src/train_longest_by_image.py` / `scripts/run_longest_by_image_vlm_lora.sh` | `outputs/results/dataset_longest_answer/vlm_lora_by_image/` — **LoRA reportado en la Tabla 1** |
 | `src/vlm_infer_longest_by_image.py` | `outputs/results/dataset_longest_answer/vlm_zero_shot_by_image/predictions_{valid,test}.csv` — **zero-shot reportado en la Tabla 1** |
@@ -266,9 +280,12 @@ make paper
 ## Estado actual
 
 **Hecho:**
-- Datasets `longest_by_image` / `short` / `enriched` construidos y versionados.
-- Baselines de retrieval held-out (TF-IDF, E5, SBERT; train-only, sin leakage)
-  corridos sobre `dataset_longest_answer_by_image` y `dataset_short_answer`.
+- Datasets `longest_by_image` / `enriched` construidos y versionados.
+- Baselines de retrieval held-out textuales (TF-IDF, E5, SBERT; train-only,
+  sin leakage) corridos sobre `dataset_longest_answer_by_image`.
+- Baselines held-out visual (BiomedCLIP) y multimodal (E5+BiomedCLIP)
+  agregados a `evaluate_retrieval_heldout.py` y corridos sobre
+  `dataset_longest_answer_by_image` y `dataset_enriched`.
 - Retrieval textual enriquecido corrido (en `outputs/metrics/dataset_enriched/`).
 - VLM zero-shot y LoRA sobre `dataset_longest_answer_by_image` corridos con
   Qwen2.5-VL-3B (todas las imágenes por caso, early stopping en L4).
@@ -290,13 +307,20 @@ caso), sin data leakage — ver `paper/draft.md` §5, Tabla 1:
 | TF-IDF held-out | 0.785 | 13.501 | 0.156 | 0.057 | 0.075 | – |
 | E5 held-out | 0.305 | 13.956 | 0.156 | 0.076 | 0.096 | – |
 | SBERT held-out | 0.633 | 16.735 | 0.169 | 0.073 | 0.097 | – |
+| Visual (BiomedCLIP) held-out | 0.433 | 14.872 | 0.173 | 0.076 | 0.102 | – |
+| Multimodal (E5+BiomedCLIP) held-out | 0.323 | 12.819 | 0.153 | 0.066 | 0.085 | – |
 | **Qwen2.5-VL zero-shot** | 0.352 | 16.163 | **0.204** | 0.080 | 0.103 | 0.643 |
 | Qwen2.5-VL LoRA | 0.211 | 13.810 | 0.161 | 0.080 | 0.088 | 0.618 |
 
-Zero-shot rinde mejor que LoRA y que los tres retrieval en todas las métricas
-salvo sacreBLEU. LoRA no mejora sobre zero-shot en respuesta larga — a
-diferencia del dataset enriquecido, donde LoRA sí supera a retrieval (ver
-tabla siguiente). Detalle e interpretación en `paper/draft.md` §5.
+Zero-shot rinde mejor que LoRA y que los cinco retrieval en todas las métricas
+salvo sacreBLEU. Entre los retrieval, SBERT y visual quedan prácticamente
+empatados en chrF; la fusión multimodal no mejora sobre su mejor componente
+individual. LoRA no mejora sobre zero-shot en respuesta larga — a diferencia
+del dataset enriquecido, donde LoRA sí supera a retrieval (ver tabla
+siguiente). El paper ACL (`paper/acl/main.tex`, Tabla 2) compara los
+recuperadores entre sí sin contrastarlos contra las condiciones generativas;
+detalle e interpretación de la versión más larga en `paper/draft.md` §5
+(desactualizado respecto al ACL, ver nota en el repo).
 
 (fuente: `outputs/metrics/dataset_longest_answer_by_image/retrieval_heldout/metrics_summary.csv`
 y `outputs/paper/tables/paper_main_test_comparison.csv`)

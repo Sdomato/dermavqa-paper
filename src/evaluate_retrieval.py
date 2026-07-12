@@ -19,9 +19,6 @@ Uso:
     # Evalúa todos los modelos del dataset longest_answer
     python -m src.evaluate_retrieval --dataset longest_answer
 
-    # Evalúa todos los modelos del dataset short_answer
-    python -m src.evaluate_retrieval --dataset short_answer
-
     # Evalúa un directorio concreto
     python -m src.evaluate_retrieval --results-dir outputs/results/dataset_longest_answer/retrieval_textual_sbert
 """
@@ -45,13 +42,12 @@ from src.retrieval_utils import PROJECT_ROOT, load_dataset
 
 DATASETS = {
     "longest_answer": PROJECT_ROOT / "outputs" / "datasets" / "dataset_longest_answer.json",
-    "short_answer": PROJECT_ROOT / "outputs" / "datasets" / "dataset_short_answer.json",
 }
 RESULTS_ROOT = PROJECT_ROOT / "outputs" / "results"
 METRICS_ROOT = PROJECT_ROOT / "outputs" / "metrics"
 
 # Campo de respuesta recuperada según el tipo de resultado
-RETRIEVED_ANSWER_KEYS = ["retrieved_answer_es", "retrieved_short_answer_es"]
+RETRIEVED_ANSWER_KEYS = ["retrieved_answer_es"]
 
 # Modelo BERTScore multilingüe
 BERTSCORE_MODEL = "bert-base-multilingual-cased"
